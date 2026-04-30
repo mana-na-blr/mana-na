@@ -34,6 +34,14 @@
             --nav-bg: rgba(13, 23, 16, 0.95);
         }
 
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+        }
+
         /* --- Global Styles --- */
         * {
             margin: 0;
@@ -124,15 +132,31 @@
         }
 
         .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
             color: var(--text-header);
-            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 0px;
+            gap: 10px;
             cursor: pointer;
             transition: var(--transition);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .brand-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            font-weight: 500;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
         }
 
         .logo:hover {
@@ -308,20 +332,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #81c784 0%, rgba(15, 26, 18, 0.4) 60%, rgba(0,0,0,0.1) 100%);
+            background: rgba(15, 26, 18, 0.4);
             z-index: -1;
             display: flex;
             align-items: center;
-            padding: 0 10%;
+            justify-content: center;
+            padding: 0 5%;
         }
 
         [data-theme="dark"] .slide-overlay {
-            background: linear-gradient(90deg, rgba(13, 23, 16, 0.95) 0%, rgba(13, 23, 16, 0.6) 60%, rgba(0,0,0,0.3) 100%);
+            background: rgba(13, 23, 16, 0.6);
         }
 
         .slide-content {
-            max-width: 700px;
+            max-width: 800px;
             z-index: 1;
+            text-align: center;
         }
 
         .slide-content h1, 
@@ -362,7 +388,7 @@
         .slide-content p {
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2.5rem;
+            margin: 0 auto 2.5rem auto;
             font-weight: 300;
             max-width: 550px;
         }
@@ -402,7 +428,8 @@
         .carousel-indicators {
             position: absolute;
             bottom: 50px;
-            left: 10%;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             gap: 12px;
             z-index: 2;
@@ -624,14 +651,14 @@
             }
         }
 
-        .counselor-grid {
+        .counsellor-grid {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
             gap: 4rem;
             align-items: center;
         }
 
-        .counselor-img {
+        .counsellor-img {
             width: 100%;
             height: 600px;
             border-radius: 20px;
@@ -665,6 +692,43 @@
             outline: none;
             border-color: var(--text-header);
             background-color: var(--card-bg);
+        }
+
+        /* --- Testimonials Section --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0, 103, 56, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--text-header);
+            font-size: 0.95rem;
         }
 
         /* --- Floating Buttons --- */
@@ -794,11 +858,11 @@
         }
 
         @media (max-width: 900px) {
-            .counselor-grid, .contact-grid {
+            .counsellor-grid, .contact-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
-            .counselor-img {
+            .counsellor-img {
                 width: 80%;
                 height: 400px;
                 margin: 0 auto;
@@ -880,10 +944,16 @@
                 margin-left: 1rem;
                 margin-right: 1rem;
             }
-            .counselor-img {
+            .counsellor-img {
                 width: 70%;
                 height: 300px;
                 margin: 0 auto;
+            }
+            .brand-name {
+                font-size: 1.2rem;
+            }
+            .tagline {
+                font-size: 0.65rem;
             }
         }
             .footer-credit {
@@ -904,6 +974,15 @@
     /* Optional: Completely disables all mouse interactions */
     /* pointer-events: none; */ 
 }
+
+.kannada-text {
+    font-weight: 400;
+    opacity: 0.9;
+}
+.kannada-title {
+    font-weight: 400;
+}
+
     </style>
 </head>
 <body>
@@ -911,15 +990,15 @@
     <nav>
         <a href="#home" class="logo">
             <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo">
-            Mana-na
-        </a>
-        
-        <div class="nav-controls">
+            <div class="logo-text">
+                <span class="brand-name">Mana-na<span class="kannada-text">&nbsp;ಮನ-ನ</span></span>
+                <span class="tagline">Counselling & Wellbeing Space</span>
+            </div>
             <div class="nav-links" id="navLinks">
                 <a href="#home" data-target="home" class="active">Home</a>
                 <a href="#about" data-target="about">About</a>
                 <a href="#approach" data-target="approach">Our Approach</a>
-                <a href="#counselor" data-target="counselor">Meet the Counselor</a>
+                <a href="#counsellor" data-target="counsellor">Meet the Counsellor</a>
                 <a href="#contact" data-target="contact" class="nav-contact-btn">Contact</a>
             </div>
             
@@ -938,7 +1017,7 @@
             <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop" alt="Calm Water">
             <div class="slide-overlay">
                 <div class="slide-content">
-                    <h1>Rooted in Care.<br>Guided by Science.</h1>
+                    <h1><br>Rooted in Care.<br>Guided by Science.</h1>
                     <p>Supporting mental well-being and enhance quality of life through awareness, understanding, and meaningful change.</p>
                     <a href="#about" class="btn">Discover Mana-na</a>
                 </div>
@@ -948,7 +1027,7 @@
             <img src="https://plus.unsplash.com/premium_photo-1733306436096-080018552c70?auto=format&fit=crop&w=1920&q=80" alt="Peaceful Nature">
             <div class="slide-overlay">
                 <div class="slide-content">
-                    <h1>Awareness & Emotional Resilience</h1>
+                    <h1><br>Awareness & Emotional Resilience</h1>
                     <p>A safe, non‑judgmental space where you feel seen and valued.</p>
                     <a href="#approach" class="btn">Our Approach</a>
                 </div>
@@ -958,7 +1037,7 @@
             <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1920&q=80" alt="Warm Light">
             <div class="slide-overlay">
                 <div class="slide-content">
-                    <h1>Navigate Your Story with Clarity</h1>
+                    <h1><br>Navigate Your Story with Clarity</h1>
                     <p>Making mental health support practical, accessible, and deeply personal.</p>
                     <a href="#contact" class="btn">Start Your Journey</a>
                 </div>
@@ -981,7 +1060,7 @@
 
     <section id="about">
         <h2>Welcome to Mana‑na</h2>
-        <p><strong>Manana refers to reflective thinking</strong> <br>— the quiet process of examining one’s thoughts and experiences with depth and intention. <br> <br>We provide practical Support tools for personal growth you can apply in everyday life for developing  emotional balance.</p>
+        <p><strong>Manana refers to reflective thinking —</strong> <br> the quiet process of examining one’s thoughts and experiences with depth and intention. <br> We provide practical Support tools for personal growth you can apply in everyday life for developing  emotional balance.</p>
     </section>
 
     <section id="approach">
@@ -1025,83 +1104,67 @@
         </script>
     </section>
 
-    <section id="counselor">
-        <div class="section-card counselor-grid">
-            <img src="https://www.mana-na.in/mtc_image.jpeg" alt="Divya Narayan - Counselling Psychologist" class="counselor-img" draggable="false" oncontextmenu="return false;">
+    <section id="counsellor">
+        <div class="section-card counsellor-grid">
+            <img src="https://www.mana-na.in/mtc_image.jpeg" alt="Divya Narayan - Counselling Psychologist" class="counsellor-img">
             <div>
-                <h2>Meet the Counselor</h2>
-                <h3 id="counselor-greeting" style="color: var(--text-main); font-weight: 500;"></h3>
-                <p id="counselor-p1"></p>
-                <p id="counselor-p2"></p>
-                <p id="counselor-p3"></p>
+                <h2>Meet the Counsellor</h2>
+                <h3 id="counsellor-greeting" style="color: var(--text-main); font-weight: 500;">Hi, I’m Divya Narayan.</h3>
+                <p id="counsellor-p1">I offer a safe, supportive space to explore your thoughts and experiences with openness and without judgment.</p>
+                <p id="counsellor-p2">I am a counselling psychologist with a Master’s in Counselling Psychology and a Diploma in Counselling Skills, trained in CBT-informed, evidence-based approaches.</p>
+                <p id="counsellor-p3">I have worked with adolescents and adults across private practice, online platforms, and institutional settings, supporting concerns such as stress, anxiety, relationship difficulties, and life transitions.</p>
             </div>
         </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const parts = [
-                    { id: 'counselor-greeting', text: "Hi, I am Divya Narayan" },
-                    { id: 'counselor-p1', text: "I believe therapy should feel like a safe, supportive space where you can explore challenges and discover new ways forward. I am a counselling psychologist with a Master’s in Counselling Psychology and a Diploma in Counselling Skills, trained in CBT-informed, evidence-based approaches." },
-                    { id: 'counselor-p2', text: "I work with adolescents and adults experiencing stress, anxiety, emotional concerns, relationship difficulties, and life transitions. Having spent years in high-pressure academic and leadership environments, I understand the stress and expectations that often come with them. I use those insights to help clients build practical coping strategies that fit their unique lives." },
-                    { id: 'counselor-p3', text: "My approach is person-centered and evidence-based, drawing on Cognitive Behavioral Therapy (CBT) and Rational Emotive Behavior Therapy (REBT). Together, we’ll work to shift patterns of thought and behavior that no longer serve you, creating space for resilience, clarity, and growth." }
-                ];
-
-                async function typeCounselorText() {
-                    for (const part of parts) {
-                        const el = document.getElementById(part.id);
-                        for (let i = 0; i < part.text.length; i++) {
-                            el.textContent += part.text.charAt(i);
-                            await new Promise(resolve => setTimeout(resolve, 15));
-                        }
-                        await new Promise(resolve => setTimeout(resolve, 300)); // Pause between paragraphs
-                    }
-                }
-
-                const counselorObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            typeCounselorText();
-                            counselorObserver.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.2 });
-
-                counselorObserver.observe(document.querySelector('#counselor'));
-            });
-        </script>
     </section>
+
+    <!--section id="testimonials">
+        <div class="section-card">
+            <h2>Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Mana-na provided a truly safe and understanding space for me to explore my challenges. The CBT-informed approach helped me develop practical strategies that have made a significant difference in my daily life. Highly recommended!"</p>
+                    <p class="testimonial-author">- Client A</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I was hesitant about therapy, but Divya made me feel comfortable from the first session. Her insights into high-pressure environments were incredibly relatable, and I've gained so much clarity and emotional resilience."</p>
+                    <p class="testimonial-author">- Client B</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The person-centered approach at Mana-na is exceptional. I felt truly heard and supported throughout my journey. It's a place where you can genuinely work towards growth."</p>
+                    <p class="testimonial-author">- Client C</p>
+                </div>
+            </div>
+        </div>
+    </section-->
 
     <section id="contact">
         <div class="section-card">
             <h2>Contact Us</h2>
             <p style="margin-bottom: 3rem;">Ready to start your journey? Reach out to schedule a session or ask any questions.</p>
-            <!--form class="contact-grid" action="https://formsubmit.co/divyadixitn@gmail.com" method="POST"-->
-    
-    <input type="hidden" name="_captcha" value="false">
-    
-    <div>
-        <div class="form-group">
-            <input type="text" name="name" required placeholder="Your Name">
-        </div>
-        <div class="form-group">
-            <input type="email" name="email" required placeholder="Your Email">
-        </div>
-        <div class="form-group">
-            <textarea rows="5" name="message" required placeholder="Your Message"></textarea>
-        </div>
-        <button type="submit" class="btn">Send Message</button>
-    </div>
-    
-    <div style="padding-left: 1rem;">
-        <h3>Mana-na Wellbeing Space</h3>
-        <p>Creating space for resilience, clarity, and growth.</p>
-        <div style="margin-top: 2rem;">
-            <p>Phone: <strong><a href="tel:+917349351920">+91 73493 51920</a></strong></p>
-            <p>Email: <strong><a href="mailto:divyadixitn@gmail.com">divyadixitn@gmail.com</a></strong></p>
-            <p style="margin-top: 0.5rem;"><strong>Available for: In-person and online consultations.</strong></p>
-        </div>
-    </div>
-</form>
+            <form class="contact-grid" id="contactForm">
+                <div>
+                    <div class="form-group">
+                        <input type="text" id="senderName" name="sender_name" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="senderEmail" name="sender_email" required placeholder="Your Email">
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" id="message" name="message" required placeholder="Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn" id="submitBtn">Send Message</button>
+                    <div id="formMessage" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+                </div>
+                <div style="padding-left: 1rem;">
+                    <h3>Mana-na Wellbeing Space</h3>
+                    <p>Creating space for resilience, clarity, and growth.</p>
+                    <div style="margin-top: 2rem;">
+                        <p>Phone:<strong><a href="tel:+917349351920">+91 73493 51920</a></p></strong>
+                        <p>Email: <strong><a href="mailto:divyadixitn@gmail.com">divyadixitn@gmail.com</a></p></strong>
+                        <p style="margin-top: 0.5rem;"><strong>Available for: In-person and online consultations.</p></strong>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -1110,7 +1173,10 @@
             <div class="footer-brand">
                 <a href="#home" class="logo">
                     <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo">
-                    Mana-na
+                    <div class="logo-text">
+                        <span class="brand-name">Mana-na<span class="kannada-text">&nbsp;ಮನ-ನ</span></span>
+                        <span class="tagline">Counselling & Wellbeing Space</span>
+                    </div>
                 </a>
                 <p>Supporting mental well-being and enhancing quality of life through awareness, understanding, and meaningful change. Rooted in care, guided by science.</p>
             </div>
@@ -1120,19 +1186,19 @@
                     <a href="#home">Home</a>
                     <a href="#about">About</a>
                     <a href="#approach">Our Approach</a>
-                    <a href="#counselor">Meet the Counselor</a>
+                    <a href="#counsellor">Meet the Counsellor</a>
                     <a href="#contact">Contact</a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Mana-na Counselling & Wellbeing Space. All rights reserved.</p>
+            <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space.</p>
             <p class="footer-credit">Designed by The 'D Team</p>
         </div>
     </footer>
 
     <div class="floating-buttons">
-        <a href="https://api.whatsapp.com/send/?phone=+917349351920&text=Hi%20Mana-na%20-%20I'm%20interested%20in%20Counselling%20and%20Wellbeing%20Space!%20https://www.mana-na.in" target="_blank" class="float-btn whatsapp-btn" aria-label="Chat on WhatsApp">
+        <a href="https://api.whatsapp.com/send/?phone=917349351920&text=Hi%20Mana-na%20-%20I'm%20interested%20in%20Counselling%20and%20Wellbeing%20Space!%20https://www.mana-na.in" target="_blank" class="float-btn whatsapp-btn" aria-label="Chat on WhatsApp">
             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
         </a>
         <button id="backToTop" class="float-btn back-top-btn" aria-label="Back to Top">
@@ -1144,7 +1210,7 @@
 // --- Navigation Scroll & Active Link Highlighting (Scroll Spy) ---
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        const navItems = document.querySelectorAll('.nav-links a, .logo, .footer-nav-links a');
+        const navItems = document.querySelectorAll('.nav-links a, .logo, .footer-nav-links a, .slide-content .btn');
         const sections = document.querySelectorAll('section, header'); 
         const navBar = document.querySelector('nav'); // Get the nav element
 
@@ -1334,6 +1400,13 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        // Prevent right-click on all images
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
