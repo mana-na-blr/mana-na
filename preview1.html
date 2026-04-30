@@ -96,6 +96,132 @@
             filter: brightness(1.15);
         }
 
+        /* --- Areas of Support Grid (Distinct Design) --- */
+        #areas-of-support .section-card {
+            text-align: center;
+        }
+
+        #areas-of-support h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        #gallery .section-card {
+            text-align: center;
+        }
+
+        #gallery h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 3rem !important;
+            opacity: 0.9;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .support-item {
+            background-color: var(--card-bg);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--text-header);
+            box-shadow: 0 6px 20px rgba(0, 103, 56, 0.06);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+        }
+
+        /* Colored borders for each support item */
+        .support-item:nth-child(1) { border-color: #E57373; }
+        .support-item:nth-child(2) { border-color: #64B5F6; }
+        .support-item:nth-child(3) { border-color: #81C784; }
+        .support-item:nth-child(4) { border-color: #FFD54F; }
+        .support-item:nth-child(5) { border-color: #BA68C8; }
+        .support-item:nth-child(6) { border-color: #FF8A65; }
+
+        .support-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.12; /* Kept very subtle for readability */
+            z-index: 0;
+            transition: transform 0.6s ease, opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .support-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 103, 56, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .support-item:hover {
+            transform: translateY(-12px) scale(1.08);
+            box-shadow: 0 18px 45px rgba(0, 103, 56, 0.18);
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(0, 103, 56, 0.03) 100%);
+        }
+
+        .support-item:hover .support-bg {
+            transform: scale(1.1);
+            opacity: 0.25; /* Slightly brightens on hover */
+        }
+
+        .support-item:hover::before {
+            opacity: 1;
+        }
+
+        .support-item h3 {
+            color: var(--text-header);
+            font-size: 1.4rem;
+            margin: 0 0 1rem 0;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.3px;
+            transition: all 0.4s ease;
+        }
+
+        .support-description {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .support-item:hover .support-description {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 200px;
+        }
+
         a {
             text-decoration: none;
             color: inherit;
@@ -150,6 +276,8 @@
             font-size: 1.6rem;
             font-weight: 700;
             letter-spacing: 1px;
+            display: flex;
+            align-items: flex-end;
         }
 
         .tagline {
@@ -730,6 +858,148 @@
             color: var(--text-header);
             font-size: 0.95rem;
         }
+        
+        /* --- Gallery Section --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            box-shadow: 0 10px 30px rgba(0, 103, 56, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 103, 56, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        [data-theme="dark"] .gallery-overlay {
+            background: rgba(13, 23, 16, 0.6);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay svg {
+            width: 40px;
+            height: 40px;
+            fill: #ffffff;
+            transform: scale(0.5);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .gallery-item:hover .gallery-overlay svg {
+            transform: scale(1);
+        }
+
+        /* --- Lightbox --- */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox.active {
+            opacity: 1;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .lightbox.active img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #ffffff;
+            font-size: 3.5rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s ease;
+            font-weight: 300;
+        }
+
+        .lightbox-close:hover {
+            color: #81c784;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 2001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 1;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-prev { left: 30px; }
+        .lightbox-next { right: 30px; }
 
         /* --- Floating Buttons --- */
         .floating-buttons {
@@ -801,7 +1071,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
+            grid-template-columns: 2fr 1fr 1fr;
             gap: 4rem;
             margin-bottom: 4rem;
         }
@@ -838,6 +1108,36 @@
             transform: translateX(5px);
         }
 
+        .footer-qr {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-qr h4 {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-qr img {
+            width: 130px;
+            height: 130px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin: 1rem;
+            padding: 12px;
+            background-color: #ffffff;
+        }
+
+        .footer-qr p {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
         .footer-bottom {
             max-width: 1200px;
             margin: 0 auto;
@@ -858,6 +1158,10 @@
         }
 
         @media (max-width: 900px) {
+            .support-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
             .counsellor-grid, .contact-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
@@ -871,7 +1175,7 @@
             .carousel-indicators {
                 left: 50%;
                 transform: translateX(-50%);
-                bottom: 30px;
+                bottom: 70px;
             }
             .slide-overlay {
                 background: linear-gradient(to top, #81c784 0%, rgba(15, 26, 18, 0.7) 50%, rgba(0,0,0,0.2) 100%);
@@ -907,10 +1211,25 @@
             .footer-brand .logo {
                 justify-content: center;
             }
+
+            .footer-qr {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
             .menu-toggle { display: flex; }
+            .support-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .support-item {
+                padding: 2.5rem 2rem;
+                min-height: 160px;
+            }
+            .support-item h3 {
+                font-size: 1.2rem;
+            }
             .nav-links {
                 position: absolute;
                 top: 80px;
@@ -944,6 +1263,13 @@
                 margin-left: 1rem;
                 margin-right: 1rem;
             }
+        #areas-of-support h2 {
+            white-space: nowrap;
+            font-size: 1.8rem;
+        }
+        .approach-intro-card h2 {
+            font-size: 1.8rem;
+        }
             .counsellor-img {
                 width: 70%;
                 height: 300px;
@@ -955,6 +1281,14 @@
             .tagline {
                 font-size: 0.65rem;
             }
+            .lightbox-nav {
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+                opacity: 1; /* Always visible on mobile */
+            }
+            .lightbox-prev { left: 15px; }
+            .lightbox-next { right: 15px; }
         }
             .footer-credit {
             font-size: 0.85rem;
@@ -998,6 +1332,7 @@
                 <a href="#home" data-target="home" class="active">Home</a>
                 <a href="#about" data-target="about">About</a>
                 <a href="#approach" data-target="approach">Our Approach</a>
+                <a href="#areas-of-support" data-target="areas-of-support">Areas of Support</a>
                 <a href="#counsellor" data-target="counsellor">Meet the Counsellor</a>
                 <a href="#contact" data-target="contact" class="nav-contact-btn">Contact</a>
             </div>
@@ -1104,6 +1439,45 @@
         </script>
     </section>
 
+    <section id="areas-of-support">
+        <div class="section-card">
+            <h2>Areas of Support</h2>
+            <p class="section-subtitle">Supporting teens and adults through life's challenges.</p>
+            <div class="support-grid">
+                <div class="support-item">
+                    <!--img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Anxiety & Stress" class="support-bg"-->
+                    <h3>Anxiety & Stress</h3>
+                    <p class="support-description">Manage worry and stress with evidence-based coping strategies tailored to your needs.</p>
+                </div>
+                <div class="support-item">
+                    <!--img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Academic Pressure" class="support-bg"-->
+                    <h3>Academic Pressure</h3>
+                    <p class="support-description">Develop study skills and resilience to thrive in academic challenges.</p>
+                </div>
+                <div class="support-item">
+                    <!--img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80" alt="Work-Life Balance" class="support-bg"-->
+                    <h3>Work-Life Balance</h3>
+                    <p class="support-description">Create meaningful boundaries and find harmony between work and personal well-being.</p>
+                </div>
+                <div class="support-item">
+                    <!--img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=600&q=80" alt="Emotional Difficulties" class="support-bg"-->
+                    <h3>Emotional Difficulties</h3>
+                    <p class="support-description">Explore and process complex emotions with compassionate, non-judgmental support.</p>
+                </div>
+                <div class="support-item">
+                    <!--img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80" alt="Relationship Concerns" class="support-bg"-->
+                    <h3>Relationship Concerns</h3>
+                    <p class="support-description">Strengthen connections and navigate relational challenges with clarity and care.</p>
+                </div>
+                <div class="support-item">
+                    <!--img src="https://images.unsplash.com/photo-1460533893735-45cea2212645?auto=format&fit=crop&w=600&q=80" alt="Life Transitions" class="support-bg"-->
+                    <h3>Life Transitions</h3>
+                    <p class="support-description">Navigate change with confidence and find stability during life's pivotal moments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="counsellor">
         <div class="section-card counsellor-grid">
             <img src="https://www.mana-na.in/mtc_image.jpeg" alt="Divya Narayan - Counselling Psychologist" class="counsellor-img">
@@ -1113,6 +1487,39 @@
                 <p id="counsellor-p1">I offer a safe, supportive space to explore your thoughts and experiences with openness and without judgment.</p>
                 <p id="counsellor-p2">I am a counselling psychologist with a Master’s in Counselling Psychology and a Diploma in Counselling Skills, trained in CBT-informed, evidence-based approaches.</p>
                 <p id="counsellor-p3">I have worked with adolescents and adults across private practice, online platforms, and institutional settings, supporting concerns such as stress, anxiety, relationship difficulties, and life transitions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="section-card">
+            <h2>Gallery</h2>
+            <p class="section-subtitle">A glimpse into our calm, welcoming, and safe environment.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80')">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Calm office space">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80')">
+                    <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=600&q=80" alt="Cozy seating area">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80')">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Relaxing nature views">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80')">
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80" alt="Journaling and desk setup">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80')">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Peaceful nature walk">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80')">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Calm water abstract">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
             </div>
         </div>
     </section>
@@ -1137,10 +1544,12 @@
         </div>
     </section-->
 
+
+    
     <section id="contact">
         <div class="section-card">
             <h2>Contact Us</h2>
-            <p style="margin-bottom: 3rem;">Ready to start your journey? Reach out to schedule a session or ask any questions.</p>
+            <p style="margin-bottom: 3rem;">Accessing support at the right time can make a meaningful difference. <br>It is never too late to seek professional's help. <br>Reach out to schedule a session or ask any questions.</p>
             <form class="contact-grid" id="contactForm">
                 <div>
                     <div class="form-group">
@@ -1186,16 +1595,31 @@
                     <a href="#home">Home</a>
                     <a href="#about">About</a>
                     <a href="#approach">Our Approach</a>
+                    <a href="#areas-of-support">Areas of Support</a>
                     <a href="#counsellor">Meet the Counsellor</a>
+                    <a href="#gallery">Our Space</a>
                     <a href="#contact">Contact</a>
                 </div>
+            </div>
+            <div class="footer-qr">
+                <h4>Scan to Visit</h4>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.mana-na.in/" alt="Mana-na QR Code">
+                <p>Access our site easily<br>on your mobile device</p>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space.</p>
-            <p class="footer-credit">Designed by The 'D Team</p>
+            <p class="footer-credit">Designed by <a href="https://bit.ly/thedteam" target="_blank"> The 'D Team</a></p>
         </div>
     </footer>
+
+    <!-- Lightbox Container -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <button class="lightbox-nav lightbox-prev" onclick="prevLightboxImage(event)" aria-label="Previous Image">&#10094;</button>
+        <img id="lightbox-img" src="" alt="Full Screen Image">
+        <button class="lightbox-nav lightbox-next" onclick="nextLightboxImage(event)" aria-label="Next Image">&#10095;</button>
+    </div>
 
     <div class="floating-buttons">
         <a href="https://api.whatsapp.com/send/?phone=917349351920&text=Hi%20Mana-na%20-%20I'm%20interested%20in%20Counselling%20and%20Wellbeing%20Space!%20https://www.mana-na.in" target="_blank" class="float-btn whatsapp-btn" aria-label="Chat on WhatsApp">
@@ -1406,6 +1830,69 @@
         document.addEventListener('contextmenu', (e) => {
             if (e.target.tagName === 'IMG') {
                 e.preventDefault();
+            }
+        });
+
+        // --- Gallery Lightbox Logic ---
+        let currentLightboxIndex = 0;
+        let galleryImagesList = [];
+
+        // Automatically find all images in the gallery and setup indexing
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        galleryItems.forEach((item, index) => {
+            const match = item.getAttribute('onclick')?.match(/'([^']+)'/);
+            if (match) {
+                galleryImagesList.push(match[1]);
+                item.removeAttribute('onclick');
+                item.addEventListener('click', () => openLightbox(index));
+            }
+        });
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            updateLightboxImage();
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'flex';
+            
+            // Slight delay to allow display:flex to apply before adding opacity
+            setTimeout(() => { lightbox.classList.add('active'); }, 10);
+        }
+
+        function updateLightboxImage() {
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = galleryImagesList[currentLightboxIndex];
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            setTimeout(() => { lightbox.style.display = 'none'; }, 300); // Wait for CSS fade out
+        }
+
+        function nextLightboxImage(e) {
+            if(e) e.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex + 1) % galleryImagesList.length;
+            updateLightboxImage();
+        }
+
+        function prevLightboxImage(e) {
+            if(e) e.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex - 1 + galleryImagesList.length) % galleryImagesList.length;
+            updateLightboxImage();
+        }
+
+        // Close lightbox when clicking outside the image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+        // Keyboard navigation for Lightbox
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox && lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowRight') nextLightboxImage();
+                if (e.key === 'ArrowLeft') prevLightboxImage();
+                if (e.key === 'Escape') closeLightbox();
             }
         });
     </script>
