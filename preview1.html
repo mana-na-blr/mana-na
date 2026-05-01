@@ -42,6 +42,49 @@
             user-drag: none;
         }
 
+        /* --- Page Loader --- */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .loader-logo {
+            width: 180px;
+            height: auto;
+            animation: loaderPulse 2s ease-in-out infinite;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .loader-logo {
+            background-color: rgba(255, 255, 255, 0);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* Loader Utility Classes for JS */
+        .opacity-100 { opacity: 1; }
+        .opacity-0 { opacity: 0; }
+        .pointer-events-none { pointer-events: none; }
+        .hidden { display: none !important; }
+
         /* --- Global Styles --- */
         * {
             margin: 0;
@@ -111,6 +154,24 @@
         }
 
         #gallery h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        #faq .section-card {
+            text-align: center;
+        }
+
+        #faq h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        #blogs .section-card {
+            text-align: center;
+        }
+
+        #blogs h2 {
             font-size: 2.8rem;
             margin-bottom: 1rem;
         }
@@ -220,6 +281,263 @@
             opacity: 1;
             transform: translateY(0);
             max-height: 200px;
+        }
+
+        /* --- FAQ Section --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .faq-item {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(0, 103, 56, 0.1);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-header);
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            background-color: rgba(0, 103, 56, 0.05);
+        }
+
+        .faq-question svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            padding: 0 1.5rem;
+            color: var(--text-main);
+            opacity: 0.9;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        /* --- Blogs Section --- */
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .blog-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 103, 56, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 103, 56, 0.1);
+        }
+
+        .blog-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            color: var(--text-header);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .blog-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Blog Modal --- */
+        .blog-modal {
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg-color);
+            z-index: 3000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            overflow-y: auto;
+            padding: 80px 5% 40px;
+        }
+
+        .blog-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .blog-modal-content {
+            max-width: 1900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .blog-modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: var(--text-header);
+            line-height: 1;
+            transition: var(--transition);
+        }
+
+        .blog-modal-close:hover {
+            transform: scale(1.1);
+        }
+
+        .blog-modal-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            text-align: left;
+        }
+
+        .blog-main-content img {
+            width: 85%;
+            max-width: 350px;
+            height: 200px;
+            display: block;
+            margin-bottom: 2.5rem;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .blog-main-content h2 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .blog-main-content .blog-date {
+            margin-bottom: 2.5rem;
+        }
+
+        .blog-body {
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+
+        .blog-sidebar {
+            border-left: 1px solid rgba(0, 103, 56, 0.1);
+            padding-left: 2.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--text-header);
+        }
+
+        .jump-link-item {
+            cursor: pointer;
+            padding: 1.2rem;
+            border-radius: 16px;
+            background-color: var(--bg-color);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .jump-link-item:hover {
+            background-color: var(--card-bg);
+            border-color: var(--text-header);
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0, 103, 56, 0.05);
+        }
+
+        .jump-link-item h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .jump-link-item .blog-date {
+            font-size: 0.8rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 900px) {
+            .blog-modal-layout { grid-template-columns: 1fr; }
+            .blog-sidebar {
+                border-left: none;
+                padding-left: 0;
+                margin-top: 3rem;
+                padding-top: 3rem;
+                border-top: 1px solid rgba(0, 103, 56, 0.1);
+            }
+            .blog-modal {
+                padding: 60px 15px 20px;
+            }
+            .blog-modal-content { 
+                padding: 1.5rem; 
+                border-radius: 16px;
+            }
+            .blog-main-content h2 { font-size: 2.2rem; }
+            .blog-main-content img {
+                width: 100%;
+                height: auto;
+                max-height: 500px;
+            }
+            .blog-modal-close {
+                top: 0px;
+                right: 6px;
+                font-size: 2rem;
+            }
         }
 
         a {
@@ -871,7 +1189,7 @@
             position: relative;
             border-radius: 16px;
             overflow: hidden;
-            aspect-ratio: 1;
+            aspect-ratio: 16/9;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: box-shadow 0.3s ease;
@@ -1282,13 +1600,25 @@
                 font-size: 0.65rem;
             }
             .lightbox-nav {
-                width: 55px;
-                height: 55px;
-                font-size: 1.8rem;
-                opacity: 1; /* Always visible on mobile */
+                display: flex;
+                background: transparent !important;
+                border: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                width: auto;
+                height: auto;
+                font-size: 2rem;
+                padding: 0;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                -webkit-tap-highlight-color: transparent;
+                outline: none;
             }
-            .lightbox-prev { left: 15px; }
-            .lightbox-next { right: 15px; }
+            .lightbox-nav:hover, .lightbox-nav:active {
+                background: transparent !important;
+            }
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
         }
             .footer-credit {
             font-size: 0.85rem;
@@ -1317,9 +1647,155 @@
     font-weight: 400;
 }
 
+@media (max-width: 768px) {
+    #gallery h2 {
+        white-space: nowrap;
+        font-size: 1.8rem;
+    }
+    .blogs-grid, .blog-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    #blogs h2 {
+        white-space: nowrap;
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #faq h2 {
+        white-space: normal;
+        max-width: 280px;
+        margin: 0 auto 1rem;
+        font-size: 1.8rem;
+    }
+    .faq-container, .faq-answer {
+        text-align: center;
+    }
+    .faq-question {
+        justify-content: center;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+        /* --- Self-Assessment Section --- */
+        .assessment-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .assessment-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .assessment-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .assessment-item:hover {
+            border-color: var(--text-header);
+            transform: translateX(10px);
+        }
+
+        .assessment-item.selected {
+            background-color: var(--card-bg);
+            border-color: var(--text-header);
+            box-shadow: 0 4px 15px rgba(0, 103, 56, 0.1);
+        }
+
+        .checkbox-custom {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--text-header);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .assessment-item.selected .checkbox-custom {
+            background-color: var(--text-header);
+        }
+
+        .checkbox-custom svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--btn-text);
+            display: none;
+        }
+
+        .assessment-item.selected .checkbox-custom svg {
+            display: block;
+        }
+
+        .assessment-feedback {
+            margin-top: 2.5rem;
+            padding: 2.5rem;
+            background-color: rgba(0, 103, 56, 0.05);
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            animation: fadeInSelf 0.5s ease;
+            border: 1px dashed var(--text-header);
+        }
+
+        .assessment-feedback p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .assessment-item p {
+            margin-bottom: 0;
+            font-size: 1.1rem;
+            flex-grow: 1;
+            color: var(--text-main);
+        }
+
+        @keyframes fadeInSelf {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #self-reflection .section-card {
+            text-align: center;
+        }
+
+        #self-reflection h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+        #self-reflection h2 {
+        white-space: nowrap;
+        font-size: 1.8rem;
+    }
+}
     </style>
 </head>
 <body>
+
+    <div id="page-loader" class="opacity-100">
+        <div class="loader-content">
+            <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo" class="loader-logo">
+        </div>
+    </div>
 
     <nav>
         <a href="#home" class="logo">
@@ -1333,7 +1809,11 @@
                 <a href="#about" data-target="about">About</a>
                 <a href="#approach" data-target="approach">Our Approach</a>
                 <a href="#areas-of-support" data-target="areas-of-support">Areas of Support</a>
+                <a href="#self-reflection" data-target="self-reflection">Self-Reflection</a>
                 <a href="#counsellor" data-target="counsellor">Meet the Counsellor</a>
+                <a href="#gallery" data-target="gallery">Gallery</a>
+                <a href="#blogs" data-target="blogs">Blogs</a>
+                <a href="#faq" data-target="faq">FAQs</a>
                 <a href="#contact" data-target="contact" class="nav-contact-btn">Contact</a>
             </div>
             
@@ -1478,6 +1958,47 @@
         </div>
     </section>
 
+    <section id="self-reflection">
+        <div class="section-card">
+            <h2>Is Therapy for Me?</h2>
+            <p class="section-subtitle">Take a moment to reflect on these questions. If any resonate with you, it might be time to reach out.</p>
+            
+            <div class="assessment-container">
+                <div class="assessment-list">
+                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                        <div class="checkbox-custom">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <p>Do you often feel overwhelmed by stress or daily expectations?</p>
+                    </div>
+                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                        <div class="checkbox-custom">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <p>Are you navigating a challenging transition in your life or relationships?</p>
+                    </div>
+                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                        <div class="checkbox-custom">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <p>Do you find yourself stuck in cycles of worry or negative thoughts?</p>
+                    </div>
+                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                        <div class="checkbox-custom">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <p>Are you seeking a dedicated space to understand yourself better?</p>
+                    </div>
+                </div>
+
+                <div id="assessmentFeedback" class="assessment-feedback">
+                    <p>It sounds like you're carrying a lot right now. You don't have to navigate this journey alone.</p>
+                    <a href="#contact" class="btn">Let's start a conversation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="counsellor">
         <div class="section-card counsellor-grid">
             <img src="https://www.mana-na.in/mtc_image.jpeg" alt="Divya Narayan - Counselling Psychologist" class="counsellor-img">
@@ -1496,6 +2017,22 @@
             <h2>Gallery</h2>
             <p class="section-subtitle">A glimpse into our calm, welcoming, and safe environment.</p>
             <div class="gallery-grid">
+                <div class="gallery-item" onclick="openLightbox('https://www.mana-na.in/mtc_image-1.jpeg')">
+                    <img src="https://www.mana-na.in/mtc_image-1.jpeg" alt="Calm office space">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://www.mana-na.in/mtc_image-2.jpeg')">
+                    <img src="https://www.mana-na.in/mtc_image-2.jpeg" alt="Calm office space">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://www.mana-na.in/mtc_image-3.jpeg')">
+                    <img src="https://www.mana-na.in/mtc_image-3.jpeg" alt="Calm office space">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://www.mana-na.in/mtc_image-4.jpeg')">
+                    <img src="https://www.mana-na.in/mtc_image-4.jpeg" alt="Calm office space">
+                    <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+                </div>
                 <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80')">
                     <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Calm office space">
                     <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
@@ -1512,10 +2049,10 @@
                     <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80" alt="Journaling and desk setup">
                     <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
                 </div>
-                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80')">
+                <!--div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80')">
                     <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Peaceful nature walk">
                     <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
-                </div>
+                </div-->
                 <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80')">
                     <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Calm water abstract">
                     <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
@@ -1524,6 +2061,106 @@
         </div>
     </section>
 
+    <section id="blogs">
+        <div class="section-card">
+            <h2>Blogs</h2>
+            <p class="section-subtitle">Insights, stories, and practical tips for your mental well-being.</p>
+            
+            <div class="blogs-grid">
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=600&q=80" alt="Mindfulness" class="blog-img">
+                    <div class="blog-info">
+                        <span class="blog-date">May 01, 2026</span>
+                        <h3 class="blog-title">The Art of Mindful Living</h3>
+                        <p class="blog-excerpt">Discover how incorporating small mindfulness practices into your daily routine can significantly reduce stress and improve your focus.</p>
+                        <button class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;" onclick="openBlogModal(0)">Read More</button>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Anxiety" class="blog-img">
+                    <div class="blog-info">
+                        <span class="blog-date">May 01, 2026</span>
+                        <h3 class="blog-title">Navigating Anxiety Today</h3>
+                        <p class="blog-excerpt">In an increasingly fast-paced world, understanding the roots of your anxiety is the first step toward finding a sustainable sense of calm.</p>
+                        <button class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;" onclick="openBlogModal(1)">Read More</button>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Self Care" class="blog-img">
+                    <div class="blog-info">
+                        <span class="blog-date">May 01, 2026</span>
+                        <h3 class="blog-title">Why Self-Care Isn't Selfish</h3>
+                        <p class="blog-excerpt">Self-care is a vital component of mental health maintenance. Learn why prioritizing yourself allows you to be more present for others.</p>
+                        <button class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;" onclick="openBlogModal(2)">Read More</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="section-card">
+            <h2>Frequently Asked Questions</h2>
+            <p class="section-subtitle">Find answers to common questions about our services.</p>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What can I expect in the first session?</span>
+                        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The first session is an initial consultation where we discuss your concerns, goals, and background. It's an opportunity for us to get to know each other and see if we're a good fit for working together.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How long are the sessions?</span>
+                        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard counselling sessions typically last 50 to 60 minutes. The frequency of sessions is usually once a week, but this can be adjusted based on your specific needs.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is therapy confidential?</span>
+                        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, confidentiality is a cornerstone of therapy. Everything discussed in our sessions remains private, with a few legal and ethical exceptions (such as immediate risk of harm to yourself or others).</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you offer online sessions?</span>
+                        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide both in-person and online consultations via secure video platforms, allowing you to access support from the comfort of your own space.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I book an appointment?</span>
+                        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can book an appointment by reaching out to us via the contact form on this website, emailing us directly, or sending a message on WhatsApp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
     <!--section id="testimonials">
         <div class="section-card">
             <h2>Testimonials</h2>
@@ -1596,22 +2233,40 @@
                     <a href="#about">About</a>
                     <a href="#approach">Our Approach</a>
                     <a href="#areas-of-support">Areas of Support</a>
+                    <a href="#self-reflection">Self-Reflection</a>
                     <a href="#counsellor">Meet the Counsellor</a>
-                    <a href="#gallery">Our Space</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#blogs">Blogs</a>
+                    <a href="#faq">FAQs</a>
                     <a href="#contact">Contact</a>
                 </div>
             </div>
             <div class="footer-qr">
                 <h4>Scan to Visit</h4>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.mana-na.in/" alt="Mana-na QR Code">
+                <img src="https://www.mana-na.in/Site-QR.png" alt="Mana-na QR Code">
                 <p>Access our site easily<br>on your mobile device</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space.</p>
+            <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space</p>
             <p class="footer-credit">Designed by <a href="https://bit.ly/thedteam" target="_blank"> The 'D Team</a></p>
         </div>
     </footer>
+
+    <!-- Blog Modal -->
+    <div id="blogModal" class="blog-modal">
+        <div class="blog-modal-content">
+            <span class="blog-modal-close" onclick="closeBlogModal()">&times;</span>
+            <div class="blog-modal-layout">
+                <div class="blog-main-content" id="blogMainContent">
+                    <!-- Content injected by JS -->
+                </div>
+                <div class="blog-sidebar" id="blogSidebar">
+                    <!-- Sidebar injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Lightbox Container -->
     <div id="lightbox" class="lightbox">
@@ -1895,6 +2550,178 @@
                 if (e.key === 'Escape') closeLightbox();
             }
         });
+
+        // Touch swipe for Lightbox
+        const lightboxElement = document.getElementById('lightbox');
+        let lbStartX = 0;
+        let lbEndX = 0;
+
+        lightboxElement.addEventListener('touchstart', (e) => {
+            lbStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightboxElement.addEventListener('touchend', (e) => {
+            lbEndX = e.changedTouches[0].screenX;
+            const swipeThreshold = 50;
+            if (lbStartX - lbEndX > swipeThreshold) nextLightboxImage();
+            if (lbEndX - lbStartX > swipeThreshold) prevLightboxImage();
+        }, { passive: true });
+
+        // --- FAQ Accordion Logic ---
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+                
+                // Close all other items
+                faqItems.forEach(otherItem => otherItem.classList.remove('active'));
+                
+                // Toggle current item
+                if (!isOpen) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // --- Blog Modal Logic ---
+        const blogPosts = [
+            {
+                title: "The Art of Mindful Living",
+                date: "May 01, 2026",
+                img: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1200&q=80",
+                content: `
+                    <p>Mindfulness is more than just a buzzword; it's a transformative practice that allows us to be fully present in our lives. By focusing on the "here and now," we can break free from the cycles of worry about the future or regret about the past.</p>
+                    <p>Incorporating mindfulness doesn't require hours of meditation. It can be as simple as focusing on your breath for five minutes, truly tasting your morning coffee, or feeling the sun on your skin during a walk. These moments of presence help regulate our nervous system and foster a sense of inner peace.</p>
+                    <p>At Mana-na, we integrate mindful awareness into our therapeutic process, helping you build a deeper connection with yourself and the world around you.</p>
+                `
+            },
+            {
+                title: "Navigating Anxiety Today",
+                date: "May 01, 2026",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+                content: `
+                    <p>Anxiety is a natural response to stress, but when it becomes overwhelming, it can interfere with our quality of life. Understanding that anxiety is often our mind's way of trying to protect us can be the first step in managing it.</p>
+                    <p>Modern life presents unique challenges—digital overload, social comparisons, and global uncertainties. These factors can keep our "fight or flight" response constantly active. Learning to recognize the physical signs of anxiety allows us to intervene early with grounding techniques.</p>
+                    <p>Through evidence-based approaches like CBT, we work together to challenge anxious thoughts and develop a toolkit of strategies that promote long-term emotional stability.</p>
+                `
+            },
+            {
+                title: "Why Self-Care Isn't Selfish",
+                date: "May 01, 2026",
+                img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80",
+                content: `
+                    <p>We often hear the phrase "you can't pour from an empty cup." This is the fundamental truth of self-care. It is not an indulgence or a luxury; it is a necessity for mental and emotional health.</p>
+                    <p>Self-care looks different for everyone. For some, it's setting boundaries at work; for others, it's making time for a hobby or ensuring they get enough sleep. The key is to identify what truly replenishes your energy and joy.</p>
+                    <p>When we prioritize our own well-being, we aren't taking away from others. Instead, we are ensuring that we have the capacity, patience, and clarity to be present for the people and responsibilities that matter most to us.</p>
+                `
+            }
+        ];
+
+        function openBlogModal(index) {
+            const post = blogPosts[index];
+            const modal = document.getElementById('blogModal');
+            const mainContent = document.getElementById('blogMainContent');
+            const sidebar = document.getElementById('blogSidebar');
+
+            // Populate Main Content
+            mainContent.innerHTML = `
+                <img src="${post.img}" alt="${post.title}">
+                <span class="blog-date">${post.date}</span>
+                <h2>${post.title}</h2>
+                <div class="blog-body">${post.content}</div>
+            `;
+
+            // Populate Sidebar (Jump Links)
+            let jumpLinksHtml = `<h3 class="sidebar-title">Explore More Blogs</h3><div class="jump-links-list">`;
+            blogPosts.forEach((otherPost, i) => {
+                if (i !== index) {
+                    jumpLinksHtml += `
+                        <div class="jump-link-item" onclick="openBlogModal(${i})">
+                            <h4>${otherPost.title}</h4>
+                            <span class="blog-date">${otherPost.date}</span>
+                        </div>
+                    `;
+                }
+            });
+            jumpLinksHtml += `</div>`;
+            sidebar.innerHTML = jumpLinksHtml;
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            setTimeout(() => { modal.classList.add('active'); }, 10);
+            
+            // Scroll modal to top
+            modal.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeBlogModal() {
+            const modal = document.getElementById('blogModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
+        }
+
+        // Close modal when clicking outside content
+        document.getElementById('blogModal').addEventListener('click', function(e) {
+            if (e.target === this) closeBlogModal();
+        });
+
+        // Keyboard Escape to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBlogModal();
+        });
+
+                // 3. Page Loader Logic
+        const loader = document.getElementById('page-loader');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loader.classList.remove('opacity-100');
+                loader.classList.add('opacity-0');
+                setTimeout(() => { loader.classList.add('pointer-events-none', 'hidden'); }, 500);
+            }, 3000); // Reduced delay for a better balance between cinematic feel and speed
+        });
+
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                loader.classList.remove('opacity-100');
+                loader.classList.add('opacity-0', 'pointer-events-none', 'hidden');
+            }
+        });
+
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetUrl = this.href;
+                // Ignore hash links so smooth scrolling works without triggering the loader
+                if (this.target === '_blank' || !targetUrl || targetUrl.includes('#') || targetUrl.startsWith('mailto:')) {
+                    return; 
+                }
+                e.preventDefault();
+                loader.classList.remove('hidden', 'pointer-events-none', 'opacity-0');
+                setTimeout(() => { loader.classList.add('opacity-100'); }, 10);
+                setTimeout(() => { window.location.href = targetUrl; }, 500); 
+            });
+        });
+
+                // --- Self-Assessment Logic ---
+        window.toggleAssessment = function(element) {
+            element.classList.toggle('selected');
+            const feedback = document.getElementById('assessmentFeedback');
+            const items = document.querySelectorAll('.assessment-item.selected');
+            
+            if (items.length > 0) {
+                feedback.style.display = 'block';
+                // Trigger a small scroll to feedback if it just appeared and is below view
+                if (items.length === 1) {
+                    setTimeout(() => {
+                        feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
+            } else {
+                feedback.style.display = 'none';
+            }
+        };
+
     </script>
 </body>
 </html>
