@@ -8,6 +8,12 @@
     <meta property="og:url" content="https://www.mana-na.in/"/>
     <meta property="og:site_name" content="Mana-na" />
     <meta property="og:image" itemprop="image primaryImageOfPage" content="https://www.mana-na.in/mana-na_logo.png" />
+    <meta name="google-site-verification" content="yW7IG-AH1RpOf2CSQDww_HuZbelVrrjI82FtT_MTp4M" />
+
+    <!--=============== GOOGLE FONTS ===============-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!--=============== FAVICON ===============-->
     <link rel="shortcut icon" href="https://www.mana-na.in/favicon.png" type="image/x-icon">
@@ -90,7 +96,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -115,7 +121,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 750;
+            font-weight: 0;
             letter-spacing: 1px;
             animation: gradientShift 8s ease infinite;
             display: inline-block;
@@ -167,6 +173,24 @@
             margin-bottom: 1rem;
         }
 
+        #resources .section-card {
+            text-align: center;
+        }
+
+        #resources h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        #testimonials .section-card {
+            text-align: center;
+        }
+
+        #testimonials h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
         #blogs .section-card {
             text-align: center;
         }
@@ -191,7 +215,7 @@
         }
 
         .support-item {
-            background-color: var(--card-bg);
+            background-color: #e9f6ea;
             padding: 3rem 2rem;
             border-radius: 16px;
             border: 2px solid var(--text-header);
@@ -207,13 +231,13 @@
             min-height: 180px;
         }
 
-        /* Colored borders for each support item */
+        /* Colored borders for each support item 
         .support-item:nth-child(1) { border-color: #E57373; }
         .support-item:nth-child(2) { border-color: #64B5F6; }
         .support-item:nth-child(3) { border-color: #81C784; }
         .support-item:nth-child(4) { border-color: #FFD54F; }
         .support-item:nth-child(5) { border-color: #BA68C8; }
-        .support-item:nth-child(6) { border-color: #FF8A65; }
+        .support-item:nth-child(6) { border-color: #FF8A65; }*/
 
         .support-bg {
             position: absolute;
@@ -592,7 +616,7 @@
 
         .brand-name {
             font-size: 1.6rem;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: 1px;
             display: flex;
             align-items: flex-end;
@@ -610,8 +634,8 @@
         }
 
         .logo img {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             object-fit: contain;
             border-radius: 8px;
         }
@@ -1665,6 +1689,20 @@
 }
 
 @media (max-width: 768px) {
+    #testimonials h2 {
+        white-space: nowrap;
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #resources h2 {
+        white-space: nowrap;
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 768px) {
     #faq h2 {
         white-space: normal;
         max-width: 280px;
@@ -1787,15 +1825,41 @@
         font-size: 1.8rem;
     }
 }
+
+        /* --- Crisis Support Section --- */
+        .crisis-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+            border: 2px dashed #e53e3e;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        [data-theme="dark"] .crisis-box {
+            background: linear-gradient(135deg, #2d1212 0%, #1a1a1a 100%);
+            border-color: #fc8181;
+        }
+        .crisis-box h3 { color: #c53030; margin-bottom: 1rem; }
+        [data-theme="dark"] .crisis-box h3 { color: #fc8181; }
+        .helpline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .helpline-item {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
 
-    <div id="page-loader" class="opacity-100">
+    <!--div id="page-loader" class="opacity-100">
         <div class="loader-content">
             <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo" class="loader-logo">
         </div>
-    </div>
+    </div-->
 
     <nav>
         <a href="#home" class="logo">
@@ -1809,10 +1873,10 @@
                 <a href="#about" data-target="about">About</a>
                 <a href="#approach" data-target="approach">Our Approach</a>
                 <a href="#areas-of-support" data-target="areas-of-support">Areas of Support</a>
-                <a href="#self-reflection" data-target="self-reflection">Self-Reflection</a>
+                <!--a href="#self-reflection" data-target="self-reflection">Self-Reflection</a-->
                 <a href="#counsellor" data-target="counsellor">Meet the Counsellor</a>
-                <a href="#gallery" data-target="gallery">Gallery</a>
-                <a href="#blogs" data-target="blogs">Blogs</a>
+                <!---a href="#gallery" data-target="gallery">Gallery</a-->
+                <!--a href="#blogs" data-target="blogs">Blogs</a-->
                 <a href="#faq" data-target="faq">FAQs</a>
                 <a href="#contact" data-target="contact" class="nav-contact-btn">Contact</a>
             </div>
@@ -1833,7 +1897,7 @@
             <div class="slide-overlay">
                 <div class="slide-content">
                     <h1><br>Rooted in Care.<br>Guided by Science.</h1>
-                    <p>Supporting mental well-being and enhance quality of life through awareness, understanding, and meaningful change.</p>
+                    <p style="font-size: 1.5rem;">Supporting mental well-being and enhance quality of life through awareness, understanding, and meaningful change.</p>
                     <a href="#about" class="btn">Discover Mana-na</a>
                 </div>
             </div>
@@ -1842,8 +1906,10 @@
             <img src="https://plus.unsplash.com/premium_photo-1733306436096-080018552c70?auto=format&fit=crop&w=1920&q=80" alt="Peaceful Nature">
             <div class="slide-overlay">
                 <div class="slide-content">
-                    <h1><br>Awareness & Emotional Resilience</h1>
-                    <p>A safe, non‑judgmental space where you feel seen and valued.</p>
+                    <h1><br>Your Journey, Supported</h1>
+                    <!--h1><br>Awareness & Emotional Resilience</h1-->
+                    <p style="font-size: 1.5rem;">Whether you are in a difficult moment or seeking a new way of seeing things, Mana-na supports you with care and understanding.</p>
+                    <!--p>A safe, non‑judgmental space where you feel seen and valued.</p-->
                     <a href="#approach" class="btn">Our Approach</a>
                 </div>
             </div>
@@ -1853,7 +1919,7 @@
             <div class="slide-overlay">
                 <div class="slide-content">
                     <h1><br>Navigate Your Story with Clarity</h1>
-                    <p>Making mental health support practical, accessible, and deeply personal.</p>
+                    <p style="font-size: 1.5rem;">Making mental health support practical, accessible, and deeply personal.</p>
                     <a href="#contact" class="btn">Start Your Journey</a>
                 </div>
             </div>
@@ -1881,18 +1947,18 @@
     <section id="approach">
         <div class="section-card approach-intro-card">
             <h2>Our Approach</h2>
-            <p>At Mana‑na, we believe that awareness and emotional resilience are the foundations of a fulfilling life. More than methods, we offer companionship on your journey.</p>
+            <p>Structured through reflective conversations and evidence-based practices, we help you make sense of your experiences and find clarity in your next steps.</p>
         </div>
 
-        <div class="section-card" style="margin-top: 3rem; text-align: center;">
+        <!--div class="section-card" style="margin-top: 3rem; text-align: center;">
             <h3>Your Journey, Supported</h3>
             <p>A safe and supportive space to explore what you’re going through at your own pace. Whether you are in a difficult moment or seeking a new way of seeing things, Mana-na supports you with care and understanding.</p>
             <p style="margin-top: 1rem; font-size: 1.5rem; font-weight: bold;"><em id="typing-mission"></em></p>
-        </div>
+        </div-->
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                const text = "Our mission is simple: to make mental health support practical, accessible, and deeply personal.";
+                const text = "Our mission is simple: to make mental health support practical and accessible.";
                 const element = document.getElementById('typing-mission');
                 let i = 0;
                 
@@ -1922,7 +1988,7 @@
     <section id="areas-of-support">
         <div class="section-card">
             <h2>Areas of Support</h2>
-            <p class="section-subtitle">Supporting teens and adults through life's challenges.</p>
+            <p class="section-subtitle" style="font-size: 1.5rem;">Supporting teens and adults through life's challenges.</p>
             <div class="support-grid">
                 <div class="support-item">
                     <!--img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Anxiety & Stress" class="support-bg"-->
@@ -1975,19 +2041,31 @@
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
-                        <p>Are you navigating a challenging transition in your life or relationships?</p>
+                        <p> Do you find yourself Overthinking or worrying a lot?</p>
                     </div>
                     <div class="assessment-item" onclick="toggleAssessment(this)">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
-                        <p>Do you find yourself stuck in cycles of worry or negative thoughts?</p>
+                        <p> Are you finding it hard to focus or stay motivated?</p>
                     </div>
                     <div class="assessment-item" onclick="toggleAssessment(this)">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
                         <p>Are you seeking a dedicated space to understand yourself better?</p>
+                    </div>
+                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                        <div class="checkbox-custom">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <p> Do you feel low, anxious or not like yourself lately?</p>
+                    </div>
+                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                        <div class="checkbox-custom">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <p> Are studies and exams causing you stress or pressure?</p>
                     </div>
                 </div>
 
@@ -2012,7 +2090,7 @@
         </div>
     </section>
 
-    <section id="gallery">
+   <!-- <section id="gallery">
         <div class="section-card">
             <h2>Gallery</h2>
             <p class="section-subtitle">A glimpse into our calm, welcoming, and safe environment.</p>
@@ -2049,10 +2127,10 @@
                     <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80" alt="Journaling and desk setup">
                     <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
                 </div>
-                <!--div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80')">
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80')">
                     <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Peaceful nature walk">
                     <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
-                </div-->
+                </div>
                 <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80')">
                     <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Calm water abstract">
                     <div class="gallery-overlay"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
@@ -2060,8 +2138,9 @@
             </div>
         </div>
     </section>
+    -->
 
-    <section id="blogs">
+    <!--section id="blogs">
         <div class="section-card">
             <h2>Blogs</h2>
             <p class="section-subtitle">Insights, stories, and practical tips for your mental well-being.</p>
@@ -2098,7 +2177,7 @@
                 </article>
             </div>
         </div>
-    </section>
+    </section-->
 
     <section id="faq">
         <div class="section-card">
@@ -2161,25 +2240,25 @@
 
     
     
-    <!--section id="testimonials">
+    <section id="testimonials">
         <div class="section-card">
             <h2>Testimonials</h2>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"Mana-na provided a truly safe and understanding space for me to explore my challenges. The CBT-informed approach helped me develop practical strategies that have made a significant difference in my daily life. Highly recommended!"</p>
-                    <p class="testimonial-author">- Client A</p>
+                    <p class="testimonial-text">"I felt really comfortable opening up here. There was no judgment, just calm listening and support. It helped me understand my thoughts better."</p>
+                    <p class="testimonial-author">- Krishna.R</p>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"I was hesitant about therapy, but Divya made me feel comfortable from the first session. Her insights into high-pressure environments were incredibly relatable, and I've gained so much clarity and emotional resilience."</p>
-                    <p class="testimonial-author">- Client B</p>
+                    <p class="testimonial-text">"Talking with Divya made things feel lighter from the first sessio ,It gave me clarity during a confusing time."</p>
+                    <p class="testimonial-author">- Vidisha Ram</p>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"The person-centered approach at Mana-na is exceptional. I felt truly heard and supported throughout my journey. It's a place where you can genuinely work towards growth."</p>
-                    <p class="testimonial-author">- Client C</p>
+                    <p class="testimonial-text">"I was going through a tough phase and didn’t know where to start. The sessions helped me feel more in control and a little more hopeful."</p>
+                    <p class="testimonial-author">- Deepa</p>
                 </div>
             </div>
         </div>
-    </section-->
+    </section>
 
 
     
@@ -2206,11 +2285,27 @@
                     <p>Creating space for resilience, clarity, and growth.</p>
                     <div style="margin-top: 2rem;">
                         <p>Phone:<strong><a href="tel:+917349351920">+91 73493 51920</a></p></strong>
-                        <p>Email: <strong><a href="mailto:divyadixitn@gmail.com">divyadixitn@gmail.com</a></p></strong>
+                        <p>Email: <strong><a href="mailto:info@mana-na.in">info@mana-na.in</a></p></strong>
                         <p style="margin-top: 0.5rem;"><strong>Available for: In-person and online consultations.</p></strong>
                     </div>
                 </div>
             </form>
+        </div>
+    </section>
+
+<section id="resources">
+        <div class="section-card">
+            <h2>Resources & Support</h2>
+            <p class="section-subtitle">Important contacts for immediate assistance.</p>
+            <div class="crisis-box">
+                <h3 style="font-size: 1.5rem;">Emergency & Crisis Support</h3>
+                <p>If you or someone you know is in immediate danger or experiencing a mental health crisis, please contact these 24/7 helplines:</p>
+                <div class="helpline-grid">
+                    <div class="helpline-item" style="font-size: 1.25rem;">Tele MANAS:<br><a href="tel:14416">14416</a></div>
+                    <div class="helpline-item" style="font-size: 1.25rem;">KIRAN:<br><a href="tel:1800-599-0019">1800-599-0019</a></div>
+                    <div class="helpline-item" style="font-size: 1.25rem;">NIMHANS:<br><a href="tel:08046110007">080 4611 0007</a></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -2233,10 +2328,10 @@
                     <a href="#about">About</a>
                     <a href="#approach">Our Approach</a>
                     <a href="#areas-of-support">Areas of Support</a>
-                    <a href="#self-reflection">Self-Reflection</a>
+                    <!--a href="#self-reflection">Self-Reflection</a-->
                     <a href="#counsellor">Meet the Counsellor</a>
-                    <a href="#gallery">Gallery</a>
-                    <a href="#blogs">Blogs</a>
+                    <!--a href="#gallery">Gallery</a-->
+                    <!--a href="#blogs">Blogs</a-->
                     <a href="#faq">FAQs</a>
                     <a href="#contact">Contact</a>
                 </div>
@@ -2460,7 +2555,7 @@
             const scrollPercentage = (window.scrollY / totalScrollableHeight) * 100;
 
             // Show WhatsApp button at 15% scroll
-            if (scrollPercentage > 15) {
+            if (scrollPercentage > 0) {
                 whatsappBtn.classList.add('visible');
             } else {
                 whatsappBtn.classList.remove('visible');
