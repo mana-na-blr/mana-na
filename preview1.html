@@ -10,11 +10,6 @@
     <meta property="og:image" itemprop="image primaryImageOfPage" content="https://www.mana-na.in/mana-na_logo.png" />
     <meta name="google-site-verification" content="yW7IG-AH1RpOf2CSQDww_HuZbelVrrjI82FtT_MTp4M" />
 
-    <!--=============== GOOGLE FONTS ===============-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <!--=============== FAVICON ===============-->
     <link rel="shortcut icon" href="https://www.mana-na.in/favicon.png" type="image/x-icon">
     <style>
@@ -96,7 +91,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -121,7 +116,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 0;
+            font-weight: 750;
             letter-spacing: 1px;
             animation: gradientShift 8s ease infinite;
             display: inline-block;
@@ -140,7 +135,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 900;
+            font-weight: 750;
             animation: gradientShift 8s ease infinite;
             filter: brightness(1.15);
         }
@@ -217,7 +212,7 @@
         [data-theme="dark"] .support-item {
             background-color: var(--card-bg);
         }
-    
+
         .support-item {
             background-color: #e9f6ea;
             padding: 3rem 2rem;
@@ -2270,7 +2265,7 @@
         <div class="section-card">
             <h2>Contact Us</h2>
             <p style="margin-bottom: 3rem;">Accessing support at the right time can make a meaningful difference. <br>It is never too late to seek professional's help. <br>Reach out to schedule a session or ask any questions.</p>
-            <form class="contact-grid" id="contactForm">
+             <form class="contact-grid" id="contactForm" action="https://formsubmit.co/info@mana-na.in" method="POST">
                 <div>
                     <div class="form-group">
                         <input type="text" id="senderName" name="sender_name" required placeholder="Your Name">
@@ -2821,6 +2816,65 @@
             }
         };
 
+        // --- Contact Form Submission (FormSubmit.co) ---
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const senderName = document.getElementById('senderName').value.trim();
+                const senderEmail = document.getElementById('senderEmail').value.trim();
+                const message = document.getElementById('message').value.trim();
+
+                if (!senderName || !senderEmail || !message) {
+                    showMessage('Please fill in all fields.', 'error');
+                    return;
+                }
+
+                // Disable button and show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+
+                // Using fetch for FormSubmit AJAX submission
+                fetch("https://formsubmit.co/ajax/info@mana-na.in", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: senderName,
+                        email: senderEmail,
+                        message: message,
+                        _subject: "New Website Inquiry from " + senderName
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showMessage('✓ Message sent successfully! We\'ll get back to you soon.', 'success');
+                    contactForm.reset();
+                })
+                .catch(error => {
+                    showMessage('✗ Failed to send message. Please try again or contact us via WhatsApp.', 'error');
+                })
+                .finally(() => {
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.disabled = false;
+                });
+            });
+        }
+
+        function showMessage(text, type) {
+            formMessage.textContent = text;
+            formMessage.style.display = 'block';
+            formMessage.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+            formMessage.style.color = type === 'success' ? '#155724' : '#721c24';
+            formMessage.style.border = `1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'}`;
+            if (type === 'success') setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
+        }
     </script>
 </body>
 </html>
