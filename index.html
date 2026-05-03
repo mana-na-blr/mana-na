@@ -116,7 +116,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 750;
+            font-weight: 500;
             letter-spacing: 1px;
             animation: gradientShift 8s ease infinite;
             display: inline-block;
@@ -135,7 +135,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 750;
+            font-weight: 500;
             animation: gradientShift 8s ease infinite;
             filter: brightness(1.15);
         }
@@ -156,6 +156,11 @@
 
         #gallery h2 {
             font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        #gallery p {
+            font-size: 1.2rem;
             margin-bottom: 1rem;
         }
 
@@ -615,7 +620,7 @@
 
         .brand-name {
             font-size: 1.6rem;
-            font-weight: 500;
+            font-weight: 450;
             letter-spacing: 1px;
             display: flex;
             align-items: flex-end;
@@ -1168,15 +1173,15 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 1rem;
         }
 
         .testimonial-card {
             background-color: var(--card-bg);
             padding: 2.5rem;
             border-radius: 18px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0, 103, 56, 0.08);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(0, 103, 57, 0.125);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: center;
         }
@@ -1675,6 +1680,12 @@
         white-space: nowrap;
         font-size: 1.8rem;
     }
+
+    #gallery p {
+
+        font-size: 1rem;
+    }
+
     .blogs-grid, .blog-info {
         text-align: center;
     }
@@ -1828,15 +1839,15 @@
         /* --- Crisis Support Section --- */
         .crisis-box {
             background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
-            border: 2px dashed #e53e3e;
+            border: 2px dashed #ffcbcb;
             padding: 2.5rem;
             border-radius: 20px;
-            margin-top: 3rem;
+            margin-top: 0rem;
             text-align: center;
         }
         [data-theme="dark"] .crisis-box {
-            background: linear-gradient(135deg, #2d1212 0%, #1a1a1a 100%);
-            border-color: #fc8181;
+            background: linear-gradient(135deg, #2d121224 0%, #1a1a1a 100%);
+            border-color: #ffcbcb;
         }
         .crisis-box h3 { color: #c53030; margin-bottom: 1rem; }
         [data-theme="dark"] .crisis-box h3 { color: #fc8181; }
@@ -2082,8 +2093,9 @@
             <div>
                 <h2>Meet the Counsellor</h2>
                 <h3 id="counsellor-greeting" style="color: var(--text-main); font-weight: 500;">Hi, I’m Divya Narayan.</h3>
-                <p id="counsellor-p1">I offer a safe, supportive space to explore your thoughts and experiences with openness and without judgment.</p>
-                <p id="counsellor-p2">I am a counselling psychologist with a Master’s in Counselling Psychology and a Diploma in Counselling Skills, trained in CBT-informed, evidence-based approaches.</p>
+                <p id="counsellor-p1"> &nbsp;I offer a safe, supportive space to explore your thoughts and experiences with openness and without judgment.</p>
+                <p id="counsellor-p2"> I am a <b>Counselling Psychologist</b> with a Master’s in Counselling Psychology and a Diploma in Counselling Skills, trained in CBT-informed, evidence-based approaches.
+ Beyond my clinical training, my experience as a <b>former School Principal</b> has given me deep insight into the challenges faced by students and families alike. </p>
                 <p id="counsellor-p3">I have worked with adolescents and adults across private practice, online platforms, and institutional settings, supporting concerns such as stress, anxiety, relationship difficulties, and life transitions.</p>
             </div>
         </div>
@@ -2178,6 +2190,34 @@
         </div>
     </section-->
 
+    <section id="testimonials">
+        <div class="section-card">
+            <h2>Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I felt really comfortable opening up here. There was no judgment, just calm listening and support. It helped me understand my thoughts better."</p>
+                    <p class="testimonial-author">- Krishna.R</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Talking with Divya made things feel lighter from the first session, It gave me clarity during a confusing time."</p>
+                    <p class="testimonial-author">- Vidisha Ram</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I was going through a tough phase and didn’t know where to start. The sessions helped me feel more in control and a little more hopeful."</p>
+                    <p class="testimonial-author">- Deepa</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="gallery"> 
+    <div class="section-card">
+    <h2>Gallery</h2>
+    <p>Community-based group sessions conducted through MANA-NA, <br>supporting women and students in building emotional awareness</p>
+    <img src="https://www.mana-na.in/mtc_image-5.png" alt="counselling space" style="width: 100%; border-radius: 8px;">
+    </div>
+</section>
+    
     <section id="faq">
         <div class="section-card">
             <h2>Frequently Asked Questions</h2>
@@ -2237,30 +2277,7 @@
         </div>
     </section>
 
-    
-    
-    <section id="testimonials">
-        <div class="section-card">
-            <h2>Testimonials</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I felt really comfortable opening up here. There was no judgment, just calm listening and support. It helped me understand my thoughts better."</p>
-                    <p class="testimonial-author">- Krishna.R</p>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Talking with Divya made things feel lighter from the first session, It gave me clarity during a confusing time."</p>
-                    <p class="testimonial-author">- Vidisha Ram</p>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I was going through a tough phase and didn’t know where to start. The sessions helped me feel more in control and a little more hopeful."</p>
-                    <p class="testimonial-author">- Deepa</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    
+        
     <section id="contact">
         <div class="section-card">
             <h2>Contact Us</h2>
@@ -2294,15 +2311,15 @@
 
 <section id="resources">
         <div class="section-card">
-            <h2>Resources & Support</h2>
-            <p class="section-subtitle">Important contacts for immediate assistance.</p>
+            <!--h2>Resources & Support</h2>
+            <p class="section-subtitle">Important contacts for immediate assistance.</p-->
             <div class="crisis-box">
-                <h3 style="font-size: 1.5rem;">Emergency & Crisis Support</h3>
+                <h3 style="font-size: 1.5rem;">24/7 Emergency Support</h3>
                 <p>If you or someone you know is in immediate danger or experiencing a mental health crisis, please contact these 24/7 helplines:</p>
                 <div class="helpline-grid">
-                    <div class="helpline-item" style="font-size: 1.25rem;">Tele MANAS:<br><a href="tel:14416">14416</a></div>
-                    <div class="helpline-item" style="font-size: 1.25rem;">KIRAN:<br><a href="tel:1800-599-0019">1800-599-0019</a></div>
-                    <div class="helpline-item" style="font-size: 1.25rem;">NIMHANS:<br><a href="tel:08046110007">080 4611 0007</a></div>
+                    <div class="helpline-item" style="font-size: 1rem;">Tele MANAS: &nbsp;<a href="tel:14416">14416</a></div>
+                    <div class="helpline-item" style="font-size: 1rem;">KIRAN:  &nbsp;<a href="tel:1800-599-0019">1800-599-0019</a></div>
+                    <div class="helpline-item" style="font-size: 1rem;">NIMHANS:  &nbsp;<a href="tel:08046110007">080 4611 0007</a></div>
                 </div>
             </div>
         </div>
@@ -2327,12 +2344,14 @@
                     <a href="#about">About</a>
                     <a href="#approach">Our Approach</a>
                     <a href="#areas-of-support">Areas of Support</a>
-                    <!--a href="#self-reflection">Self-Reflection</a-->
+                    <a href="#self-reflection">Self-Reflection</a>
                     <a href="#counsellor">Meet the Counsellor</a>
-                    <!--a href="#gallery">Gallery</a-->
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#gallery">Gallery</a>
                     <!--a href="#blogs">Blogs</a-->
                     <a href="#faq">FAQs</a>
                     <a href="#contact">Contact</a>
+                    <a href="#resources">Resources & Support</a>
                 </div>
             </div>
             <div class="footer-qr">
@@ -2383,7 +2402,7 @@
 // --- Navigation Scroll & Active Link Highlighting (Scroll Spy) ---
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        const navItems = document.querySelectorAll('.nav-links a, .logo, .footer-nav-links a, .slide-content .btn');
+        const navItems = document.querySelectorAll('.nav-links a, .logo, .footer-nav-links a, .slide-content .btn, #self-reflection .btn');
         const sections = document.querySelectorAll('section, header'); 
         const navBar = document.querySelector('nav'); // Get the nav element
 
@@ -2834,6 +2853,15 @@
                     return;
                 }
 
+                let finalMessage = message;
+                const selectedAssessments = document.querySelectorAll('.assessment-item.selected p');
+                if (selectedAssessments.length > 0) {
+                    finalMessage += '\n\n--- Self-Reflection Selections ---\n';
+                    selectedAssessments.forEach(item => {
+                        finalMessage += '- ' + item.textContent.trim() + '\n';
+                    });
+                }
+
                 // Disable button and show loading state
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Sending...';
@@ -2848,7 +2876,7 @@
                     body: JSON.stringify({
                         name: senderName,
                         email: senderEmail,
-                        message: message,
+                        message: finalMessage,
                         _subject: "New Website Inquiry from " + senderName
                     })
                 })
@@ -2856,6 +2884,12 @@
                 .then(data => {
                     showMessage('✓ Message sent successfully! We\'ll get back to you soon.', 'success');
                     contactForm.reset();
+                    
+                    // Clear selected self-reflection items
+                    document.querySelectorAll('.assessment-item.selected').forEach(item => {
+                        item.classList.remove('selected');
+                    });
+                    document.getElementById('assessmentFeedback').style.display = 'none';
                 })
                 .catch(error => {
                     showMessage('✗ Failed to send message. Please try again or contact us via WhatsApp.', 'error');
