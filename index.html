@@ -26,7 +26,7 @@
     <!-- WINDOWS -->
     <meta name="msapplication-TileImage" content="https://www.mana-na.in/icon-72x72.png">
     <meta name="msapplication-TileColor" content="#ffffff">
-    
+
     <style>
         /* --- CSS Variables & Theme --- */
         :root {
@@ -1422,6 +1422,36 @@
             transform: translateY(-5px) scale(1.05);
         }
 
+        /* --- Newsletter Section --- */
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(0, 103, 56, 0.1);
+            border-radius: 30px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+        .newsletter-form input:focus {
+            border-color: var(--text-header);
+            background-color: var(--card-bg);
+        }
+
+        .footer-newsletter {
+            margin-top: 2.5rem;
+        }
+        .footer-newsletter .newsletter-form {
+            margin: 0;
+            max-width: 400px;
+        }
+
         footer {
             background-color: var(--card-bg);
             padding: 5rem 5% 2rem;
@@ -1569,6 +1599,9 @@
                 align-items: center;
                 justify-content: center;
             }
+            .footer-newsletter .newsletter-form {
+                margin: 0 auto;
+            }
             .footer-brand .logo {
                 justify-content: center;
             }
@@ -1635,6 +1668,12 @@
                 width: 70%;
                 height: 300px;
                 margin: 0 auto;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .newsletter-form input {
+                text-align: center;
             }
             .brand-name {
                 font-size: 1.2rem;
@@ -2340,6 +2379,18 @@
         </div>
     </section>
 
+    <!--section id="newsletter">
+        <div class="section-card" style="text-align: center;">
+            <h2>Stay Connected</h2>
+            <p class="section-subtitle">Subscribe to the Mana-na Wellbeing Newsletter for monthly insights, wellness tips, and updates directly to your inbox.</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" id="newsletterEmail" name="email" placeholder="Enter your email address" required>
+                <button type="submit" class="btn" id="newsletterBtn">Subscribe</button>
+            </form>
+            <div id="newsletterMessage" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none; max-width: 500px; margin-left: auto; margin-right: auto;"></div>
+        </div>
+    </section-->
+
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
@@ -2351,6 +2402,15 @@
                     </div>
                 </a>
                 <p>Supporting mental well-being and enhancing quality of life through awareness, understanding, and meaningful change. Rooted in care, guided by science.</p>
+                <div class="footer-newsletter">
+                    <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-header);">Stay Connected</h4>
+                    <p style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 1.5rem; max-width: 400px;">Subscribe to our newsletter for insights and wellness tips.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" id="newsletterEmail" name="email" placeholder="Email address" required style="padding: 0.8rem 1.2rem; font-size: 0.95rem;">
+                        <button type="submit" class="btn" id="newsletterBtn" style="padding: 0.8rem 1.5rem; font-size: 0.95rem;">Subscribe</button>
+                    </form>
+                    <div id="newsletterMessage" style="margin-top: 1rem; padding: 0.8rem; border-radius: 8px; display: none; font-size: 0.85rem; max-width: 400px;"></div>
+                </div>
             </div>
             <div class="footer-nav">
                 <h4>Quick Links</h4>
@@ -2923,6 +2983,55 @@
             formMessage.style.color = type === 'success' ? '#155724' : '#721c24';
             formMessage.style.border = `1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'}`;
             if (type === 'success') setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
+        }
+
+        // --- Newsletter Form Submission ---
+        const newsletterForm = document.getElementById('newsletterForm');
+        const newsletterBtn = document.getElementById('newsletterBtn');
+        const newsletterMessage = document.getElementById('newsletterMessage');
+
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('newsletterEmail').value.trim();
+                if (!email) return;
+
+                newsletterBtn.disabled = true;
+                newsletterBtn.textContent = 'Subscribing...';
+
+                fetch("https://formsubmit.co/ajax/info@mana-na.in", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        _subject: "New Newsletter Subscription from " + email
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showNewsletterMessage('✓ Successfully subscribed to the newsletter!', 'success');
+                    newsletterForm.reset();
+                })
+                .catch(error => {
+                    showNewsletterMessage('✗ Failed to subscribe. Please try again.', 'error');
+                })
+                .finally(() => {
+                    newsletterBtn.textContent = 'Subscribe';
+                    newsletterBtn.disabled = false;
+                });
+            });
+        }
+
+        function showNewsletterMessage(text, type) {
+            newsletterMessage.textContent = text;
+            newsletterMessage.style.display = 'block';
+            newsletterMessage.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+            newsletterMessage.style.color = type === 'success' ? '#155724' : '#721c24';
+            newsletterMessage.style.border = `1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'}`;
+            if (type === 'success') setTimeout(() => { newsletterMessage.style.display = 'none'; }, 5000);
         }
     </script>
 </body>
