@@ -2300,9 +2300,9 @@
                     <h3>Mana-na Wellbeing Space</h3>
                     <p>Creating space for resilience, clarity, and growth.</p>
                     <div style="margin-top: 2rem;">
-                        <p>Phone:<strong><a href="tel:+917349351920">+91 73493 51920</a></p></strong>
-                        <p>Email: <strong><a href="mailto:info@mana-na.in">info@mana-na.in</a></p></strong>
-                        <p style="margin-top: 0.5rem;"><strong>Available for: In-person and online consultations.</p></strong>
+                        <p>Phone: <strong><a href="tel:+917349351920">+91 73493 51920</a></strong></p>
+                        <p>Email: <strong><a href="mailto:info@mana-na.in">info@mana-na.in</a></strong></p>
+                        <p style="margin-top: 0.5rem;"><strong>Available for: In-person and online consultations.</strong></p>
                     </div>
                 </div>
             </form>
@@ -2806,7 +2806,7 @@
             link.addEventListener('click', function(e) {
                 const targetUrl = this.href;
                 // Ignore hash links so smooth scrolling works without triggering the loader
-                if (this.target === '_blank' || !targetUrl || targetUrl.includes('#') || targetUrl.startsWith('mailto:')) {
+                if (this.target === '_blank' || !targetUrl || targetUrl.includes('#') || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:')) {
                     return; 
                 }
                 e.preventDefault();
