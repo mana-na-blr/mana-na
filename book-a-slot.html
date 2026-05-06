@@ -194,7 +194,7 @@
 
         /* --- Page Header --- */
         header.page-header {
-            margin-top: 80px;
+            margin-top: 20px;
             padding: 6rem 5% 2rem;
             text-align: center;
             background: var(--bg-color);
@@ -523,7 +523,7 @@
                 <span class="tagline">Counselling & Wellbeing Space</span>
             </div>
         </a>
-        <div class="nav-controls">
+        <!--div class="nav-controls">
             <div class="nav-links" id="navLinks">
                 <a href="preview1.html#home">Home</a>
                 <a href="preview1.html#about">About</a>
@@ -532,7 +532,7 @@
                 <a href="preview1.html#counsellor">Meet the Counsellor</a>
                 <a href="preview1.html#faq">FAQs</a>
                 <a href="preview1.html#contact" class="nav-contact-btn">Contact</a>
-            </div>
+            </div-->
             
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme"></button>
 
@@ -611,10 +611,10 @@
                     </div-->
 
                     <!-- Occupation -->
-                    <div class="form-group">
+                    <!--div class="form-group">
                         <label for="occupation">Occupation / Student Status (Optional)</label>
                         <input type="text" id="occupation" name="Occupation" placeholder="College Student, Engineer">
-                    </div>
+                    </div-->
 
                     <!-- Country -->
                     <!--div class="form-group">
@@ -760,7 +760,7 @@
                     </div-->
 
                     <!-- Date -->
-                    <div class="form-group full-width">
+                    <div class="form-group">
                         <label for="date">Preferred Date</label>
                         <input type="date" id="date" name="Preferred Date" required>
                     </div>
@@ -774,10 +774,10 @@
                     </div>
 
                     <!-- Message -->
-                    <div class="form-group full-width">
+                    <!--div class="form-group full-width">
                         <label for="reason">Briefly describe what brings you to therapy (Optional)</label>
                         <textarea id="reason" name="Reason/Message" rows="4" placeholder="Any initial thoughts or concerns you'd like us to know about..."></textarea>
-                    </div>
+                    </div-->
 
                     <!-- Consent Checkbox -->
                     <div class="form-group full-width" style="display: flex; align-items: flex-start; gap: 12px; margin-top: 0.5rem;">
@@ -794,7 +794,7 @@
         </div>
     </section>
 
-    <footer>
+    <!--footer>
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="#home" class="logo">
@@ -817,7 +817,7 @@
                     <a href="#counsellor">Meet the Counsellor</a>
                     <a href="#testimonials">Testimonials</a>
                     <a href="#gallery">Gallery</a>
-                    <!--a href="#blogs">Blogs</a-->
+                    <a href="#blogs">Blogs</a>
                     <a href="#faq">FAQs</a>
                     <a href="#contact">Contact</a>
                     <a href="#emergency-support">24/7 Emergency Support</a>
@@ -828,7 +828,7 @@
                 <img src="https://www.mana-na.in/Site-QR.png" alt="Mana-na QR Code">
                 <p>Access our site easily<br>on your mobile device</p>
             </div>
-        </div>
+        </div-->
         <div class="footer-bottom">
             <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space</p>
             <p class="footer-credit">Designed by <a href="https://bit.ly/thedteam" target="_blank"> The 'D Team</a></p>
@@ -1014,7 +1014,7 @@
             });
 
             if (availableCount === 0) {
-                slotMessage.textContent = "All slots are fully booked on this date.";
+                slotMessage.textContent = "No slots are available on this date. Please select another day.";
             }
         });
 
