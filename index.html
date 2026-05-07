@@ -192,6 +192,15 @@
             margin-bottom: 1rem;
         }
 
+        #book-appointment .section-card {
+            text-align: center;
+        }
+
+        #book-appointment h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
         #emergency-support .section-card {
             text-align: center;
         }
@@ -448,6 +457,9 @@
             position: fixed;
             inset: 0;
             background-color: var(--bg-color);
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            backdrop-filter: blur(5px); /* Blur effect */
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
             z-index: 3000;
             display: none;
             opacity: 0;
@@ -1170,7 +1182,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 1.2rem;
             border: 2px solid rgba(0, 103, 56, 0.1);
@@ -1179,12 +1191,98 @@
             color: var(--text-main);
             font-family: inherit;
             transition: var(--transition);
+            font-size: 1rem;
+            resize: vertical;
         }
         
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: var(--text-header);
             background-color: var(--card-bg);
+            box-shadow: 0 0 0 4px rgba(0, 103, 56, 0.05);
+        }
+
+        /* --- Booking Form Modal Styles --- */
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-header);
+            font-size: 0.95rem;
+            text-align: left;
+        }
+        
+        [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+
+        .slot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .slot-btn {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 2px solid rgba(0, 103, 56, 0.1);
+            padding: 0.8rem 0.5rem;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+            user-select: none;
+        }
+
+        .slot-btn:hover:not(.blocked):not(.selected) {
+            border-color: var(--text-header);
+            background-color: var(--card-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 103, 56, 0.05);
+        }
+
+        .slot-btn.selected {
+            background-color: var(--text-header);
+            color: var(--btn-text);
+            border-color: var(--text-header);
+            box-shadow: 0 4px 15px rgba(0, 103, 56, 0.2);
+        }
+
+        .slot-btn.blocked {
+            opacity: 0.8;
+            cursor: not-allowed;
+            background-color: #fff5f5;
+            border: 2px dashed #ffcbcb;
+            text-decoration: line-through;
+            color: #c53030;
+        }
+
+        [data-theme="dark"] .slot-btn.blocked {
+            background-color: rgba(45, 18, 18, 0.4);
+            border-color: #ffcbcb;
+            color: #fc8181;
+        }
+
+        .slot-message {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            opacity: 0.8;
+            margin-top: 0.8rem;
+            font-style: italic;
+            text-align: left;
         }
 
         /* --- Testimonials Section --- */
@@ -1650,6 +1748,8 @@
             .menu-toggle.active span:nth-child(2) { opacity: 0; }
             .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
             
+            .booking-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
             .nav-links a.nav-contact-btn {
                 display: inline-block;
                 width: max-content;
@@ -1770,6 +1870,13 @@
     #emergency-support h2 {
         white-space: nowrap;
         font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #book-appointment h2 {
+        white-space: nowrap;
+        font-size: 1.5rem;
     }
 }
 
@@ -2338,6 +2445,13 @@
         </div>
     </section>
 
+    <section id="book-appointment">
+        <div class="section-card" style="text-align: center;">
+            <h2>Book an Appointment</h2>
+            <p class="section-subtitle">Take the first step towards clarity and resilience. Schedule your session with us today.</p>
+            <button class="btn" onclick="openBookingModal()" style="padding: 1rem 3rem; font-size: 1.1rem;">Book a Session</button>
+        </div>
+    </section>
         
     <section id="contact">
         <div class="section-card">
@@ -2369,6 +2483,8 @@
             </form>
         </div>
     </section>
+
+
 
 <section id="emergency-support">
         <div class="section-card">
@@ -2432,6 +2548,7 @@
                     <a href="#gallery">Gallery</a>
                     <!--a href="#blogs">Blogs</a-->
                     <a href="#faq">FAQs</a>
+                    <a href="#book-appointment">Book an Appointment</a>
                     <a href="#contact">Contact</a>
                     <a href="#emergency-support">24/7 Emergency Support</a>
                 </div>
@@ -2460,6 +2577,121 @@
                     <!-- Sidebar injected by JS -->
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="blog-modal">
+        <div class="blog-modal-content" style="max-width: 900px; padding: 2rem;">
+            <span class="blog-modal-close" onclick="closeBookingModal()">&times;</span>
+            <h2 style="text-align: center; margin-bottom: 1rem; font-size: 2rem;">Book a Session</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Fill out the details below, and we will get back to you shortly to confirm your appointment.</p>
+            
+            <form id="bookingForm" action="https://formsubmit.co/info@mana-na.in" method="POST">
+                <!-- FormSubmit Configuration -->
+                <input type="hidden" name="_subject" value="New Session Booking Request">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="booking-grid">
+                    
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="Full Name" required placeholder="Your full name" pattern="^[^0-9]+$" title="Numbers are not allowed" oninput="this.value = this.value.replace(/[0-9]/g, '')">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="bookingEmail">Email Address</label>
+                        <input type="email" id="bookingEmail" name="Email" required placeholder="you@example.com">
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" value="+91" readonly tabindex="-1" style="width: 70px; flex-shrink: 0; text-align: center; padding-left: 0; padding-right: 0; background-color: rgba(0, 103, 56, 0.03); cursor: default; user-select: none;">
+                            <input type="tel" id="phone" name="Phone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit number" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        </div>
+                    </div>
+
+                    <!-- Age -->
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="Age" min="16" max="100" required placeholder="Your age">
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="Gender" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+
+                    <!-- Primary Concern -->
+                    <div class="form-group">
+                        <label for="concern">Primary Area of Concern</label>
+                        <select id="concern" name="Primary Concern" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Anxiety & Stress">Anxiety & Stress</option>
+                            <option value="Depression / Low Mood">Depression / Low Mood</option>
+                            <option value="Relationship Issues">Relationship Issues</option>
+                            <option value="Academic / Work Pressure">Academic / Work Pressure</option>
+                            <option value="Life Transitions">Life Transitions</option>
+                            <option value="Grief & Loss">Grief & Loss</option>
+                            <option value="Trauma & Past Experiences">Trauma & Past Experiences</option>
+                            <option value="Self-Esteem & Confidence">Self-Esteem & Confidence</option>
+                            <option value="Anger Management">Anger Management</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Other Concern (Hidden by default) -->
+                    <div class="form-group" id="otherConcernGroup" style="display: none;">
+                        <label for="otherConcern">Please specify your concern</label>
+                        <input type="text" id="otherConcern" name="Other Concern Specification" placeholder="Briefly describe your concern">
+                    </div>
+
+                    <!-- Format -->
+                    <div class="form-group">
+                        <label for="format">Preferred Format</label>
+                        <select id="format" name="Format" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Online Session (Video Call)">Online Session (Video Call)</option>
+                            <option value="In-Person Session (Clinic)">In-Person Session</option>
+                        </select>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="form-group">
+                        <label for="date">Preferred Date</label>
+                        <input type="date" id="date" name="Preferred Date" required onkeydown="return false;">
+                    </div>
+
+                    <!-- Dynamic Time Slots -->
+                    <div class="form-group full-width" id="timeSlotGroup" style="display: none;">
+                        <label>Available Time Slots</label>
+                        <div id="slotGrid" class="slot-grid"></div>
+                        <input type="hidden" id="time" name="Preferred Time" required>
+                        <p id="slotMessage" class="slot-message"></p>
+                    </div>
+
+                    <!-- Consent Checkbox -->
+                    <div class="form-group full-width" style="display: flex; align-items: flex-start; gap: 12px; margin-top: 0.5rem;">
+                        <input type="checkbox" id="consent" name="Consent Given" value="Yes" required style="width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; cursor: pointer; accent-color: #006738;">
+                        <label for="consent" style="font-weight: 400; font-size: 0.9rem; margin-bottom: 0; cursor: pointer; text-align: left;">I acknowledge that this form collects my personal and health-related information for the purpose of scheduling a therapy session. I agree to the <a href="privacy-policy.html" target="_blank" style="color: var(--text-header); text-decoration: underline;">Privacy Policy & Consent terms</a>.</label>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn" id="submitBookingBtn" style="width: 100%; margin-top: 1rem;">Request Appointment</button>
+                <div id="bookingFormMessage" style="margin-top: 1.5rem; padding: 1rem; border-radius: 8px; text-align: center; font-weight: 500; display: none;"></div>
+            </form>
         </div>
     </div>
 
@@ -2916,6 +3148,214 @@
                 feedback.style.display = 'none';
             }
         };
+
+        // --- Booking Modal & Form Logic ---
+        function openBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; 
+            setTimeout(() => { modal.classList.add('active'); }, 10);
+            modal.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
+        }
+
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) closeBookingModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBookingModal();
+        });
+
+        const dateInput = document.getElementById('date');
+        const localNowInit = new Date();
+        const localTodayInitStr = localNowInit.getFullYear() + '-' + String(localNowInit.getMonth() + 1).padStart(2, '0') + '-' + String(localNowInit.getDate()).padStart(2, '0');
+        if (dateInput) dateInput.setAttribute('min', localTodayInitStr);
+
+        const concernSelect = document.getElementById('concern');
+        const otherConcernGroup = document.getElementById('otherConcernGroup');
+        const otherConcernInput = document.getElementById('otherConcern');
+
+        if (concernSelect) {
+            concernSelect.addEventListener('change', function() {
+                if (this.value === 'Other') {
+                    otherConcernGroup.style.display = 'block';
+                    otherConcernInput.setAttribute('required', 'true');
+                } else {
+                    otherConcernGroup.style.display = 'none';
+                    otherConcernInput.removeAttribute('required');
+                    otherConcernInput.value = '';
+                }
+            });
+        }
+
+        const slotGrid = document.getElementById('slotGrid');
+        const hiddenTimeInput = document.getElementById('time');
+        const slotMessage = document.getElementById('slotMessage');
+        const timeSlotGroup = document.getElementById('timeSlotGroup');
+
+        const slotConfig = {
+            slots: [
+                '10:00 AM', '11:00 AM', '12:00 PM', 
+                '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', '06:00 PM'
+            ],
+            blockedData: {
+                '2026-05-15': 'ALL',
+                '2026-05-14': ['11:00 AM', '02:00 PM', '04:00 PM'],
+            },
+            blockWeekends: true
+        };
+
+        if (dateInput) {
+            dateInput.addEventListener('change', function() {
+                const selectedDateStr = this.value;
+                
+                if (!selectedDateStr) {
+                    timeSlotGroup.style.display = 'none';
+                    hiddenTimeInput.value = '';
+                    return;
+                }
+
+                timeSlotGroup.style.display = 'block';
+                slotGrid.innerHTML = '';
+                hiddenTimeInput.value = '';
+                slotMessage.textContent = '';
+                
+                const selectedDateObj = new Date(selectedDateStr);
+                const dayOfWeek = selectedDateObj.getDay();
+                const month = selectedDateObj.getMonth() + 1;
+                const day = selectedDateObj.getDate();
+                
+                const now = new Date();
+                const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+                const isToday = selectedDateStr === todayStr;
+                const currentHour = now.getHours();
+                const currentMinute = now.getMinutes();
+
+                const fixedHolidays = {
+                    '1-26': 'Republic Day',
+                    '8-15': 'Independence Day',
+                    '9-4': 'Janmashtami',
+                    '9-17': 'Ganesh Chaturthi',
+                    '10-2': 'Gandhi Jayanti',
+                    '10-9': 'Diwali',
+                    '11-1': 'Karnataka Rajyotsava',
+                    '11-24': 'Guru Nanak Jayanti',
+                    '11-26': 'Kanakadasa Jayanti',
+                    '12-25': 'Christmas Day'
+                };
+                
+                const holidayKey = `${month}-${day}`;
+                if (fixedHolidays[holidayKey]) {
+                    slotMessage.textContent = `We are closed on ${fixedHolidays[holidayKey]}. Please select another day.`;
+                    return;
+                }
+                
+                if (slotConfig.blockWeekends && (dayOfWeek === 0 || dayOfWeek === 6)) {
+                    slotMessage.textContent = "We are currently closed on weekends. Please select a weekday.";
+                    return;
+                }
+
+                const dateBlocks = slotConfig.blockedData[selectedDateStr];
+                if (dateBlocks === 'ALL') {
+                    slotMessage.textContent = "All slots are fully booked on this date. Please select another day.";
+                    return;
+                }
+
+                let availableCount = 0;
+                slotConfig.slots.forEach(slotTime => {
+                    const btn = document.createElement('div');
+                    btn.className = 'slot-btn';
+                    btn.textContent = slotTime;
+                    
+                    let isPastTime = false;
+                    if (isToday) {
+                        const match = slotTime.match(/(\d+):(\d+)\s*(AM|PM)/i);
+                        if (match) {
+                            let hours = parseInt(match[1], 10);
+                            const minutes = parseInt(match[2], 10);
+                            const ampm = match[3].toUpperCase();
+                            if (ampm === 'PM' && hours < 12) hours += 12;
+                            if (ampm === 'AM' && hours === 12) hours = 0;
+                            if (hours < currentHour || (hours === currentHour && minutes <= currentMinute)) {
+                                isPastTime = true;
+                            }
+                        }
+                    }
+
+                    const isBlocked = (Array.isArray(dateBlocks) && dateBlocks.includes(slotTime)) || isPastTime;
+
+                    if (isBlocked) {
+                        btn.classList.add('blocked');
+                    } else {
+                        availableCount++;
+                        btn.addEventListener('click', function() {
+                            document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+                            this.classList.add('selected');
+                            hiddenTimeInput.value = slotTime;
+                        });
+                    }
+                    slotGrid.appendChild(btn);
+                });
+
+                if (availableCount === 0) {
+                    slotMessage.textContent = "No slots are available on this date. Please select another day.";
+                }
+            });
+        }
+
+        const bookingForm = document.getElementById('bookingForm');
+        const submitBookingBtn = document.getElementById('submitBookingBtn');
+        const bookingFormMessage = document.getElementById('bookingFormMessage');
+
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                submitBookingBtn.disabled = true;
+                submitBookingBtn.textContent = 'Sending Request...';
+                
+                const formData = new FormData(bookingForm);
+                const phoneVal = formData.get('Phone');
+                if (phoneVal && !phoneVal.startsWith('+91')) {
+                    formData.set('Phone', '+91 ' + phoneVal);
+                }
+
+                fetch("https://formsubmit.co/ajax/info@mana-na.in", {
+                    method: "POST",
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    bookingFormMessage.textContent = '✓ Booking request sent successfully! We will contact you soon.';
+                    bookingFormMessage.style.display = 'block';
+                    bookingFormMessage.style.backgroundColor = '#d4edda';
+                    bookingFormMessage.style.color = '#155724';
+                    bookingFormMessage.style.border = '1px solid #c3e6cb';
+                    
+                    bookingForm.reset();
+                    setTimeout(() => { bookingFormMessage.style.display = 'none'; closeBookingModal(); }, 4000);
+                })
+                .catch(error => {
+                    bookingFormMessage.textContent = '✗ Failed to send request. Please try again or contact us via WhatsApp.';
+                    bookingFormMessage.style.display = 'block';
+                    bookingFormMessage.style.backgroundColor = '#f8d7da';
+                    bookingFormMessage.style.color = '#721c24';
+                    bookingFormMessage.style.border = '1px solid #f5c6cb';
+                })
+                .finally(() => {
+                    submitBookingBtn.disabled = false;
+                    submitBookingBtn.textContent = 'Request Appointment';
+                });
+            });
+        }
 
         // --- Contact Form Submission (FormSubmit.co) ---
         const contactForm = document.getElementById('contactForm');
