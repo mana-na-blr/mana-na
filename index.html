@@ -1353,11 +1353,9 @@
         }
 
         .slot-message {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--text-main);
-            opacity: 0.8;
             margin-top: 0.8rem;
-            font-style: italic;
             text-align: left;
         }
 
@@ -1977,6 +1975,13 @@
     /* pointer-events: none; */ 
 }
 
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 .kannada-text {
     font-weight: 400;
     opacity: 0.9;
@@ -1984,6 +1989,35 @@
 .kannada-title {
     font-weight: 400;
 }
+
+        /* --- Validation Errors --- */
+        .validation-error {
+            color: #c53030;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+            text-align: left;
+        }
+        .was-validated input:invalid,
+        .was-validated select:invalid,
+        .was-validated textarea:invalid {
+            border-color: #c53030 !important;
+            background-color: #fff5f5 !important;
+        }
+        .was-validated input:invalid ~ .validation-error,
+        .was-validated select:invalid ~ .validation-error,
+        .was-validated textarea:invalid ~ .validation-error {
+            display: block;
+        }
+        [data-theme="dark"] .was-validated input:invalid,
+        [data-theme="dark"] .was-validated select:invalid,
+        [data-theme="dark"] .was-validated textarea:invalid {
+            background-color: rgba(45, 18, 18, 0.4) !important;
+            border-color: #ffcbcb !important;
+        }
+        [data-theme="dark"] .validation-error {
+            color: #fc8181;
+        }
 
 @media (max-width: 768px) {
     #gallery h2 {
@@ -2603,7 +2637,7 @@
                         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
                     </div>
                     <div class="faq-answer">
-                        <p>You can book an appointment by reaching out to us via the contact form on this website, emailing us directly, or sending a message on WhatsApp.</p>
+                        <p>You can book an appointment or by reaching out to us via the contact form on this website, emailing us directly, or sending a message on WhatsApp.</p>
                     </div>
                 </div>
             </div>
@@ -2760,7 +2794,7 @@
             <h2 style="text-align: center; margin-bottom: 1rem; font-size: 2rem;">Book a Session</h2>
             <p style="text-align: center; margin-bottom: 2rem;">Fill out the details below, and we will get back to you shortly to confirm your appointment.</p>
             
-            <form id="bookingForm" action="https://formsubmit.co/info@mana-na.in" method="POST">
+            <form id="bookingForm" action="https://formsubmit.co/info@mana-na.in" method="POST" novalidate>
                 <!-- FormSubmit Configuration -->
                 <input type="hidden" name="_subject" value="New Session Booking Request">
                 <input type="hidden" name="_captcha" value="false">
@@ -2772,20 +2806,23 @@
                     <div class="form-group">
                         <label for="fullName">Full Name</label>
                         <input type="text" id="fullName" name="Full Name" required placeholder="Your full name" pattern="^[^0-9]+$" title="Numbers are not allowed" oninput="this.value = this.value.replace(/[0-9]/g, '')">
+                        <div class="validation-error">Please enter your full name.</div>
                     </div>
 
                     <!-- Email -->
                     <div class="form-group">
                         <label for="bookingEmail">Email Address</label>
                         <input type="email" id="bookingEmail" name="Email" required placeholder="you@example.com">
+                        <div class="validation-error">Please enter a valid email address.</div>
                     </div>
 
                     <!-- Phone -->
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                             <input type="text" value="+91" readonly tabindex="-1" style="width: 70px; flex-shrink: 0; text-align: center; padding-left: 0; padding-right: 0; background-color: rgba(0, 103, 56, 0.03); cursor: default; user-select: none;">
-                            <input type="tel" id="phone" name="Phone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit number" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <input type="tel" id="phone" name="Phone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit number" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="flex: 1;">
+                            <div class="validation-error" style="width: 100%;">Please enter a valid 10-digit phone number.</div>
                         </div>
                     </div>
 
@@ -2793,6 +2830,7 @@
                     <div class="form-group">
                         <label for="age">Age</label>
                         <input type="number" id="age" name="Age" min="16" max="100" required placeholder="Your age">
+                        <div class="validation-error">Please enter a valid age (16-100).</div>
                     </div>
 
                     <!-- Gender -->
@@ -2804,6 +2842,7 @@
                             <option value="Female">Female</option>
                             <option value="Prefer not to say">Prefer not to say</option>
                         </select>
+                        <div class="validation-error">Please select your gender.</div>
                     </div>
 
                     <!-- Primary Concern -->
@@ -2822,11 +2861,12 @@
                             <option value="Anger Management">Anger Management</option>
                             <option value="Other">Other</option>
                         </select>
+                        <div class="validation-error">Please select a primary area of concern.</div>
                     </div>
 
                     <!-- Other Concern (Hidden by default) -->
                     <div class="form-group" id="otherConcernGroup" style="display: none;">
-                        <label for="otherConcern">Please specify your concern</label>
+                        <label for="otherConcern">Please specify your concern (Optional)</label>
                         <input type="text" id="otherConcern" name="Other Concern Specification" placeholder="Briefly describe your concern">
                     </div>
 
@@ -2838,12 +2878,14 @@
                             <option value="Online Session (Video Call)">Online Session (Video Call)</option>
                             <option value="In-Person Session (Clinic)">In-Person Session</option>
                         </select>
+                        <div class="validation-error">Please select your preferred format.</div>
                     </div>
 
                     <!-- Date -->
                     <div class="form-group">
                         <label for="date">Preferred Date</label>
                         <input type="date" id="date" name="Preferred Date" required onkeydown="return false;">
+                        <div class="validation-error">Please select a preferred date.</div>
                     </div>
 
                     <!-- Dynamic Time Slots -->
@@ -2855,9 +2897,10 @@
                     </div>
 
                     <!-- Consent Checkbox -->
-                    <div class="form-group full-width" style="display: flex; align-items: flex-start; gap: 12px; margin-top: 0.5rem;">
+                    <div class="form-group full-width" style="display: flex; align-items: flex-start; gap: 12px; margin-top: 0.5rem; flex-wrap: wrap;">
                         <input type="checkbox" id="consent" name="Consent Given" value="Yes" required style="width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; cursor: pointer; accent-color: #006738;">
-                        <label for="consent" style="font-weight: 400; font-size: 0.9rem; margin-bottom: 0; cursor: pointer; text-align: left;">I acknowledge that this form collects my personal and health-related information for the purpose of scheduling a therapy session. I agree to the <a href="privacy-policy.html" target="_blank" style="color: var(--text-header); text-decoration: underline;">Privacy Policy & Consent terms</a>.</label>
+                        <label for="consent" style="font-weight: 400; font-size: 0.9rem; margin-bottom: 0; cursor: pointer; text-align: left; flex: 1;">I acknowledge that this form collects my personal and health-related information for the purpose of scheduling a therapy session. I agree to the <a href="privacy-policy.html" target="_blank" style="color: var(--text-header); text-decoration: underline;">Privacy Policy & Consent terms</a>.</label>
+                        <div class="validation-error" style="width: 100%; margin-top: 0;">Please agree to the privacy policy and consent terms.</div>
                     </div>
 
                 </div>
@@ -3366,10 +3409,10 @@
             concernSelect.addEventListener('change', function() {
                 if (this.value === 'Other') {
                     otherConcernGroup.style.display = 'block';
-                    otherConcernInput.setAttribute('required', 'true');
+                    /*otherConcernInput.setAttribute('required', 'true');*/
                 } else {
                     otherConcernGroup.style.display = 'none';
-                    otherConcernInput.removeAttribute('required');
+                    /*otherConcernInput.removeAttribute('required');*/
                     otherConcernInput.value = '';
                 }
             });
@@ -3386,8 +3429,11 @@
                 '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', '06:00 PM'
             ],
             blockedData: {
-                '2026-05-15': 'ALL',
-                '2026-05-14': ['11:00 AM', '02:00 PM', '04:00 PM'],
+                '2026-05-11': 'ALL',
+                '2026-05-14': ['10:00 AM', '11:00 AM', '12:00 PM'],
+                '2026-05-15': ['10:00 AM', '11:00 AM', '12:00 PM'],
+                '2026-05-16': ['10:00 AM', '11:00 AM', '12:00 PM'],
+                '2026-05-17': ['10:00 AM', '11:00 AM', '12:00 PM'],
             },
             blockWeekends: true
         };
@@ -3395,6 +3441,8 @@
         if (dateInput) {
             dateInput.addEventListener('change', function() {
                 const selectedDateStr = this.value;
+                submitBookingBtn.disabled = false;
+                slotMessage.style.color = "";
                 
                 if (!selectedDateStr) {
                     timeSlotGroup.style.display = 'none';
@@ -3434,17 +3482,20 @@
                 const holidayKey = `${month}-${day}`;
                 if (fixedHolidays[holidayKey]) {
                     slotMessage.textContent = `We are closed on ${fixedHolidays[holidayKey]}. Please select another day.`;
+                    submitBookingBtn.disabled = true;
                     return;
                 }
                 
                 if (slotConfig.blockWeekends && (dayOfWeek === 0 || dayOfWeek === 6)) {
                     slotMessage.textContent = "We are currently closed on weekends. Please select a weekday.";
+                    submitBookingBtn.disabled = true;
                     return;
                 }
 
                 const dateBlocks = slotConfig.blockedData[selectedDateStr];
                 if (dateBlocks === 'ALL') {
                     slotMessage.textContent = "All slots are fully booked on this date. Please select another day.";
+                    submitBookingBtn.disabled = true;
                     return;
                 }
 
@@ -3479,6 +3530,8 @@
                             document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
                             this.classList.add('selected');
                             hiddenTimeInput.value = slotTime;
+                            slotMessage.textContent = '';
+                            slotMessage.style.color = '';
                         });
                     }
                     slotGrid.appendChild(btn);
@@ -3486,6 +3539,7 @@
 
                 if (availableCount === 0) {
                     slotMessage.textContent = "No slots are available on this date. Please select another day.";
+                    submitBookingBtn.disabled = true;
                 }
             });
         }
@@ -3497,7 +3551,26 @@
         if (bookingForm) {
             bookingForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+                bookingForm.classList.add('was-validated');
+
+                let isTimeValid = true;
+                if (timeSlotGroup.style.display === 'block' && !hiddenTimeInput.value) {
+                    slotMessage.textContent = "Please select an available time slot to proceed.";
+                    slotMessage.style.color = "#c53030";
+                    isTimeValid = false;
+                }
+
+                if (!bookingForm.checkValidity() || !isTimeValid) {
+                    const firstInvalid = bookingForm.querySelector(':invalid');
+                    if (firstInvalid) {
+                        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstInvalid.focus();
+                    } else if (!isTimeValid) {
+                        timeSlotGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    return;
+                }
+
                 submitBookingBtn.disabled = true;
                 submitBookingBtn.textContent = 'Sending Request...';
                 
@@ -3521,6 +3594,7 @@
                     bookingFormMessage.style.border = '1px solid #c3e6cb';
                     
                     bookingForm.reset();
+                    bookingForm.classList.remove('was-validated');
                     setTimeout(() => { bookingFormMessage.style.display = 'none'; closeBookingModal(); }, 4000);
                 })
                 .catch(error => {
