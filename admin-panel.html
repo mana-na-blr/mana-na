@@ -126,6 +126,11 @@
             left: 0;
             cursor: pointer;
         }
+        .form-group input[id="blockDate"]::-webkit-inner-spin-button,
+        .form-group input[id="blockDate"]::-webkit-clear-button {
+            display: none;
+            -webkit-appearance: none;
+        }
 
         /* --- Slots Grid --- */
         .slot-options {
@@ -226,6 +231,7 @@
         .login-card input:focus { outline: none; border-color: var(--text-header); }
         #loginError { color: #c53030; display: none; margin-top: 1rem; margin-bottom: 0; font-weight: 500; }
         [data-theme="dark"] #loginError { color: #fc8181; }
+
     </style>
 </head>
 <body class="locked">
@@ -268,7 +274,7 @@
             
             <div class="form-group">
                 <label for="blockDate">Select Date</label>
-                <input type="text" id="blockDate" placeholder="dd-mm-yyyy" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" onkeydown="return false;">
+                <input type="text" id="blockDate" placeholder="dd-mm-yyyy" onmouseenter="(this.type='date')" ontouchstart="(this.type='date')" onfocus="(this.type='date')" onclick="if(this.showPicker) this.showPicker();" onblur="if(!this.value) this.type='text'" onkeydown="return false;">
             </div>
 
             <div class="form-group">
@@ -350,9 +356,9 @@
 
         // The current configuration state
         let blockedData = {
-            '2026-05-11': 'ALL',
+            /*'2026-05-12': 'ALL',
             '2026-05-14': ['09:30 AM', '11:00 AM', '12:30 PM'],
-            '2026-05-15': ['09:30 AM', '11:00 AM', '12:30 PM']
+            '2026-05-15': ['09:30 AM', '11:00 AM', '12:30 PM']*/
         };
 
         // --- GLOBAL DATABASE CONFIGURATION (JSONBin.io Example) ---
@@ -363,15 +369,6 @@
         const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
         async function loadGlobalData() {
-            if (JSONBIN_BIN_ID === '6a02063cc0954111d80a95cf') {
-                const liveData = localStorage.getItem('mana_na_blocked_slots');
-                if (liveData) {
-                    blockedData = JSON.parse(liveData);
-                    updateUI();
-                }
-                return;
-            }
-
             try {
                 const response = await fetch(`${JSONBIN_URL}/latest`, {
                     headers: { 'X-Master-Key': JSONBIN_MASTER_KEY }
@@ -479,12 +476,6 @@
         }
 
         async function saveGlobalData() {
-            if (JSONBIN_BIN_ID === '6a02063cc0954111d80a95cf') {
-                localStorage.setItem('mana_na_blocked_slots', JSON.stringify(blockedData));
-                alert("Configuration updated! (Only saved locally. Configure JSONBin for global access).");
-                return;
-            }
-
             try {
                 await fetch(JSONBIN_URL, {
                     method: 'PUT',
