@@ -104,12 +104,28 @@
         /* --- Form Elements --- */
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-header); }
-        .form-group input[type="date"] {
+        .form-group input[id="blockDate"] {
             width: 100%; padding: 1rem; border: 2px solid rgba(0, 103, 56, 0.1); border-radius: 12px;
             background-color: var(--bg-color); color: var(--text-main); font-size: 1rem;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23006738" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1.2rem center;
+            background-size: 20px;
+            position: relative;
         }
         .form-group input:focus { outline: none; border-color: var(--text-header); }
-        [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+        [data-theme="dark"] .form-group input[id="blockDate"] {
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%2381c784" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>');
+        }
+        .form-group input[id="blockDate"]::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
 
         /* --- Slots Grid --- */
         .slot-options {
@@ -252,7 +268,7 @@
             
             <div class="form-group">
                 <label for="blockDate">Select Date</label>
-                <input type="date" id="blockDate">
+                <input type="text" id="blockDate" placeholder="dd-mm-yyyy" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" onkeydown="return false;">
             </div>
 
             <div class="form-group">
@@ -289,14 +305,7 @@
     </footer>
 
     <script>
-        // --- Security / Authentication ---
-        // The password is Base64 encoded to hide it from plain text in the source code.
-        // Default password is: ManaNaSecure2026!
         const ENCODED_PWD = "TWFuYU5hU2VjdXJlMjAyNiE=";
-
-        // If you want to change the password, you can open your browser console (F12) and run this:
-        // btoa("YourNewPassword");
-
         let inactivityTimer;
         const INACTIVITY_LIMIT = 5 * 60 * 1000; // 5 minutes in milliseconds
 
@@ -335,31 +344,52 @@
 
         // The standard slots offered on the website
         const STANDARD_SLOTS = [
-            '10:00 AM', '11:00 AM', '12:00 PM', 
-            '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', '06:00 PM'
+            '09:30 AM', '11:00 AM', '12:30 PM', 
+                '02:00 PM', '05:00 PM', '06:30 PM', '08:00 PM'
         ];
 
         // The current configuration state
         let blockedData = {
             '2026-05-11': 'ALL',
-            '2026-05-14': ['10:00 AM', '11:00 AM', '12:00 PM'],
-            '2026-05-15': ['10:00 AM', '11:00 AM', '12:00 PM']
+            '2026-05-14': ['09:30 AM', '11:00 AM', '12:30 PM'],
+            '2026-05-15': ['09:30 AM', '11:00 AM', '12:30 PM']
         };
 
-        // Load from LocalStorage if available (Simulates a live database connection)
-        const liveData = localStorage.getItem('mana_na_blocked_slots');
-        if (liveData) {
+        // --- GLOBAL DATABASE CONFIGURATION (JSONBin.io Example) ---
+        // Get your Bin ID and Master Key from jsonbin.io and paste them below:
+        const JSONBIN_BIN_ID = '6a02063cc0954111d80a95cf';
+        const JSONBIN_MASTER_KEY = '$2a$10$KtpjUH.kUkperO4nhKPWCuBibauYH6WQC0czjv1uc1.2iAXoiJWzu';
+
+        const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+
+        async function loadGlobalData() {
+            if (JSONBIN_BIN_ID === '6a02063cc0954111d80a95cf') {
+                const liveData = localStorage.getItem('mana_na_blocked_slots');
+                if (liveData) {
+                    blockedData = JSON.parse(liveData);
+                    updateUI();
+                }
+                return;
+            }
+
             try {
-                blockedData = JSON.parse(liveData);
+                const response = await fetch(`${JSONBIN_URL}/latest`, {
+                    headers: { 'X-Master-Key': JSONBIN_MASTER_KEY }
+                });
+                const data = await response.json();
+                if (data.record) {
+                    blockedData = data.record;
+                    updateUI();
+                }
             } catch (e) {
-                console.error("Failed to parse stored slots", e);
+                console.error("Failed to load live slots from server", e);
             }
         }
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
             renderCheckboxes();
-            updateUI();
+            loadGlobalData();
             
             // Set minimum date to today
             const dateInput = document.getElementById('blockDate');
@@ -445,16 +475,34 @@
             
             updateUI();
             
-            // Save directly to LocalStorage
-            localStorage.setItem('mana_na_blocked_slots', JSON.stringify(blockedData));
-            alert("Configuration updated! The booking pages will now read this automatically.");
+            saveGlobalData();
+        }
+
+        async function saveGlobalData() {
+            if (JSONBIN_BIN_ID === '6a02063cc0954111d80a95cf') {
+                localStorage.setItem('mana_na_blocked_slots', JSON.stringify(blockedData));
+                alert("Configuration updated! (Only saved locally. Configure JSONBin for global access).");
+                return;
+            }
+
+            try {
+                await fetch(JSONBIN_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_MASTER_KEY },
+                    body: JSON.stringify(blockedData)
+                });
+                alert("Configuration updated globally!");
+            } catch (error) {
+                console.error("Error saving globally:", error);
+                alert("Failed to save globally. Please check your connection.");
+            }
         }
 
         // Remove a date entirely
         function removeDate(date) {
             delete blockedData[date];
             updateUI();
-            localStorage.setItem('mana_na_blocked_slots', JSON.stringify(blockedData));
+            saveGlobalData();
             if(document.getElementById('blockDate').value === date) {
                 loadExistingBlocks();
             }
