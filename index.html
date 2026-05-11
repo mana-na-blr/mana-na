@@ -1874,6 +1874,7 @@
             
             .booking-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
+            .slot-grid { grid-template-columns: 1fr 1fr; }
             .nav-links a.nav-contact-btn {
                 display: inline-block;
                 width: max-content;
@@ -3437,6 +3438,17 @@
             },
             blockWeekends: true
         };
+
+        // READ DYNAMIC CONFIGURATION:
+        // Automatically load any slot updates saved by the Admin Panel
+        const liveBlockedData = localStorage.getItem('mana_na_blocked_slots');
+        if (liveBlockedData) {
+            try {
+                slotConfig.blockedData = JSON.parse(liveBlockedData);
+            } catch (e) {
+                console.error("Error loading live slots", e);
+            }
+        }
 
         if (dateInput) {
             dateInput.addEventListener('change', function() {
