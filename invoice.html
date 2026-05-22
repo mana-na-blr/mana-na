@@ -282,9 +282,14 @@
             .invoice-meta { text-align: left; width: 100%; }
             .meta-row { justify-content: flex-start; }
             .invoice-addresses { grid-template-columns: 1fr; }
+            .invoice-addresses { 
+                grid-template-columns: 1fr 1fr; /* Keep side-by-side on mobile */
+                gap: 1rem; /* Reduce gap on mobile */
+            }
             .invoice-card { padding: 1.5rem; }
             .invoice-table { font-size: 0.85rem; }
             .invoice-table th, .invoice-table td { padding: 0.5rem 0.2rem; }
+            .invoice-table th { white-space: nowrap; } /* Prevent table headers from wrapping */
         }
     </style>
     <!-- Global Protection: Disable Selection, Dragging, and Right-Click -->
