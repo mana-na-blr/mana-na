@@ -115,6 +115,17 @@
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+
+        input, textarea, select {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
         }
 
         h1, h2, h3, h4 {
