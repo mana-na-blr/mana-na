@@ -56,6 +56,7 @@
             -moz-user-drag: none;
             -o-user-drag: none;
             user-drag: none;
+            -webkit-touch-callout: none;
         }
 
         /* --- Page Loader --- */
@@ -164,6 +165,18 @@
             font-weight: 500;
             animation: gradientShift 8s ease infinite;
             filter: brightness(1.15);
+        }
+
+        /* --- Scroll Reveal Animation --- */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- Areas of Support Grid (Distinct Design) --- */
@@ -1806,6 +1819,62 @@
             opacity: 0.7;
         }
 
+        /* --- Tablet Landscape / Small Desktop Optimization --- */
+        @media (max-width: 1366px) {
+            /* Shift Hamburger Menu to trigger at 1366px (iPad Landscape & below) */
+            .menu-toggle { display: flex; }
+            .nav-links {
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg);
+                flex-direction: column;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease-in-out;
+            }
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+            
+            .nav-links a.nav-contact-btn {
+                display: inline-block;
+                width: max-content;
+                margin: 0 auto;
+            }
+            .nav-contact-wrapper {
+                flex-direction: column;
+            }
+            .nav-contact-wrapper .dropdown-content {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                border: none;
+                background: transparent;
+                margin-top: 10px;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+            .nav-contact-wrapper:hover .dropdown-content {
+                transform: none;
+            }
+            .nav-contact-wrapper::after {
+                display: none;
+            }
+        }
+
         /* --- Mobile Responsiveness --- */
         @media (max-width: 1024px) {
             .slide-content h1 { font-size: 3rem; }
@@ -1877,14 +1946,13 @@
             }
         }
 
-        @media (min-width: 769px) {
+        @media (min-width: 1367px) {
             .nav-links a.nav-contact-btn {
                 min-width: 146px; /* Prevents layout shifting when text changes */
             }
         }
 
         @media (max-width: 768px) {
-            .menu-toggle { display: flex; }
             .support-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -1896,59 +1964,9 @@
             .support-item h3 {
                 font-size: 1.2rem;
             }
-            .nav-links {
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: var(--nav-bg);
-                flex-direction: column;
-                padding: 2rem 0;
-                gap: 1.5rem;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-                backdrop-filter: blur(15px);
-                -webkit-backdrop-filter: blur(15px);
-                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-                transition: clip-path 0.4s ease-in-out;
-            }
-            .nav-links.active {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            }
-            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-            .menu-toggle.active span:nth-child(2) { opacity: 0; }
-            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-            
             .booking-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
             .slot-grid { grid-template-columns: 1fr 1fr; }
-            .nav-links a.nav-contact-btn {
-                display: inline-block;
-                width: max-content;
-                margin: 0 auto;
-            }
-            .nav-contact-wrapper {
-                flex-direction: column;
-            }
-            .nav-contact-wrapper .dropdown-content {
-                position: static;
-                transform: none;
-                opacity: 1;
-                visibility: visible;
-                box-shadow: none;
-                border: none;
-                background: transparent;
-                margin-top: 10px;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-            }
-            .nav-contact-wrapper:hover .dropdown-content {
-                transform: none;
-            }
-            .nav-contact-wrapper::after {
-                display: none;
-            }
             .slide-content h1 { font-size: 2.2rem; }
             .section-card { 
                 padding: 2rem;
@@ -1975,6 +1993,10 @@
             }
             .newsletter-form input {
                 text-align: center;
+            }
+            .logo img {
+                width: 60px;
+                height: 60px;
             }
             .brand-name {
                 font-size: 1.2rem;
@@ -2017,6 +2039,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-touch-callout: none;
     
     /* Optional: Completely disables all mouse interactions */
     /* pointer-events: none; */ 
@@ -2276,6 +2299,8 @@
                 <span class="brand-name">Mana-na<span class="kannada-text">&nbsp;ಮನ-ನ</span></span>
                 <span class="tagline">Counselling & Wellbeing Space</span>
             </div>
+        </a>
+        <div class="nav-controls">
             <div class="nav-links" id="navLinks">
                 <a href="#home" data-target="home" class="active">Home</a>
                 <a href="#about" data-target="about">About</a>
@@ -2363,13 +2388,13 @@
         </button>
     </header>
 
-    <section id="about">
+    <section id="about" class="reveal-on-scroll">
         <h2>Welcome to Mana‑na</h2>
         <p><strong>Manana refers to reflective thinking —</strong> <br> the quiet process of examining one’s thoughts and experiences with depth and intention. <br> We provide practical Support tools for personal growth you can apply in everyday life for developing  emotional balance.</p>
     </section>
 
     <section id="approach">
-        <div class="section-card approach-intro-card">
+        <div class="section-card approach-intro-card reveal-on-scroll">
             <h2>Our Approach</h2>
             <p>Structured through reflective conversations and evidence-based practices, we help you make sense of your experiences and find clarity in your next steps.</p>
         </div>
@@ -2410,41 +2435,41 @@
     </section>
 
     <section id="areas-of-support">
-        <div class="section-card">
+        <div class="section-card reveal-on-scroll">
             <h2>Areas of Support</h2>
             <p class="section-subtitle">Supporting teens and adults through life's challenges.</p>
             <div class="support-grid">
-                <div class="support-item">
+                <div class="support-item reveal-on-scroll">
                     <!--img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Anxiety & Stress" class="support-bg"-->
                     <h3>Anxiety & Stress</h3>
                     <p class="support-description">Manage worry and stress with evidence-based coping strategies tailored to your needs.</p>
                 </div>
-                <div class="support-item">
+                <div class="support-item reveal-on-scroll" style="transition-delay: 0.1s;">
                     <!--img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Academic Pressure" class="support-bg"-->
                     <h3>Academic Pressure</h3>
                     <p class="support-description">Develop study skills and resilience to thrive in academic challenges.</p>
                 </div>
-                <div class="support-item">
+                <div class="support-item reveal-on-scroll" style="transition-delay: 0.2s;">
                     <!--img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80" alt="Work-Life Balance" class="support-bg"-->
                     <h3>Work-Life Balance</h3>
                     <p class="support-description">Create meaningful boundaries and find harmony between work and personal well-being.</p>
                 </div>
-                <div class="support-item">
+                <div class="support-item reveal-on-scroll">
                     <!--img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=600&q=80" alt="Emotional Difficulties" class="support-bg"-->
                     <h3>Emotional Difficulties</h3>
                     <p class="support-description">Explore and process complex emotions with compassionate, non-judgmental support.</p>
                 </div>
-                <div class="support-item">
+                <div class="support-item reveal-on-scroll" style="transition-delay: 0.1s;">
                     <!--img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80" alt="Relationship Concerns" class="support-bg"-->
                     <h3>Relationship Concerns</h3>
                     <p class="support-description">Strengthen connections and navigate relational challenges with clarity and care.</p>
                 </div>
-                <div class="support-item">
+                <div class="support-item reveal-on-scroll" style="transition-delay: 0.2s;">
                     <!--img src="https://images.unsplash.com/photo-1460533893735-45cea2212645?auto=format&fit=crop&w=600&q=80" alt="Life Transitions" class="support-bg"-->
                     <h3>Life Transitions</h3>
                     <p class="support-description">Navigate change with confidence and find stability during life's pivotal moments.</p>
                 </div>
-                <div class="support-item">
+                <div class="support-item reveal-on-scroll">
                     <h3>Parenting & Teen Behavior Support</h3>
                     <p class="support-description">Foster understanding, improve family communication, and navigate the complexities of adolescence with practical guidance.</p>
                 </div>
@@ -2453,43 +2478,43 @@
     </section>
 
     <section id="self-reflection">
-        <div class="section-card">
+        <div class="section-card reveal-on-scroll">
             <h2>Is Therapy for Me?</h2>
             <p class="section-subtitle">Take a moment to reflect on these questions. If any resonate with you, it might be time to reach out.</p>
             
             <div class="assessment-container">
                 <div class="assessment-list">
-                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                    <div class="assessment-item reveal-on-scroll" onclick="toggleAssessment(this)">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
                         <p>Do you often feel overwhelmed by stress or daily expectations?</p>
                     </div>
-                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                    <div class="assessment-item reveal-on-scroll" onclick="toggleAssessment(this)" style="transition-delay: 0.1s;">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
                         <p> Do you find yourself Overthinking or worrying a lot?</p>
                     </div>
-                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                    <div class="assessment-item reveal-on-scroll" onclick="toggleAssessment(this)" style="transition-delay: 0.2s;">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
                         <p> Are you finding it hard to focus or stay motivated?</p>
                     </div>
-                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                    <div class="assessment-item reveal-on-scroll" onclick="toggleAssessment(this)" style="transition-delay: 0.3s;">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
                         <p>Are you seeking a dedicated space to understand yourself better?</p>
                     </div>
-                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                    <div class="assessment-item reveal-on-scroll" onclick="toggleAssessment(this)" style="transition-delay: 0.4s;">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
                         <p> Do you feel low, anxious or not like yourself lately?</p>
                     </div>
-                    <div class="assessment-item" onclick="toggleAssessment(this)">
+                    <div class="assessment-item reveal-on-scroll" onclick="toggleAssessment(this)" style="transition-delay: 0.5s;">
                         <div class="checkbox-custom">
                             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                         </div>
@@ -2506,7 +2531,7 @@
     </section>
 
     <section id="counsellor">
-        <div class="section-card counsellor-grid">
+        <div class="section-card counsellor-grid reveal-on-scroll">
             <img src="https://www.mana-na.in/mtc_image.jpeg" alt="Divya Narayan - Counselling Psychologist" class="counsellor-img">
             <div>
                 <h2>Meet the Counsellor</h2>
@@ -2609,18 +2634,18 @@
     </section-->
 
     <section id="testimonials">
-        <div class="section-card">
+        <div class="section-card reveal-on-scroll">
             <h2>Testimonials</h2>
             <div class="testimonials-grid">
-                <div class="testimonial-card">
+                <div class="testimonial-card reveal-on-scroll">
                     <p class="testimonial-text">"I felt really comfortable opening up here. There was no judgment, just calm listening and support. It helped me understand my thoughts better."</p>
                     <p class="testimonial-author">- Krishna.R</p>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card reveal-on-scroll" style="transition-delay: 0.15s;">
                     <p class="testimonial-text">"Talking with Divya made things feel lighter from the first session, It gave me clarity during a confusing time."</p>
                     <p class="testimonial-author">- Vidisha Ram</p>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card reveal-on-scroll" style="transition-delay: 0.3s;">
                     <p class="testimonial-text">"I was going through a tough phase and didn’t know where to start. The sessions helped me feel more in control and a little more hopeful."</p>
                     <p class="testimonial-author">- Deepa</p>
                 </div>
@@ -2629,7 +2654,7 @@
     </section>
 
 <section id="gallery"> 
-    <div class="section-card">
+    <div class="section-card reveal-on-scroll">
     <h2>Gallery</h2>
     <p>Community-based group sessions conducted through MANA-NA, <br>supporting women and students in building emotional awareness</p>
     <img src="https://www.mana-na.in/mtc_image-5.png" alt="counselling space" style="width: 100%; border-radius: 8px;">
@@ -2637,12 +2662,12 @@
 </section>
     
     <section id="faq">
-        <div class="section-card">
+        <div class="section-card reveal-on-scroll">
             <h2>Frequently Asked Questions</h2>
             <p class="section-subtitle">Find answers to common questions about our services.</p>
             
             <div class="faq-container">
-                <div class="faq-item">
+                <div class="faq-item reveal-on-scroll">
                     <div class="faq-question">
                         <span>What can I expect in the first session?</span>
                         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
@@ -2652,7 +2677,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item reveal-on-scroll" style="transition-delay: 0.1s;">
                     <div class="faq-question">
                         <span>How long are the sessions?</span>
                         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
@@ -2662,7 +2687,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item reveal-on-scroll" style="transition-delay: 0.2s;">
                     <div class="faq-question">
                         <span>Is therapy confidential?</span>
                         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
@@ -2672,7 +2697,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item reveal-on-scroll" style="transition-delay: 0.3s;">
                     <div class="faq-question">
                         <span>Do you offer online sessions?</span>
                         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
@@ -2682,7 +2707,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item reveal-on-scroll" style="transition-delay: 0.4s;">
                     <div class="faq-question">
                         <span>How do I book an appointment?</span>
                         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
@@ -2696,7 +2721,7 @@
     </section>
 
     <section id="book-appointment">
-        <div class="section-card" style="text-align: center;">
+        <div class="section-card reveal-on-scroll" style="text-align: center;">
             <h2>Book an Appointment</h2>
             <p class="section-subtitle">Take the first step towards clarity and resilience. Schedule your session with us today.</p>
             <button class="btn" onclick="openBookingModal()" style="padding: 1rem 3rem; font-size: 1.1rem;">Book a Session</button>
@@ -2704,7 +2729,7 @@
     </section>
         
     <section id="contact">
-        <div class="section-card">
+        <div class="section-card reveal-on-scroll">
             <h2>Contact Us</h2>
             <p style="margin-bottom: 3rem;">Accessing support at the right time can make a meaningful difference. <br>It is never too late to seek professional's help. <br>Reach out to schedule a session or ask any questions.</p>
              <form class="contact-grid" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
@@ -2739,7 +2764,7 @@
 
 
 <section id="emergency-support">
-        <div class="section-card">
+        <div class="section-card reveal-on-scroll">
             <!--h2>Resources & Support</h2>
             <p class="section-subtitle">Important contacts for immediate assistance.</p-->
             <div class="crisis-box">
@@ -2768,7 +2793,7 @@
 
     <footer>
         <div class="footer-grid">
-            <div class="footer-brand">
+            <div class="footer-brand reveal-on-scroll">
                 <a href="#home" class="logo">
                     <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo">
                     <div class="logo-text">
@@ -2794,7 +2819,7 @@
                     <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
                 </div>
             </div>
-            <div class="footer-nav">
+            <div class="footer-nav reveal-on-scroll" style="transition-delay: 0.1s;">
                 <h4>Quick Links</h4>
                 <div class="footer-nav-links">
                     <a href="#home">Home</a>
@@ -2813,13 +2838,13 @@
                     <a href="https://www.mana-na.in/privacy-policy.html" target="_blank">Privacy Policy</a>
                 </div>
             </div>
-            <div class="footer-qr">
+            <div class="footer-qr reveal-on-scroll" style="transition-delay: 0.2s;">
                 <h4>Scan to Visit</h4>
                 <img src="https://www.mana-na.in/Site-QR.png" alt="Mana-na QR Code">
                 <p>Access our site easily<br>on your mobile device</p>
             </div>
         </div>
-        <div class="footer-bottom">
+        <div class="footer-bottom reveal-on-scroll" style="transition-delay: 0.3s;">
             <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space</p>
             <p class="footer-credit">Designed by <a href="https://bit.ly/thedteam" target="_blank"> The 'D Team</a></p>
         </div>
@@ -3050,6 +3075,11 @@
                 }
             });
 
+            // Update URL hash as user scrolls
+            if (current && window.location.hash !== `#${current}`) {
+                history.replaceState(null, null, `#${current}`);
+            }
+
             navItems.forEach(a => {
                 a.classList.remove('active');
                 if (a.getAttribute('data-target') === current) {
@@ -3059,6 +3089,24 @@
                 }
             });
         });
+
+        // --- Scroll Reveal Animation ---
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealObserver.observe(el));
 
         // --- Theme Toggle Logic ---
         const themeToggleBtn = document.getElementById('themeToggle');
@@ -3847,7 +3895,7 @@
             let textIndex = 0;
 
             setInterval(() => {
-                if (window.innerWidth > 768) {
+                if (window.innerWidth > 1366) {
                     contactBtnText.style.opacity = '0';
                     setTimeout(() => {
                         const content = rotatingContent[textIndex];
