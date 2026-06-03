@@ -172,7 +172,6 @@
             opacity: 0;
             transform: translateY(40px);
             transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-            will-change: opacity, transform;
         }
         .reveal-on-scroll.visible {
             opacity: 1;
@@ -3100,7 +3099,9 @@
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                requestAnimationFrame(() => {
                     entry.target.classList.add('visible');
+                });
                     observer.unobserve(entry.target);
                 }
             });
