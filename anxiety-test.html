@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anxiety Test | Mana-na</title>
+    <meta name="description" content="Take this short anxiety test (GAD-7) to check your anxiety levels. Mana-na Counselling & Wellbeing Space.">
+    <meta property="og:url" content="https://www.mana-na.in/anxiety-test.html"/>
+    <meta property="og:site_name" content="Mana-na" />
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="https://www.mana-na.in/mana-na_logo.png" />
+    
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="https://www.mana-na.in/favicon.png" type="image/x-icon">
+
+    <!-- ANDROID/CHROME -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="white">
+
+    <style>
+        /* --- CSS Variables & Theme --- */
+        :root {
+            --bg-color: #e8f6e9; 
+            --text-main: #2c3e35;
+            --text-header: #006738; 
+            --btn-bg: #006738;      
+            --btn-text: #ffffff;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(232, 246, 233, 0.95);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0d1710;
+            --text-main: #e8f6e9;
+            --text-header: #81c784; 
+            --btn-bg: #81c784;
+            --btn-text: #0d1710;
+            --card-bg: #152419;
+            --nav-bg: rgba(13, 23, 16, 0.95);
+        }
+
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -webkit-touch-callout: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+
+        input, textarea, select {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--text-header);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        section {
+            padding: 1.5rem 5%;
+            padding-bottom: 0rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            padding: 4rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 103, 56, 0.05);
+        }
+
+        /* --- Form Inputs --- */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .form-row .form-group {
+            margin-bottom: 0;
+            flex: 1;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-header);
+            font-size: 0.95rem;
+        }
+        .form-group input, .form-group select {
+            width: 100%; padding: 1.2rem; border: 2px solid rgba(0, 103, 56, 0.1); border-radius: 12px;
+            background-color: var(--bg-color); color: var(--text-main); font-family: inherit;
+            transition: var(--transition); font-size: 1rem;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none; border-color: var(--text-header); background-color: var(--card-bg);
+            box-shadow: 0 0 0 4px rgba(0, 103, 56, 0.05);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 103, 56, 0.2);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            color: var(--text-header);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .brand-name {
+            font-size: 1.6rem;
+            font-weight: 450;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            font-weight: 500;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        .logo img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 1rem;
+            position: relative;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-header);
+        }
+
+        .nav-links a.nav-contact-btn {
+            background-color: var(--btn-bg);
+            color: var(--btn-text) !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(0, 103, 56, 0.2);
+            text-align: center;
+        }
+
+        .nav-links a.nav-contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 103, 56, 0.3);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(0, 103, 56, 0.1);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-header);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* --- Test Specific Styles --- */
+        .question-card {
+            margin-bottom: 2rem;
+            padding: 3rem;
+            text-align: left;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1.6fr 1.1fr;
+            gap: 1rem;
+        }
+        
+        .hidden-radio {
+            display: none;
+        }
+        
+        .option-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background-color: var(--bg-color);
+            border: 2px solid rgba(0, 103, 56, 0.1);
+            border-radius: 12px;
+            padding: 0.8rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            color: var(--text-main);
+            user-select: none;
+            font-size: 0.95rem;
+        }
+        
+        .option-label:hover {
+            border-color: var(--text-header);
+            background-color: var(--card-bg);
+        }
+        
+        .hidden-radio:checked + .option-label {
+            background-color: var(--text-header);
+            color: var(--btn-text);
+            border-color: var(--text-header);
+            box-shadow: 0 4px 15px rgba(0, 103, 56, 0.2);
+        }
+        
+        [data-theme="dark"] .hidden-radio:checked + .option-label {
+            box-shadow: 0 4px 15px rgba(129, 199, 132, 0.2);
+        }
+
+        /* --- Floating Buttons --- */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+        }
+
+        .float-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366; 
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        .whatsapp-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn svg { width: 32px; height: 32px; fill: white; }
+
+        .back-top-btn {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        .back-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-top-btn svg { width: 28px; height: 28px; fill: var(--btn-text); }
+
+        .float-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--card-bg);
+            padding: 5rem 5% 2rem;
+            border-top: 1px solid rgba(0, 103, 56, 0.1);
+            margin-top: 4rem;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-credit {
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        .footer-credit a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media (max-width: 900px) {
+            .options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .question-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .nav-links {
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg);
+                flex-direction: column;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease-in-out;
+            }
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+            
+            .nav-links a.nav-contact-btn {
+                display: inline-block;
+                width: max-content;
+                margin: 0 auto;
+            }
+            .options {
+                grid-template-columns: 1fr;
+            }
+            .brand-name {
+                font-size: 1.2rem;
+            }
+            .tagline {
+                font-size: 0.65rem;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            header.page-header {
+                padding-top: 4rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html#home" class="logo">
+            <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo">
+            <div class="logo-text">
+                <span class="brand-name">Mana-na<span class="kannada-text" style="font-weight: 400; opacity: 0.9;">&nbsp;ಮನ-ನ</span></span>
+                <span class="tagline">Counselling & Wellbeing Space</span>
+            </div>
+        </a>
+        <div class="nav-controls">
+            <div class="nav-links" id="navLinks">
+                <a href="index.html#home">Home</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#approach">Our Approach</a>
+                <a href="index.html#areas-of-support">Areas of Support</a>
+                <a href="index.html#counsellor">Meet the Counsellor</a>
+                <a href="index.html#faq">FAQs</a>
+                <a href="index.html#contact" class="nav-contact-btn">Contact</a>
+            </div>
+            
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme"></button>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Open Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="page-header" style="margin-top: 80px; padding: 6rem 5% 2rem; text-align: center; background: var(--bg-color);">
+        <h1>Anxiety Assessment</h1>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; color: var(--text-main); opacity: 0.9;">
+            Over the last 2 weeks, how often have you been bothered by the following problems?
+        </p>
+    </header>
+
+    <section id="test-section">
+        <form id="anxiety-form">
+            <!-- Step 1: Questions -->
+            <div id="step-questions">
+                <!-- Question 1 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">1. Feeling nervous, anxious or on edge</h3>
+                    <div class="options">
+                        <input type="radio" name="q1" id="q1_0" value="0" class="hidden-radio">
+                        <label for="q1_0" class="option-label">Not at all</label>
+                        <input type="radio" name="q1" id="q1_1" value="1" class="hidden-radio">
+                        <label for="q1_1" class="option-label">Several days</label>
+                        <input type="radio" name="q1" id="q1_2" value="2" class="hidden-radio">
+                        <label for="q1_2" class="option-label">More than half the days</label>
+                        <input type="radio" name="q1" id="q1_3" value="3" class="hidden-radio">
+                        <label for="q1_3" class="option-label">Nearly every day</label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">2. Not being able to stop or control worrying</h3>
+                    <div class="options">
+                        <input type="radio" name="q2" id="q2_0" value="0" class="hidden-radio">
+                        <label for="q2_0" class="option-label">Not at all</label>
+                        <input type="radio" name="q2" id="q2_1" value="1" class="hidden-radio">
+                        <label for="q2_1" class="option-label">Several days</label>
+                        <input type="radio" name="q2" id="q2_2" value="2" class="hidden-radio">
+                        <label for="q2_2" class="option-label">More than half the days</label>
+                        <input type="radio" name="q2" id="q2_3" value="3" class="hidden-radio">
+                        <label for="q2_3" class="option-label">Nearly every day</label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">3. Worrying too much about different things</h3>
+                    <div class="options">
+                        <input type="radio" name="q3" id="q3_0" value="0" class="hidden-radio">
+                        <label for="q3_0" class="option-label">Not at all</label>
+                        <input type="radio" name="q3" id="q3_1" value="1" class="hidden-radio">
+                        <label for="q3_1" class="option-label">Several days</label>
+                        <input type="radio" name="q3" id="q3_2" value="2" class="hidden-radio">
+                        <label for="q3_2" class="option-label">More than half the days</label>
+                        <input type="radio" name="q3" id="q3_3" value="3" class="hidden-radio">
+                        <label for="q3_3" class="option-label">Nearly every day</label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">4. Trouble relaxing</h3>
+                    <div class="options">
+                        <input type="radio" name="q4" id="q4_0" value="0" class="hidden-radio">
+                        <label for="q4_0" class="option-label">Not at all</label>
+                        <input type="radio" name="q4" id="q4_1" value="1" class="hidden-radio">
+                        <label for="q4_1" class="option-label">Several days</label>
+                        <input type="radio" name="q4" id="q4_2" value="2" class="hidden-radio">
+                        <label for="q4_2" class="option-label">More than half the days</label>
+                        <input type="radio" name="q4" id="q4_3" value="3" class="hidden-radio">
+                        <label for="q4_3" class="option-label">Nearly every day</label>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">5. Being so restless that it is hard to sit still</h3>
+                    <div class="options">
+                        <input type="radio" name="q5" id="q5_0" value="0" class="hidden-radio">
+                        <label for="q5_0" class="option-label">Not at all</label>
+                        <input type="radio" name="q5" id="q5_1" value="1" class="hidden-radio">
+                        <label for="q5_1" class="option-label">Several days</label>
+                        <input type="radio" name="q5" id="q5_2" value="2" class="hidden-radio">
+                        <label for="q5_2" class="option-label">More than half the days</label>
+                        <input type="radio" name="q5" id="q5_3" value="3" class="hidden-radio">
+                        <label for="q5_3" class="option-label">Nearly every day</label>
+                    </div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">6. Becoming easily annoyed or irritable</h3>
+                    <div class="options">
+                        <input type="radio" name="q6" id="q6_0" value="0" class="hidden-radio">
+                        <label for="q6_0" class="option-label">Not at all</label>
+                        <input type="radio" name="q6" id="q6_1" value="1" class="hidden-radio">
+                        <label for="q6_1" class="option-label">Several days</label>
+                        <input type="radio" name="q6" id="q6_2" value="2" class="hidden-radio">
+                        <label for="q6_2" class="option-label">More than half the days</label>
+                        <input type="radio" name="q6" id="q6_3" value="3" class="hidden-radio">
+                        <label for="q6_3" class="option-label">Nearly every day</label>
+                    </div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">7. Feeling afraid as if something awful might happen</h3>
+                    <div class="options">
+                        <input type="radio" name="q7" id="q7_0" value="0" class="hidden-radio">
+                        <label for="q7_0" class="option-label">Not at all</label>
+                        <input type="radio" name="q7" id="q7_1" value="1" class="hidden-radio">
+                        <label for="q7_1" class="option-label">Several days</label>
+                        <input type="radio" name="q7" id="q7_2" value="2" class="hidden-radio">
+                        <label for="q7_2" class="option-label">More than half the days</label>
+                        <input type="radio" name="q7" id="q7_3" value="3" class="hidden-radio">
+                        <label for="q7_3" class="option-label">Nearly every day</label>
+                    </div>
+                </div>
+
+                <div class="section-card" style="text-align: center; padding: 2rem;">
+                    <button type="button" id="next-btn-1" class="btn" style="padding: 1rem 3rem; font-size: 1.1rem;" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Details -->
+            <div id="step-details" style="display: none;">
+                <div class="section-card">
+                    <h2 style="text-align: center; font-size: 2.2rem;">Final Step Before Your Report</h2>
+                    <p style="text-align: center; margin-bottom: 2.5rem; font-size: 1.1rem; opacity: 0.9;">Your details help us personalise your results and deliver them securely.</p>
+                    
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Please Enter Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter Your Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" value="+91" readonly tabindex="-1" style="width: 70px; flex-shrink: 0; text-align: center; padding-left: 0; padding-right: 0; background-color: rgba(0, 103, 56, 0.03); cursor: default; user-select: none;">
+                            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" maxlength="10" placeholder="Enter phone number" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" required placeholder="Please Enter Your Age" min="10" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="occupation">Occupation</label>
+                            <select id="occupation" name="occupation" required>
+                                <option value="" disabled selected>Select Your Occupation</option>
+                                <option value="Student">Student</option>
+                                <option value="Working Professional">Working Professional</option>
+                                <option value="Business/Self-Employed">Business / Self-Employed</option>
+                                <option value="Homemaker">Homemaker</option>
+                                <option value="Retired">Retired</option>
+                                <option value="Unemployed">Unemployed</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="language">Language</label>
+                            <select id="language" name="language" required>
+                                <option value="" disabled selected>Select Your Preferred</option>
+                                <option value="English">English</option>
+                                <option value="Hindi">Hindi</option>
+                                <option value="Kannada">Kannada</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button type="submit" id="generate-btn" class="btn" style="padding: 1rem 3rem; font-size: 1.1rem;">Generate My Report</button>
+                        <div id="form-error" style="color: #c53030; margin-top: 1rem; display: none; font-weight: 500;">Please fill out all fields correctly.</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section id="result-section" style="display: none;">
+        <div class="section-card" style="text-align: center;">
+            <h2>Your Results</h2>
+            <div id="result-box" style="margin: 2rem auto; padding: 2.5rem; border-radius: 16px; background-color: var(--bg-color); max-width: 700px; border: 2px solid rgba(0, 103, 56, 0.1);">
+                <h3 id="result-title" style="font-size: 2.2rem; margin-bottom: 1rem;"></h3>
+                <p id="result-score" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text-main);"></p>
+                <p id="result-desc" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-main);"></p>
+            </div>
+            
+            <p style="opacity: 0.8; font-size: 0.95rem; max-width: 700px; margin: 0 auto 2.5rem; font-style: italic;">
+                *This assessment is based on the GAD-7 scale and is for informational purposes only. It is not a diagnostic tool. If you are experiencing distress, please consult a mental health professional.
+            </p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="index.html#book-appointment" class="btn">Book a Session</a>
+                <button class="btn" onclick="resetTest()" style="background-color: transparent; border: 2px solid var(--btn-bg); color: var(--text-header);">Take Again</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space</p>
+            <p class="footer-credit">Designed by <a href="https://bit.ly/thedteam" target="_blank"> The 'D Team</a></p>
+        </div>
+    </footer>
+
+    <div class="floating-buttons">
+        <a href="https://api.whatsapp.com/send/?phone=917349351920&text=Hi%20Mana-na%20-%20I'm%20interested%20in%20Counselling%20and%20Wellbeing%20Space!%20https://www.mana-na.in" target="_blank" class="float-btn whatsapp-btn" aria-label="Chat on WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </a>
+        <button id="backToTop" class="float-btn back-top-btn" aria-label="Back to Top">
+            <svg viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+        </button>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // --- Navigation & Mobile Menu Toggle ---
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // --- Theme Toggle Logic ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const rootElement = document.documentElement;
+        
+        const svgMoon = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        const svgSun = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
+        function updateThemeIcon(theme) {
+            themeToggleBtn.innerHTML = theme === 'dark' ? svgSun : svgMoon;
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        rootElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = rootElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            rootElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        // --- Anxiety Test Logic ---
+        const anxietyForm = document.getElementById('anxiety-form');
+        const stepQuestions = document.getElementById('step-questions');
+        const stepDetails = document.getElementById('step-details');
+        const nextBtn1 = document.getElementById('next-btn-1');
+
+        anxietyForm.addEventListener('change', function() {
+            if(stepQuestions.style.display !== 'none') {
+                let allAnswered = true;
+                for(let i = 1; i <= 7; i++) {
+                    if(!anxietyForm.querySelector(`input[name="q${i}"]:checked`)) {
+                        allAnswered = false;
+                        break;
+                    }
+                }
+                nextBtn1.disabled = !allAnswered;
+            }
+        });
+
+        nextBtn1.addEventListener('click', function() {
+            stepQuestions.style.display = 'none';
+            stepDetails.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.getElementById('anxiety-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const occupation = document.getElementById('occupation').value;
+            const language = document.getElementById('language').value;
+            
+            let score = 0;
+            const answers = {};
+            const questionTexts = [
+                "1. Feeling nervous, anxious or on edge",
+                "2. Not being able to stop or control worrying",
+                "3. Worrying too much about different things",
+                "4. Trouble relaxing",
+                "5. Being so restless that it is hard to sit still",
+                "6. Becoming easily annoyed or irritable",
+                "7. Feeling afraid as if something awful might happen"
+            ];
+            const optionLabels = ["Not at all", "Several days", "More than half the days", "Nearly every day"];
+            
+            for(let i = 1; i <= 7; i++) {
+                const selected = anxietyForm.querySelector(`input[name="q${i}"]:checked`);
+                if(selected) {
+                    const val = parseInt(selected.value);
+                    score += val;
+                    answers[`Question ${i}`] = optionLabels[val];
+                }
+            }
+
+            if(!name || !email || phone.length !== 10 || !age || !gender || !occupation || !language) {
+                document.getElementById('form-error').style.display = 'block';
+                return;
+            }
+            document.getElementById('form-error').style.display = 'none';
+
+            const generateBtn = document.getElementById('generate-btn');
+            const originalBtnText = generateBtn.textContent;
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating Report...';
+
+            let title, desc, color;
+            const currentTheme = rootElement.getAttribute('data-theme');
+            
+            if(score <= 4) {
+                title = "Minimal Anxiety";
+                desc = "Your anxiety levels are currently minimal. Continue to practice good self-care and stress management.";
+                color = currentTheme === 'dark' ? "#81c784" : "#4CAF50";
+            } else if(score <= 9) {
+                title = "Mild Anxiety";
+                desc = "You are experiencing mild anxiety. Consider incorporating relaxation techniques and mindfulness into your routine.";
+                color = currentTheme === 'dark' ? "#FFD54F" : "#FFC107";
+            } else if(score <= 14) {
+                title = "Moderate Anxiety";
+                desc = "You are experiencing moderate anxiety. It might be beneficial to speak with a mental health professional for support and guidance.";
+                color = currentTheme === 'dark' ? "#FFB74D" : "#FF9800";
+            } else {
+                title = "Severe Anxiety";
+                desc = "You are experiencing severe anxiety. We strongly encourage you to seek professional help to discuss what you're going through and find effective coping strategies.";
+                color = currentTheme === 'dark' ? "#fc8181" : "#F44336";
+            }
+
+            // --- Firebase Tracking ---
+            try {
+                const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lEVmtBaDU5c2tkd1U3VE5CRFNiVl9nN29JTVVOTzFrZ3ciLCJhdXRoRG9tYWluIjoibWFuYS1uYS1zbG90cy5maXJlYmFzZWFwcC5jb20iLCJwcm9qZWN0SWQiOiJtYW5hLW5hLXNsb3RzIiwic3RvcmFnZUJ1Y2tldCI6Im1hbmEtbmEtc2xvdHMuYXBwc3BvdC5jb20iLCJtZXNzYWdpbmdTZW5kZXJJZCI6Ijk3MDk5Njg1NDI5MiIsImFwcElkIjoiMTo5NzA5OTY4NTQyOTI6d2ViOmNlNWFkY2M0YTFjNGIyMWM0YjQxMDEifQ=="));
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                const db = firebase.firestore();
+                await db.collection("analytics").doc("anxiety-test").set({
+                    count: firebase.firestore.FieldValue.increment(1)
+                }, { merge: true });
+            } catch (error) {
+                console.error("Firebase tracking error:", error);
+            }
+
+            // --- FormSubmit Submission ---
+            try {
+                const formData = {
+                    _subject: `New Anxiety Test Result - ${name} (${title})`,
+                    _captcha: "false",
+                    _template: "table",
+                    "👤 User Details": "-------------------------------------",
+                    "Name": name,
+                    "Email": email,
+                    "Phone": `+91 ${phone}`,
+                    "Age": age,
+                    "Gender": gender,
+                    "Occupation": occupation,
+                    "Language": language,
+                    "📊 Test Results": "-------------------------------------",
+                    "Total Score": `${score} / 21`,
+                    "Category": title,
+                    "Description": desc,
+                    "📝 Test Answers": "-------------------------------------"
+                };
+
+                for(let i = 1; i <= 7; i++) {
+                    formData[questionTexts[i-1]] = answers[`Question ${i}`];
+                }
+
+                await fetch("https://formsubmit.co/ajax/info@mana-na.in", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
+            } catch (error) {
+                console.error("FormSubmit submission error:", error);
+            }
+
+            generateBtn.disabled = false;
+            generateBtn.textContent = originalBtnText;
+
+            document.getElementById('result-title').textContent = title;
+            document.getElementById('result-title').style.color = color;
+            document.getElementById('result-box').style.borderColor = color;
+            document.getElementById('result-score').textContent = `Total Score: ${score} / 21`;
+            document.getElementById('result-desc').textContent = desc;
+
+            document.getElementById('test-section').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+            
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        function resetTest() {
+            document.getElementById('anxiety-form').reset();
+            document.getElementById('next-btn-1').disabled = true;
+            document.getElementById('step-questions').style.display = 'block';
+            document.getElementById('step-details').style.display = 'none';
+            document.getElementById('test-section').style.display = 'block';
+            document.getElementById('result-section').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Back to Top & WhatsApp Button Logic ---
+        const backToTopBtn = document.getElementById('backToTop');
+        const whatsappBtn = document.querySelector('.whatsapp-btn');
+
+        window.addEventListener('scroll', () => {
+            // Calculate 20% of total scrollable height
+            const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercentage = (window.scrollY / totalScrollableHeight) * 100;
+
+            // Show WhatsApp button at 15% scroll
+            if (scrollPercentage > 0) {
+                whatsappBtn.classList.add('visible');
+            } else {
+                whatsappBtn.classList.remove('visible');
+            }
+
+            // Show Back to Top button at 300px scroll
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
