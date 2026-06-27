@@ -382,7 +382,7 @@
         
         .options {
             display: grid;
-            grid-template-columns: 1fr 1.2fr 1.6fr 1.1fr;
+            grid-template-columns: repeat(4, 1fr);
             gap: 1rem;
         }
         
@@ -646,7 +646,7 @@
     <header class="page-header" style="margin-top: 80px; padding: 6rem 5% 2rem; text-align: center; background: var(--bg-color);">
         <h1>Anxiety Assessment</h1>
         <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; color: var(--text-main); opacity: 0.9;">
-            Over the last 2 weeks, how often have you been bothered by the following problems?
+            Over the past two weeks, how often have you experienced the following?
         </p>
     </header>
 
@@ -656,106 +656,121 @@
             <div id="step-questions">
                 <!-- Question 1 -->
                 <div class="section-card question-card">
-                    <h3 class="question-text">1. Feeling nervous, anxious or on edge</h3>
+                    <h3 class="question-text">1. I have felt nervous, worried, or uneasy without a clear reason.</h3>
                     <div class="options">
                         <input type="radio" name="q1" id="q1_0" value="0" class="hidden-radio">
-                        <label for="q1_0" class="option-label">Not at all</label>
+                        <label for="q1_0" class="option-label">Never</label>
                         <input type="radio" name="q1" id="q1_1" value="1" class="hidden-radio">
-                        <label for="q1_1" class="option-label">Several days</label>
+                        <label for="q1_1" class="option-label">Occasionally</label>
                         <input type="radio" name="q1" id="q1_2" value="2" class="hidden-radio">
-                        <label for="q1_2" class="option-label">More than half the days</label>
+                        <label for="q1_2" class="option-label">Often</label>
                         <input type="radio" name="q1" id="q1_3" value="3" class="hidden-radio">
-                        <label for="q1_3" class="option-label">Nearly every day</label>
+                        <label for="q1_3" class="option-label">Almost Every Day</label>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="section-card question-card">
-                    <h3 class="question-text">2. Not being able to stop or control worrying</h3>
+                    <h3 class="question-text">2. I have found it difficult to stop worrying once my thoughts begin.</h3>
                     <div class="options">
                         <input type="radio" name="q2" id="q2_0" value="0" class="hidden-radio">
-                        <label for="q2_0" class="option-label">Not at all</label>
+                        <label for="q2_0" class="option-label">Never</label>
                         <input type="radio" name="q2" id="q2_1" value="1" class="hidden-radio">
-                        <label for="q2_1" class="option-label">Several days</label>
+                        <label for="q2_1" class="option-label">Occasionally</label>
                         <input type="radio" name="q2" id="q2_2" value="2" class="hidden-radio">
-                        <label for="q2_2" class="option-label">More than half the days</label>
+                        <label for="q2_2" class="option-label">Often</label>
                         <input type="radio" name="q2" id="q2_3" value="3" class="hidden-radio">
-                        <label for="q2_3" class="option-label">Nearly every day</label>
+                        <label for="q2_3" class="option-label">Almost Every Day</label>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="section-card question-card">
-                    <h3 class="question-text">3. Worrying too much about different things</h3>
+                    <h3 class="question-text">3. I have spent a lot of time worrying about everyday situations or future events.</h3>
                     <div class="options">
                         <input type="radio" name="q3" id="q3_0" value="0" class="hidden-radio">
-                        <label for="q3_0" class="option-label">Not at all</label>
+                        <label for="q3_0" class="option-label">Never</label>
                         <input type="radio" name="q3" id="q3_1" value="1" class="hidden-radio">
-                        <label for="q3_1" class="option-label">Several days</label>
+                        <label for="q3_1" class="option-label">Occasionally</label>
                         <input type="radio" name="q3" id="q3_2" value="2" class="hidden-radio">
-                        <label for="q3_2" class="option-label">More than half the days</label>
+                        <label for="q3_2" class="option-label">Often</label>
                         <input type="radio" name="q3" id="q3_3" value="3" class="hidden-radio">
-                        <label for="q3_3" class="option-label">Nearly every day</label>
+                        <label for="q3_3" class="option-label">Almost Every Day</label>
                     </div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="section-card question-card">
-                    <h3 class="question-text">4. Trouble relaxing</h3>
+                    <h3 class="question-text">4. I have found it hard to relax, even when I had the opportunity.</h3>
                     <div class="options">
                         <input type="radio" name="q4" id="q4_0" value="0" class="hidden-radio">
-                        <label for="q4_0" class="option-label">Not at all</label>
+                        <label for="q4_0" class="option-label">Never</label>
                         <input type="radio" name="q4" id="q4_1" value="1" class="hidden-radio">
-                        <label for="q4_1" class="option-label">Several days</label>
+                        <label for="q4_1" class="option-label">Occasionally</label>
                         <input type="radio" name="q4" id="q4_2" value="2" class="hidden-radio">
-                        <label for="q4_2" class="option-label">More than half the days</label>
+                        <label for="q4_2" class="option-label">Often</label>
                         <input type="radio" name="q4" id="q4_3" value="3" class="hidden-radio">
-                        <label for="q4_3" class="option-label">Nearly every day</label>
+                        <label for="q4_3" class="option-label">Almost Every Day</label>
                     </div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="section-card question-card">
-                    <h3 class="question-text">5. Being so restless that it is hard to sit still</h3>
+                    <h3 class="question-text">5. I have felt restless or unable to remain calm.</h3>
                     <div class="options">
                         <input type="radio" name="q5" id="q5_0" value="0" class="hidden-radio">
-                        <label for="q5_0" class="option-label">Not at all</label>
+                        <label for="q5_0" class="option-label">Never</label>
                         <input type="radio" name="q5" id="q5_1" value="1" class="hidden-radio">
-                        <label for="q5_1" class="option-label">Several days</label>
+                        <label for="q5_1" class="option-label">Occasionally</label>
                         <input type="radio" name="q5" id="q5_2" value="2" class="hidden-radio">
-                        <label for="q5_2" class="option-label">More than half the days</label>
+                        <label for="q5_2" class="option-label">Often</label>
                         <input type="radio" name="q5" id="q5_3" value="3" class="hidden-radio">
-                        <label for="q5_3" class="option-label">Nearly every day</label>
+                        <label for="q5_3" class="option-label">Almost Every Day</label>
                     </div>
                 </div>
 
                 <!-- Question 6 -->
                 <div class="section-card question-card">
-                    <h3 class="question-text">6. Becoming easily annoyed or irritable</h3>
+                    <h3 class="question-text">6. I have become more irritable or easily frustrated than usual.</h3>
                     <div class="options">
                         <input type="radio" name="q6" id="q6_0" value="0" class="hidden-radio">
-                        <label for="q6_0" class="option-label">Not at all</label>
+                        <label for="q6_0" class="option-label">Never</label>
                         <input type="radio" name="q6" id="q6_1" value="1" class="hidden-radio">
-                        <label for="q6_1" class="option-label">Several days</label>
+                        <label for="q6_1" class="option-label">Occasionally</label>
                         <input type="radio" name="q6" id="q6_2" value="2" class="hidden-radio">
-                        <label for="q6_2" class="option-label">More than half the days</label>
+                        <label for="q6_2" class="option-label">Often</label>
                         <input type="radio" name="q6" id="q6_3" value="3" class="hidden-radio">
-                        <label for="q6_3" class="option-label">Nearly every day</label>
+                        <label for="q6_3" class="option-label">Almost Every Day</label>
                     </div>
                 </div>
 
                 <!-- Question 7 -->
                 <div class="section-card question-card">
-                    <h3 class="question-text">7. Feeling afraid as if something awful might happen</h3>
+                    <h3 class="question-text">7. I have felt that something bad might happen, even when there was no clear evidence.</h3>
                     <div class="options">
                         <input type="radio" name="q7" id="q7_0" value="0" class="hidden-radio">
-                        <label for="q7_0" class="option-label">Not at all</label>
+                        <label for="q7_0" class="option-label">Never</label>
                         <input type="radio" name="q7" id="q7_1" value="1" class="hidden-radio">
-                        <label for="q7_1" class="option-label">Several days</label>
+                        <label for="q7_1" class="option-label">Occasionally</label>
                         <input type="radio" name="q7" id="q7_2" value="2" class="hidden-radio">
-                        <label for="q7_2" class="option-label">More than half the days</label>
+                        <label for="q7_2" class="option-label">Often</label>
                         <input type="radio" name="q7" id="q7_3" value="3" class="hidden-radio">
-                        <label for="q7_3" class="option-label">Nearly every day</label>
+                        <label for="q7_3" class="option-label">Almost Every Day</label>
+                    </div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="section-card question-card">
+                    <h3 class="question-text">8. My anxiety has made it difficult to concentrate on work, studies, or daily activities.</h3>
+                    <div class="options">
+                        <input type="radio" name="q8" id="q8_0" value="0" class="hidden-radio">
+                        <label for="q8_0" class="option-label">Never</label>
+                        <input type="radio" name="q8" id="q8_1" value="1" class="hidden-radio">
+                        <label for="q8_1" class="option-label">Occasionally</label>
+                        <input type="radio" name="q8" id="q8_2" value="2" class="hidden-radio">
+                        <label for="q8_2" class="option-label">Often</label>
+                        <input type="radio" name="q8" id="q8_3" value="3" class="hidden-radio">
+                        <label for="q8_3" class="option-label">Almost Every Day</label>
                     </div>
                 </div>
 
@@ -927,7 +942,7 @@
         anxietyForm.addEventListener('change', function() {
             if(stepQuestions.style.display !== 'none') {
                 let allAnswered = true;
-                for(let i = 1; i <= 7; i++) {
+                for(let i = 1; i <= 8; i++) {
                     if(!anxietyForm.querySelector(`input[name="q${i}"]:checked`)) {
                         allAnswered = false;
                         break;
@@ -957,17 +972,18 @@
             let score = 0;
             const answers = {};
             const questionTexts = [
-                "1. Feeling nervous, anxious or on edge",
-                "2. Not being able to stop or control worrying",
-                "3. Worrying too much about different things",
-                "4. Trouble relaxing",
-                "5. Being so restless that it is hard to sit still",
-                "6. Becoming easily annoyed or irritable",
-                "7. Feeling afraid as if something awful might happen"
+                "1. I have felt nervous, worried, or uneasy without a clear reason.",
+                "2. I have found it difficult to stop worrying once my thoughts begin.",
+                "3. I have spent a lot of time worrying about everyday situations or future events.",
+                "4. I have found it hard to relax, even when I had the opportunity.",
+                "5. I have felt restless or unable to remain calm.",
+                "6. I have become more irritable or easily frustrated than usual.",
+                "7. I have felt that something bad might happen, even when there was no clear evidence.",
+                "8. My anxiety has made it difficult to concentrate on work, studies, or daily activities."
             ];
-            const optionLabels = ["Not at all", "Several days", "More than half the days", "Nearly every day"];
+            const optionLabels = ["Never", "Occasionally", "Often", "Almost Every Day"];
             
-            for(let i = 1; i <= 7; i++) {
+            for(let i = 1; i <= 8; i++) {
                 const selected = anxietyForm.querySelector(`input[name="q${i}"]:checked`);
                 if(selected) {
                     const val = parseInt(selected.value);
@@ -994,11 +1010,11 @@
                 title = "Minimal Anxiety";
                 desc = "Your anxiety levels are currently minimal. Continue to practice good self-care and stress management.";
                 color = currentTheme === 'dark' ? "#81c784" : "#4CAF50";
-            } else if(score <= 9) {
+            } else if(score <= 10) {
                 title = "Mild Anxiety";
                 desc = "You are experiencing mild anxiety. Consider incorporating relaxation techniques and mindfulness into your routine.";
                 color = currentTheme === 'dark' ? "#FFD54F" : "#FFC107";
-            } else if(score <= 14) {
+            } else if(score <= 15) {
                 title = "Moderate Anxiety";
                 desc = "You are experiencing moderate anxiety. It might be beneficial to speak with a mental health professional for support and guidance.";
                 color = currentTheme === 'dark' ? "#FFB74D" : "#FF9800";
@@ -1037,13 +1053,13 @@
                     "Occupation": occupation,
                     "Language": language,
                     "📊 Test Results": "-------------------------------------",
-                    "Total Score": `${score} / 21`,
+                    "Total Score": `${score} / 24`,
                     "Category": title,
                     "Description": desc,
                     "📝 Test Answers": "-------------------------------------"
                 };
 
-                for(let i = 1; i <= 7; i++) {
+                for(let i = 1; i <= 8; i++) {
                     formData[questionTexts[i-1]] = answers[`Question ${i}`];
                 }
 
@@ -1065,7 +1081,7 @@
             document.getElementById('result-title').textContent = title;
             document.getElementById('result-title').style.color = color;
             document.getElementById('result-box').style.borderColor = color;
-            document.getElementById('result-score').textContent = `Total Score: ${score} / 21`;
+            document.getElementById('result-score').textContent = `Total Score: ${score} / 24`;
             document.getElementById('result-desc').textContent = desc;
 
             document.getElementById('test-section').style.display = 'none';
