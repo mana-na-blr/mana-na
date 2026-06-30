@@ -2284,6 +2284,65 @@
             font-weight: 600;
             font-size: 1.1rem;
         }
+
+                /* --- Grid for Assessments --- */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-top: 1rem;
+        }
+        .test-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 330px;
+            padding: 2rem 1.6rem;
+            border: 2px solid rgba(0, 103, 56, 0.05);
+            border-radius: 24px;
+            background-color: var(--card-bg);
+            transition: var(--transition);
+        }
+        .test-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-header);
+        }
+        .test-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            flex-grow: 1;
+        }
+        .test-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(0, 103, 56, 0.08);
+            border-color: rgba(0, 103, 56, 0.2);
+        }
+        @media (max-width: 900px) {
+        .tests-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        .test-card {
+            padding: 3rem 2rem;
+            min-height: auto;
+        }
+        }
+
+        #self-assessments h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+        #self-assessments h2 {
+            font-size: 1.5rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -2722,6 +2781,33 @@
         </div>
     </section>
 
+    <section id="self-assessments">
+        <div class="section-card reveal-on-scroll" style="text-align: center;">
+            <h2>Self-Assessments</h2>
+            <p class="section-subtitle">
+                Take a moment to check in with yourself. <br>Select one of our mental health assessments below.
+            </p>
+            <div class="tests-grid">
+                <!-- Anxiety Assessment Card -->
+                <div class="test-card">
+                    <h2>Anxiety Assessment</h2>
+                    <p>
+                        Check your anxiety levels over the past two weeks using the standardized GAD-7 screening tool. This short test helps evaluate common signs of worry and tension.
+                    </p>
+                    <a href="self-assessments.html?test=anxiety" target="_blank" class="btn">Take Anxiety Test</a>
+                </div>
+                <!-- Mood & Depression Assessment Card -->
+                <div class="test-card">
+                    <h2>Mood & Depression Check</h2>
+                    <p>
+                        A brief emotional well-being check to help you understand your mood patterns, energy levels, and potential signs of depression.
+                    </p>
+                    <a href="self-assessments.html?test=mood" target="_blank" class="btn">Take Mood Check</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="book-appointment">
         <div class="section-card reveal-on-scroll" style="text-align: center;">
             <h2>Book an Appointment</h2>
@@ -2756,6 +2842,7 @@
                     <div style="margin-top: 2rem;">
                         <p>Phone: <strong><a href="tel:+917349351920">+91 73493 51920</a></strong></p>
                         <p>Email: <strong><a href="mailto:info@mana-na.in">info@mana-na.in</a></strong></p>
+                        <p>Address: <strong>Pride Vatika Layout, Bannerghatta Road, Bengaluru</strong></p>
                         <p style="margin-top: 0.5rem;"><strong>Available for: In-person and online consultations.</strong></p>
                     </div>
                 </div>
@@ -2834,6 +2921,7 @@
                     <a href="#gallery">Gallery</a>
                     <!--a href="#blogs">Blogs</a-->
                     <a href="#faq">FAQs</a>
+                    <a href="#self-assessments">Self-Assessments</a>
                     <a href="#book-appointment">Book an Appointment</a>
                     <a href="#contact">Contact</a>
                     <a href="#emergency-support">24/7 Emergency Support</a>
@@ -3922,6 +4010,20 @@
                 }
             }, 3000); // Change text every 3 seconds
         }
+
+        // Check for redirects immediately to avoid flickering
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const testParam = urlParams.get('test') || urlParams.get('type') || urlParams.get('page');
+            if (testParam) {
+                const testVal = testParam.toLowerCase();
+                if (testVal.includes('anxiety')) {
+                    window.location.replace('anxiety-test.html');
+                } else if (testVal.includes('mood') || testVal.includes('depress')) {
+                    window.location.replace('mood&depression-test.html');
+                }
+            }
+        })();
     </script>
     <script src="https://deepakdesigns.thedteam.in/popup-injector.js"></script>
 </body>
