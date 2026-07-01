@@ -425,7 +425,7 @@
 
     <footer>
         <div class="footer-bottom">
-            <p>&copy; 2026 Mana-na <br>Counselling & Wellbeing Space</p>
+            <p>&copy; <span id="copyright-year">2026</span> Mana-na <br>Counselling & Wellbeing Space</p>
             <p class="footer-credit">Designed by <a href="https://bit.ly/thedteam" target="_blank"> The 'D Team</a></p>
         </div>
     </footer>
@@ -494,6 +494,14 @@
                 behavior: 'smooth'
             });
         });
+
+        // --- Dynamic Copyright Year ---
+        (function() {
+        const yearSpan = document.getElementById('copyright-year');
+        if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+        }
+        })();
     </script>
 </body>
 </html>
