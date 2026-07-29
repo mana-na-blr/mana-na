@@ -1016,13 +1016,10 @@
         document.getElementById('anxiety-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
             const age = document.getElementById('age').value;
             const gender = document.getElementById('gender').value;
             const occupation = document.getElementById('occupation').value;
-            const language = document.getElementById('language').value;
             
             let score = 0;
             const answers = {};
@@ -1049,7 +1046,7 @@
                 }
             }
 
-            if(!name || !email || phone.length !== 10 || !age || !gender || !occupation || !language) {
+            if(!email || !age || !gender || !occupation) {
                 document.getElementById('form-error').style.display = 'block';
                 return;
             }
@@ -1098,7 +1095,7 @@
             // --- FormSubmit Submission ---
             try {
                 const formData = {
-                    _subject: `New Mood & Depression Test Result - ${name} (${title})`,
+                    _subject: `New Mood & Depression Test Result - ${email} (${title})`,
                     _captcha: "false",
                     _template: "table",
                     "👤 User Details": "-------------------------------------",
