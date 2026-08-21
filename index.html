@@ -3503,6 +3503,13 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
     <script>
+        // --- GLOBAL DATABASE CONFIGURATION ---
+        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lEVmtBaDU5c2tkd1U3VE5CRFNiVl9nN29JTVVOTzFrZ3ciLCJhdXRoRG9tYWluIjoibWFuYS1uYS1zbG90cy5maXJlYmFzZWFwcC5jb20iLCJwcm9qZWN0SWQiOiJtYW5hLW5hLXNsb3RzIiwic3RvcmFnZUJ1Y2tldCI6Im1hbmEtbmEtc2xvdHMuYXBwc3BvdC5jb20iLCJtZXNzYWdpbmdTZW5kZXJJZCI6Ijk3MDk5Njg1NDI5MiIsImFwcElkIjoiMTo5NzA5OTY4NTQyOTI6d2ViOmNlNWFkY2M0YTFjNGIyMWM0YjQxMDEifQ=="));
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
 // --- Navigation Scroll & Active Link Highlighting (Scroll Spy) ---
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
@@ -3881,11 +3888,49 @@
             blogPosts = JSON.parse(JSON.stringify(DEFAULT_BLOG_POSTS));
         }
 
+        async function saveBlogPostsToFirestore(posts) {
+            if (typeof db === 'undefined' || !db) return;
+            try {
+                await db.collection("settings").doc("blogs").set({
+                    posts: posts,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (err) {
+                console.error("Failed to sync blogs to Firestore cloud:", err);
+            }
+        }
+
         function saveBlogPostsToStorage() {
             try {
                 localStorage.setItem('manana_blog_posts', JSON.stringify(blogPosts));
             } catch (e) {
                 console.error("Could not save blogs to localStorage:", e);
+            }
+            saveBlogPostsToFirestore(blogPosts);
+        }
+
+        function subscribeToLiveBlogs() {
+            if (typeof db === 'undefined' || !db) return;
+            try {
+                db.collection("settings").doc("blogs").onSnapshot((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data && Array.isArray(data.posts) && data.posts.length > 0) {
+                            blogPosts = data.posts;
+                            try {
+                                localStorage.setItem('manana_blog_posts', JSON.stringify(blogPosts));
+                            } catch (e) {}
+                            renderBlogs();
+                        }
+                    } else {
+                        // First time cloud setup: push current blog posts to Firestore
+                        saveBlogPostsToFirestore(blogPosts);
+                    }
+                }, (error) => {
+                    console.warn("Firestore live blog sync fallback to local cache:", error);
+                });
+            } catch (err) {
+                console.warn("Error setting up live blog sync:", err);
             }
         }
 
@@ -4227,6 +4272,7 @@
         // Initialize Blogs on DOM load & handle hash changes
         loadBlogPosts();
         renderBlogs();
+        subscribeToLiveBlogs();
 
         window.addEventListener('hashchange', () => {
             renderBlogs();
@@ -4367,15 +4413,6 @@
             },
             blockWeekends: true
         };
-
-        // --- GLOBAL DATABASE CONFIGURATION ---
-        // Obfuscated to prevent automated bot scraping
-        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lEVmtBaDU5c2tkd1U3VE5CRFNiVl9nN29JTVVOTzFrZ3ciLCJhdXRoRG9tYWluIjoibWFuYS1uYS1zbG90cy5maXJlYmFzZWFwcC5jb20iLCJwcm9qZWN0SWQiOiJtYW5hLW5hLXNsb3RzIiwic3RvcmFnZUJ1Y2tldCI6Im1hbmEtbmEtc2xvdHMuYXBwc3BvdC5jb20iLCJtZXNzYWdpbmdTZW5kZXJJZCI6Ijk3MDk5Njg1NDI5MiIsImFwcElkIjoiMTo5NzA5OTY4NTQyOTI6d2ViOmNlNWFkY2M0YTFjNGIyMWM0YjQxMDEifQ=="));
-        
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const db = firebase.firestore();
 
         function fetchGlobalBlockedSlots() {
             try {
