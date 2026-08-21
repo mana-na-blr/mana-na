@@ -3900,9 +3900,9 @@
         function loadBlogPosts() {
             try {
                 const saved = localStorage.getItem('manana_blog_posts');
-                if (saved) {
+                if (saved !== null) {
                     const parsed = JSON.parse(saved);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
+                    if (Array.isArray(parsed)) {
                         blogPosts = parsed;
                         return;
                     }
@@ -3919,7 +3919,7 @@
                 await db.collection("settings").doc("blogs").set({
                     posts: posts,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                }, { merge: true });
             } catch (err) {
                 console.error("Failed to sync blogs to Firestore cloud:", err);
             }
@@ -3940,7 +3940,7 @@
                 db.collection("settings").doc("blogs").onSnapshot((doc) => {
                     if (doc.exists) {
                         const data = doc.data();
-                        if (data && Array.isArray(data.posts) && data.posts.length > 0) {
+                        if (data && Array.isArray(data.posts)) {
                             blogPosts = data.posts;
                             try {
                                 localStorage.setItem('manana_blog_posts', JSON.stringify(blogPosts));
@@ -4243,10 +4243,32 @@
 
         function deleteBlogPost(index) {
             if (confirm("Are you sure you want to delete this blog post?")) {
+                const deletedItem = blogPosts[index];
                 blogPosts.splice(index, 1);
-                saveBlogPostsToStorage();
+                
+                try {
+                    localStorage.setItem('manana_blog_posts', JSON.stringify(blogPosts));
+                } catch (e) {}
+                
+                if (typeof db !== 'undefined' && db && deletedItem) {
+                    try {
+                        db.collection("settings").doc("blogs").set({
+                            posts: blogPosts,
+                            deletedArchive: firebase.firestore.FieldValue.arrayUnion({
+                                ...deletedItem,
+                                deletedAt: new Date().toISOString()
+                            }),
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true });
+                    } catch (err) {
+                        console.error("Firestore delete archive error:", err);
+                    }
+                } else {
+                    saveBlogPostsToStorage();
+                }
+                
                 renderBlogs();
-                showBlogToast("Blog post deleted.");
+                showBlogToast("Blog post deleted from frontend.");
             }
         }
 
