@@ -684,6 +684,7 @@
             font-weight: 600;
             transition: var(--transition);
             user-select: none;
+            flex-shrink: 0;
         }
         .editor-btn:hover {
             background: rgba(0, 103, 56, 0.12);
@@ -704,6 +705,7 @@
             height: 20px;
             background: rgba(0, 103, 56, 0.2);
             margin: 0 4px;
+            flex-shrink: 0;
         }
         .rich-editor-content {
             min-height: 200px;
@@ -2663,6 +2665,18 @@
             .blog-modal .blog-admin-card-btn-group {
                 justify-content: center !important;
                 width: 100%;
+            }
+            .rich-editor-toolbar {
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding: 6px 8px !important;
+                gap: 2px !important;
+                justify-content: flex-start !important;
+            }
+            .rich-editor-toolbar::-webkit-scrollbar {
+                display: none;
             }
         }
 
