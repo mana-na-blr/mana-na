@@ -4252,8 +4252,8 @@
 
         function resetBlogsToDefault() {
             if (confirm("Reset all blog posts to default? All custom edits will be lost.")) {
-                localStorage.removeItem('manana_blog_posts');
-                loadBlogPosts();
+                blogPosts = JSON.parse(JSON.stringify(DEFAULT_BLOG_POSTS));
+                saveBlogPostsToStorage();
                 renderBlogs();
                 showBlogToast("Blog posts reset to default.");
             }
