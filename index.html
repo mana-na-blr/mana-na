@@ -3180,9 +3180,10 @@
         <div class="section-card reveal-on-scroll">
             <h2>Contact Us</h2>
             <p style="margin-bottom: 3rem;">Accessing support at the right time can make a meaningful difference. <br>It is never too late to seek professional's help. <br>Reach out to schedule a session or ask any questions.</p>
-             <form class="contact-grid" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="a8b4289e-3d63-48bf-88da-4af7caeed487">
-                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+             <form class="contact-grid" id="contactForm" action="https://formsubmit.co/info@mana-na.in" method="POST">
+                <input type="hidden" name="_subject" value="New Website Inquiry | Mana-na">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
                 <div>
                     <div class="form-group">
                         <input type="text" id="senderName" name="sender_name" required placeholder="Your Name">
@@ -4709,19 +4710,20 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Sending...';
 
-                // Using fetch for Web3Forms AJAX submission
-                fetch("https://api.web3forms.com/submit", {
+                // Using fetch for FormSubmit.co AJAX submission
+                fetch("https://formsubmit.co/ajax/info@mana-na.in", {
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },
                     body: JSON.stringify({
-                        access_key: "a8b4289e-3d63-48bf-88da-4af7caeed487",
-                        name: senderName,
-                        email: senderEmail,
-                        message: finalMessage,
-                        subject: "New Website Inquiry from " + senderName
+                        _subject: "New Website Inquiry from " + senderName,
+                        _template: "table",
+                        _captcha: "false",
+                        Name: senderName,
+                        Email: senderEmail,
+                        Message: finalMessage
                     })
                 })
                 .then(response => response.json())
