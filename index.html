@@ -40,6 +40,22 @@
             --transition: all 0.3s ease;
         }
 
+        /* Hide Reviewer Names */
+        .sc-bBHxTw.liaVUv.jf-reviews-reviewer-name.jf-google-reviews-text,
+        .jf-reviews-reviewer-name {
+            display: none !important;
+        }
+
+        [data-theme="light"] .jzYSTT span,
+        [data-theme="light"] .jMricc .read-more-modal--text {
+            color: #000 !important;
+        }
+
+        [data-theme="dark"] .jzYSTT span,
+        [data-theme="dark"] .jMricc .read-more-modal--text {
+            color: #000 !important;
+        }
+
         [data-theme="dark"] {
             --bg-color: #0d1710;
             --text-main: #e8f6e9;
@@ -48,6 +64,28 @@
             --btn-text: #0d1710;
             --card-bg: #152419;
             --nav-bg: rgba(13, 23, 16, 0.95);
+        }
+
+        [data-theme="dark"] .sc-jeraig.iwvMzw.jf-reviews-header-card {
+            background-color: var(--card-bg) !important;
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.04) !important;
+            border: 1px solid rgba(0, 103, 57, 0.125) !important;
+            color: var(--text-main) !important;
+        }
+
+        [data-theme="dark"] .sc-jeraig.iwvMzw.jf-reviews-header-card * {
+            color: var(--text-main) !important;
+        }
+
+        [data-theme="dark"] .sc-ezbkAF.bOKntu.jf-reviews-card-content {
+            background-color: var(--card-bg) !important;
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.04) !important;
+            border: 1px solid rgba(0, 103, 57, 0.125) !important;
+            color: var(--text-main) !important;
+        }
+
+        [data-theme="dark"] .sc-ezbkAF.bOKntu.jf-reviews-card-content * {
+            color: var(--text-main) !important;
         }
 
         img {
@@ -1742,6 +1780,136 @@
             color: var(--text-header);
             font-size: 0.95rem;
         }
+
+        /* --- Google Reviews Section --- */
+        .google-reviews-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding: 1rem 0;
+            margin-top: 1.5rem;
+        }
+
+        .google-reviews-track {
+            display: flex;
+            gap: 2rem;
+            width: max-content;
+            animation: scroll-google-reviews 30s linear infinite;
+        }
+
+        .google-reviews-track:hover {
+            animation-play-state: paused;
+        }
+
+        .google-review-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 103, 57, 0.125);
+            width: 320px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        [data-theme="dark"] .google-review-card {
+            border-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .google-review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .google-review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #4285F4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .google-review-name {
+            font-weight: 600;
+            color: var(--text-header);
+            font-size: 0.95rem;
+        }
+
+        .google-review-date {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .google-review-stars {
+            color: #fbbc04; /* Google yellow for stars */
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .google-review-text {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .google-reviews-action {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .google-reviews-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: white;
+            color: #3c4043;
+            border: 1px solid #dadce0;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        [data-theme="dark"] .google-reviews-btn {
+            background-color: #303134;
+            color: #e8eaed;
+            border-color: #5f6368;
+        }
+
+        .google-reviews-btn:hover {
+            background-color: #f8f9fa;
+        }
+
+        [data-theme="dark"] .google-reviews-btn:hover {
+            background-color: #3c4043;
+        }
+
+        .google-reviews-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        @keyframes scroll-google-reviews {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 1rem)); }
+        }
         
         /* --- Gallery Section --- */
         .gallery-grid {
@@ -2545,8 +2713,19 @@
         #self-reflection h2 {
         white-space: nowrap;
         font-size: 1.5rem;
-    }
-}
+        }
+        }
+
+        #google-reviews h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+        #google-reviews h2 {
+        white-space: nowrap;
+        font-size: 1.5rem;
+        }
+        }
 
         /* --- Crisis Support Section --- */
         .crisis-box {
@@ -3071,6 +3250,133 @@
                     <p class="testimonial-author">- Deepa</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="google-reviews">
+        <div class="section-card reveal-on-scroll">
+            <h2 style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <!--svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+                </svg-->
+                Our Happy Client Reviews!
+            </h2>
+            <!--div class="google-reviews-container">
+                <div class="google-reviews-track" id="google-reviews-dynamic-track"-->
+                    <!-- Default static reviews (Fallback if API key is missing or fails) -->
+                    <!-- Review 1 -->
+                    <!--div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #4285F4;">S</div>
+                            <div>
+                                <div class="google-review-name">Shruthi N</div>
+                                <div class="google-review-date">2 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">Divya is a wonderful therapist. She creates a safe and non-judgmental space. I highly recommend her to anyone looking for support.</div>
+                    </div-->
+                    <!-- Review 2 -->
+                    <!--div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #0F9D58;">R</div>
+                            <div>
+                                <div class="google-review-name">Rahul M</div>
+                                <div class="google-review-date">3 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">My experience here was truly transformative. The sessions helped me navigate a very difficult time in my life with clarity and peace.</div>
+                    </div-->
+                    <!-- Review 3 -->
+                    <!--div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #F4B400;">A</div>
+                            <div>
+                                <div class="google-review-name">Anjali P</div>
+                                <div class="google-review-date">5 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">Professional, empathetic, and incredibly insightful. The counseling approach is tailored and genuinely helpful for personal growth.</div>
+                    </div-->
+                    <!-- Review 4 -->
+                    <!--div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #DB4437;">K</div>
+                            <div>
+                                <div class="google-review-name">Karthik S</div>
+                                <div class="google-review-date">6 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">Great environment for mental health support. I always felt heard and respected during our conversations. Highly recommended!</div>
+                    </div-->
+                    
+                    <!-- DUPLICATE SET FOR INFINITE SCROLL -->
+                    <!--div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #4285F4;">S</div>
+                            <div>
+                                <div class="google-review-name">Shruthi N</div>
+                                <div class="google-review-date">2 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">Divya is a wonderful therapist. She creates a safe and non-judgmental space. I highly recommend her to anyone looking for support.</div>
+                    </div>
+                    <div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #0F9D58;">R</div>
+                            <div>
+                                <div class="google-review-name">Rahul M</div>
+                                <div class="google-review-date">3 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">My experience here was truly transformative. The sessions helped me navigate a very difficult time in my life with clarity and peace.</div>
+                    </div>
+                    <div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #F4B400;">A</div>
+                            <div>
+                                <div class="google-review-name">Anjali P</div>
+                                <div class="google-review-date">5 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">Professional, empathetic, and incredibly insightful. The counseling approach is tailored and genuinely helpful for personal growth.</div>
+                    </div>
+                    <div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: #DB4437;">K</div>
+                            <div>
+                                <div class="google-review-name">Karthik S</div>
+                                <div class="google-review-date">6 months ago</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">★★★★★</div>
+                        <div class="google-review-text">Great environment for mental health support. I always felt heard and respected during our conversations. Highly recommended!</div>
+                    </div-->
+                </div-->
+            </div-->
+            <div id="JFWebsiteWidget-01a0670ef68870008580a6e0a1bfc0c5dbd0"></div>
+            <script src="https://www.jotform.com/website-widgets/embed/01a0670ef68870008580a6e0a1bfc0c5dbd0"></script>
+
+            
+            <!--div class="google-reviews-action">
+                <a href="https://www.google.co.in/maps/place/MANA-NA/@12.7825822,77.4567707,12z/data=!4m12!1m2!2m1!1sMana-na!3m8!1s0x3bae69697581a343:0x205fc0128da4e046!8m2!3d12.7825822!4d77.609206!9m1!1b1!15sCgdNYW5hLW5hWgkiB21hbmEgbmGSAQljb3Vuc2Vsb3LgAQA!16s%2Fg%2F11zx1j36nl?entry=ttu&g_ep=EgoyMDI2MDgzMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="google-reviews-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    View All Google Reviews
+                </a>
+            </div-->
         </div>
     </section>
 
@@ -4870,5 +5176,101 @@
 
     </script>
     <script src="https://deepakdesigns.thedteam.in/popup-injector.js"></script>
+    <script src="js/script.js"></script>
+
+    <!-- Custom Live Google Reviews Integration -->
+    <!-- IMPORTANT: Replace YOUR_API_KEY_HERE with your actual Google Maps API Key -->
+    <script>
+        function initGoogleReviews() {
+            // Ensure we have a valid key (not the placeholder) before trying to fetch
+            const scriptTag = document.querySelector('script[src*="maps.googleapis.com"]');
+            if (scriptTag && scriptTag.src.includes('YOUR_API_KEY_HERE')) {
+                console.warn("Google Reviews: Please replace 'YOUR_API_KEY_HERE' in index.html with your actual Google Maps API key to fetch live reviews.");
+                return; // Fallback to static reviews
+            }
+
+            const map = new google.maps.Map(document.createElement('div'));
+            const service = new google.maps.places.PlacesService(map);
+            
+            // Search for MANA-NA to get the exact Place ID
+            const request = {
+                query: 'MANA-NA counselling',
+                fields: ['place_id'],
+            };
+            
+            service.findPlaceFromQuery(request, function(results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+                    const placeId = results[0].place_id;
+                    fetchReviews(service, placeId);
+                } else {
+                    console.error("Google Reviews: Could not find Place ID.");
+                }
+            });
+        }
+
+        function fetchReviews(service, placeId) {
+            const request = {
+                placeId: placeId,
+                fields: ['name', 'reviews']
+            };
+
+            service.getDetails(request, function(place, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK && place.reviews && place.reviews.length > 0) {
+                    renderReviews(place.reviews);
+                }
+            });
+        }
+
+        function renderReviews(reviews) {
+            const track = document.getElementById('google-reviews-dynamic-track');
+            if (!track) return;
+            
+            track.innerHTML = ''; // Clear static fallback reviews
+
+            // Google Places API returns up to 5 top reviews. 
+            // We duplicate the array to allow for a seamless infinite CSS scroll.
+            const infiniteReviews = [...reviews, ...reviews];
+
+            // Google Colors for avatars if no photo exists
+            const colors = ['#4285F4', '#0F9D58', '#F4B400', '#DB4437'];
+
+            infiniteReviews.forEach(function(review, index) {
+                // Generate stars HTML
+                let starsHtml = '';
+                for (let i = 0; i < 5; i++) {
+                    starsHtml += (i < review.rating) ? '★' : '☆';
+                }
+
+                // Handle Avatar
+                const avatarUrl = review.profile_photo_url || '';
+                const initial = review.author_name.charAt(0).toUpperCase();
+                const bgColor = colors[index % colors.length];
+                const avatarHtml = avatarUrl 
+                    ? `<img src="${avatarUrl}" alt="${review.author_name}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">` 
+                    : initial;
+
+                const reviewTime = review.relative_time_description || new Date(review.time * 1000).toLocaleDateString();
+
+                const card = `
+                    <div class="google-review-card">
+                        <div class="google-review-header">
+                            <div class="google-review-avatar" style="background-color: ${bgColor};">
+                                ${avatarHtml}
+                            </div>
+                            <div>
+                                <div class="google-review-name">${review.author_name}</div>
+                                <div class="google-review-date">${reviewTime}</div>
+                            </div>
+                        </div>
+                        <div class="google-review-stars">${starsHtml}</div>
+                        <div class="google-review-text">${review.text}</div>
+                    </div>
+                `;
+                track.innerHTML += card;
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&libraries=places&callback=initGoogleReviews"></script>
+
 </body>
 </html>
