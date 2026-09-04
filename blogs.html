@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs | Mana-na</title>
+    <meta name="description" content="Mana-na | Blogs - Insights, stories, and practical tips for your mental well-being.">
+    
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="https://www.mana-na.in/favicon.png" type="image/x-icon">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        /* --- CSS Variables & Theme --- */
+        :root {
+            --bg-color: #e8f6e9; 
+            --text-main: #2c3e35;
+            --text-header: #006738; 
+            --btn-bg: #006738;      
+            --btn-text: #ffffff;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(232, 246, 233, 0.95);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0d1710;
+            --text-main: #e8f6e9;
+            --text-header: #81c784; 
+            --btn-bg: #81c784;
+            --btn-text: #0d1710;
+            --card-bg: #152419;
+            --nav-bg: rgba(13, 23, 16, 0.95);
+        }
+
+        /* --- Global Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--text-header);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        p { margin-bottom: 1rem; }
+        ul { margin-bottom: 1.5rem; margin-left: 1.5rem; }
+        li { margin-bottom: 0.5rem; }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo { color: var(--text-header); display: flex; align-items: center; gap: 10px; cursor: pointer; transition: var(--transition); }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .brand-name { font-size: 1.6rem; font-weight: 450; letter-spacing: 1px; display: flex; align-items: flex-end; }
+        .tagline { font-size: 0.75rem; font-weight: 500; opacity: 0.9; letter-spacing: 0.5px; }
+        .logo:hover { opacity: 0.8; }
+        .logo img { width: 90px; height: 90px; object-fit: contain; border-radius: 8px; }
+        .kannada-text { font-weight: 400; opacity: 0.9; }
+
+        .nav-controls { display: flex; align-items: center; gap: 2rem; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { font-weight: 500; transition: var(--transition); font-size: 1rem; position: relative; }
+        .nav-links a:hover { color: var(--text-header); }
+        .nav-links a.nav-contact-btn {
+            background-color: var(--btn-bg); color: var(--btn-text) !important; padding: 0.6rem 1.5rem;
+            border-radius: 30px; font-weight: 600 !important; box-shadow: 0 4px 15px rgba(0, 103, 56, 0.2);
+        }
+        .nav-links a.nav-contact-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 103, 56, 0.3); }
+
+        .theme-toggle {
+            background: none; border: none; cursor: pointer; color: var(--text-main);
+            display: flex; align-items: center; justify-content: center; width: 45px; height: 45px;
+            border-radius: 50%; transition: background-color 0.3s ease;
+        }
+        .theme-toggle:hover { background-color: rgba(0, 103, 56, 0.1); }
+        .theme-toggle svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .menu-toggle { display: none; flex-direction: column; justify-content: space-between; width: 28px; height: 20px; background: transparent; border: none; cursor: pointer; z-index: 1001; }
+        .menu-toggle span { display: block; width: 100%; height: 2px; background-color: var(--text-header); transition: var(--transition); border-radius: 2px; }
+
+        /* --- Page Header --- */
+        header.page-header {
+            margin-top: 30px;
+            padding: 6rem 5% .1rem;
+            text-align: center;
+            background: var(--bg-color);
+        }
+        header.page-header h1 {
+            font-size: 2.5rem;
+            color: var(--text-header);
+            margin-bottom: 1rem;
+        }
+        header.page-header p {
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-main);
+            opacity: 0.9;
+        }
+
+        /* --- Content Section --- */
+        section { padding: 2rem 5% 5rem; max-width: 1390px; margin: 0 auto; }
+        .section-card { 
+            background-color: var(--card-bg); 
+            padding: 4rem; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03); 
+            border: 1px solid rgba(0, 103, 56, 0.05); 
+        }
+
+        .policy-section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(0, 103, 56, 0.1);
+        }
+
+        .policy-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .policy-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-header);
+        }
+
+        .policy-section h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+            opacity: 0.9;
+        }
+
+        .last-updated {
+            font-style: italic;
+            opacity: 0.7;
+            text-align: right;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- Floating Buttons --- */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+        }
+
+        .float-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366; 
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        .whatsapp-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn svg { width: 32px; height: 32px; fill: white; }
+
+        .back-top-btn {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        .back-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-top-btn svg { width: 28px; height: 28px; fill: var(--btn-text); }
+
+        .float-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--card-bg);
+            padding: 5rem 5% 2rem;
+            border-top: 1px solid rgba(0, 103, 56, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 103, 56, 0.1);
+            text-align: center;
+        }
+
+        .footer-credit {
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        .footer-credit a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .footer-credit a:hover {
+            opacity: 1;
+        }
+        
+                /* --- Blogs Section --- */
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .blog-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 103, 56, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 103, 56, 0.1);
+        }
+
+        .blog-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            color: var(--text-header);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .blog-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Blog Admin Controls & Edit Styles --- */
+        .blog-admin-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.2rem 1.8rem;
+            background: rgba(0, 103, 56, 0.08);
+            border: 2px dashed var(--text-header);
+            border-radius: 16px;
+            animation: fadeInAdmin 0.3s ease;
+        }
+        [data-theme="dark"] .blog-admin-controls {
+            background: rgba(129, 199, 132, 0.08);
+            border-color: var(--text-header);
+        }
+        .blog-admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            color: var(--text-header);
+            font-size: 1rem;
+        }
+        .blog-admin-actions {
+            display: inline-flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--text-header);
+            color: var(--text-header);
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-outline:hover {
+            background: var(--text-header);
+            color: var(--btn-text);
+            transform: translateY(-2px);
+        }
+        .btn-sm {
+            padding: 0.6rem 1.4rem !important;
+            font-size: 0.85rem !important;
+        }
+        .blog-card-actions {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: auto;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .blog-admin-card-btn-group {
+            display: inline-flex;
+            gap: 0.4rem;
+            align-items: center;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+        .blog-card-edit-btn {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 0.95rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .blog-card-edit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .blog-card-delete-btn {
+            background: transparent;
+            border: 1px solid #d32f2f;
+            color: #d32f2f;
+            border-radius: 50px;
+            padding: 0.5rem 0.85rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .blog-card-delete-btn:hover {
+            background: #d32f2f;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .blog-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--text-header);
+            color: var(--btn-text);
+            padding: 1rem 1.8rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 99999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+        .blog-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .blog-form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        .blog-form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-header);
+            font-size: 0.95rem;
+        }
+        .blog-form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 103, 56, 0.2);
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        [data-theme="dark"] .blog-form-control {
+            border-color: rgba(129, 199, 132, 0.3);
+            background: #101c13;
+        }
+        .blog-form-control:focus {
+            border-color: var(--text-header);
+            box-shadow: 0 0 0 3px rgba(0, 103, 56, 0.15);
+        }
+
+        /* --- Rich Text Editor Styles --- */
+        .rich-editor-container {
+            border: 1px solid rgba(0, 103, 56, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--card-bg);
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .rich-editor-container {
+            border-color: rgba(129, 199, 132, 0.3);
+            background: #101c13;
+        }
+        .rich-editor-container:focus-within {
+            border-color: var(--text-header);
+            box-shadow: 0 0 0 3px rgba(0, 103, 56, 0.15);
+        }
+        .rich-editor-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            background: rgba(0, 103, 56, 0.05);
+            border-bottom: 1px solid rgba(0, 103, 56, 0.12);
+            flex-wrap: wrap;
+        }
+        [data-theme="dark"] .rich-editor-toolbar {
+            background: rgba(129, 199, 132, 0.06);
+            border-color: rgba(129, 199, 132, 0.15);
+        }
+        .editor-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-main);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: var(--transition);
+            user-select: none;
+            flex-shrink: 0;
+        }
+        .editor-btn:hover {
+            background: rgba(0, 103, 56, 0.12);
+            color: var(--text-header);
+            border-color: rgba(0, 103, 56, 0.2);
+        }
+        [data-theme="dark"] .editor-btn:hover {
+            background: rgba(129, 199, 132, 0.15);
+            color: var(--text-header);
+        }
+        .editor-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        .editor-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(0, 103, 56, 0.2);
+            margin: 0 4px;
+            flex-shrink: 0;
+        }
+        .rich-editor-content {
+            min-height: 200px;
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 1rem;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            outline: none;
+            text-align: left;
+            font-family: inherit;
+            position: relative;
+        }
+        .rich-editor-content:empty::before,
+        .rich-editor-content[data-empty="true"]::before {
+            content: attr(data-placeholder);
+            color: var(--text-main);
+            opacity: 0.45;
+            pointer-events: none;
+            display: block;
+        }
+        .rich-editor-content p {
+            margin-bottom: 0.8rem;
+        }
+        .rich-editor-content a {
+            color: var(--text-header);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .rich-editor-content ul, .rich-editor-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        @keyframes fadeInAdmin {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Blog Modal --- */
+        .blog-modal {
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg-color);
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            backdrop-filter: blur(5px); /* Blur effect */
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+            z-index: 3000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            overflow-y: auto;
+            padding: 80px 5% 40px;
+        }
+
+        .blog-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .blog-modal-content {
+            max-width: 1900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .blog-modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: var(--text-header);
+            line-height: 1;
+            transition: var(--transition);
+        }
+
+        .blog-modal-close:hover {
+            transform: scale(1.1);
+        }
+
+        .blog-modal-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            text-align: left;
+        }
+
+        .blog-main-content img {
+            width: 85%;
+            max-width: 350px;
+            height: 200px;
+            display: block;
+            margin-bottom: 2.5rem;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .blog-main-content h2 {
+            font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .blog-main-content .blog-date {
+            margin-bottom: 2.5rem;
+        }
+
+        .blog-body {
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+        .blog-body p {
+            margin-bottom: 1.2rem;
+        }
+        .blog-body a {
+            color: var(--text-header);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .blog-body a:hover {
+            opacity: 0.8;
+        }
+        .blog-body ul, .blog-body ol {
+            padding-left: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+        .blog-body li {
+            margin-bottom: 0.4rem;
+        }
+
+        .blog-sidebar {
+            border-left: 1px solid rgba(0, 103, 56, 0.1);
+            padding-left: 2.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--text-header);
+        }
+
+        .jump-link-item {
+            cursor: pointer;
+            padding: 1.2rem;
+            border-radius: 16px;
+            background-color: var(--bg-color);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .jump-link-item:hover {
+            background-color: var(--card-bg);
+            border-color: var(--text-header);
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0, 103, 56, 0.05);
+        }
+
+        .jump-link-item h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .jump-link-item .blog-date {
+            font-size: 0.8rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 900px) {
+            .blog-modal-layout { grid-template-columns: 1fr; }
+            .blog-sidebar {
+                border-left: none;
+                padding-left: 0;
+                margin-top: 3rem;
+                padding-top: 3rem;
+                border-top: 1px solid rgba(0, 103, 56, 0.1);
+            }
+            .blog-modal {
+                padding: 60px 15px 20px;
+            }
+            .blog-modal-content { 
+                padding: 1.5rem; 
+                border-radius: 16px;
+            }
+            .blog-main-content h2 { font-size: 1.5rem; }
+            .blog-main-content img {
+                width: 100%;
+                height: auto;
+                max-height: 500px;
+            }
+            .blog-modal-close {
+                top: 0px;
+                right: 6px;
+                font-size: 2rem;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style-position: inside;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .section-card { padding: 3rem; }
+
+        }
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .nav-links { position: absolute; top: 80px; left: 0; width: 100%; background-color: var(--nav-bg); flex-direction: column; padding: 2rem 0; gap: 1.5rem; box-shadow: 0 10px 20px rgba(0,0,0,0.08); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: clip-path 0.4s ease-in-out; }
+            .nav-links.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+            .nav-links a.nav-contact-btn { display: inline-block; width: max-content; margin: 0 auto; }
+            header.page-header h1 { font-size: 1.5rem; }
+            .section-card { padding: 2rem; margin: 0 1rem; }
+            .brand-name { font-size: 1.2rem; }
+            .tagline { font-size: 0.65rem; }
+        }
+        /* --- Login Overlay --- */
+        .login-overlay {
+            position: fixed; inset: 0; background-color: var(--bg-color);
+            z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;
+        }
+        .login-card {
+            background-color: var(--card-bg); padding: 3rem 2rem; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-align: center; max-width: 400px; width: 100%;
+            border: 1px solid rgba(0, 103, 56, 0.1);
+        }
+        .login-card h2 { margin-bottom: 0.5rem; }
+        .login-card p { opacity: 0.8; margin-bottom: 2rem; font-size: 0.95rem; }
+        .login-card input {
+            width: 100%; padding: 1rem; border: 2px solid rgba(0, 103, 56, 0.1); border-radius: 12px;
+            background-color: var(--bg-color); color: var(--text-main); font-size: 1rem; margin-bottom: 1rem;
+        }
+        .login-card input:focus { outline: none; border-color: var(--text-header); }
+        #loginError { color: #c53030; display: none; margin-top: 1rem; margin-bottom: 0; font-weight: 500; }
+        [data-theme="dark"] #loginError { color: #fc8181; }
+    </style>
+            <!-- Global Protection: Disable Selection, Dragging, and Right-Click on Images -->
+    <style>
+        body {
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+        input, textarea, select {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+        }
+        img {
+            -webkit-user-drag: none !important;
+            -khtml-user-drag: none !important;
+            -moz-user-drag: none !important;
+            -o-user-drag: none !important;
+            pointer-events: none !important;
+            -webkit-touch-callout: none !important;
+        }
+    </style>
+    <script>
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay" style="display: none;">
+        <div class="login-card">
+            <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo" style="width: 80px; margin-bottom: 1rem; border-radius: 8px;">
+            <h2>Admin Access</h2>
+            <p>Please log in with your <br>authorized administrator account.</p>
+            <input type="email" id="adminEmail" placeholder="Enter admin email" style="margin-bottom: 10px;">
+            <input type="password" id="adminPwd" placeholder="Enter password" onkeypress="if(event.key === 'Enter') checkPwd()">
+            <button class="btn" id="loginBtn" onclick="checkPwd()" style="margin-top: 0; width: 100%;">Unlock Panel</button>
+            <p id="loginError">Incorrect credentials. Please try again.</p>
+        </div>
+    </div>
+
+    <div id="mainContent">
+    <nav>
+        <a href="index.html#home" class="logo">
+            <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo">
+            <div class="logo-text">
+                <span class="brand-name">Mana-na<span class="kannada-text">&nbsp;ಮನ-ನ</span></span>
+                <span class="tagline">Counselling & Wellbeing Space</span>
+            </div>
+        </a>
+        <!--div class="nav-controls">
+            <div class="nav-links" id="navLinks">
+                <a href="preview1.html#home">Home</a>
+                <a href="preview1.html#about">About</a>
+                <a href="preview1.html#approach">Our Approach</a>
+                <a href="preview1.html#areas-of-support">Areas of Support</a>
+                <a href="preview1.html#counsellor">Meet the Counsellor</a>
+                <a href="preview1.html#faq">FAQs</a>
+                <a href="preview1.html#contact" class="nav-contact-btn">Contact</a>
+            </div-->
+            
+            <div style="display: flex; align-items: center;">
+                <button id="navLogoutBtn" class="logout-btn" onclick="logoutUser()" style="display: none;">Logout</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme"></button>
+            </div>
+            
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Blogs</h1>
+        <p>Insights, stories, and practical tips for your mental well-being.</p>
+    </header>
+
+    <section id="blogs">
+        <div class="section-card">
+            <h2></h2>
+            <p class="section-subtitle"></p>
+            
+            <!-- Blog Admin Toolbar (visible only in edit mode) -->
+            <div id="blogAdminControls" class="blog-admin-controls" style="display: none;">
+                <div class="blog-admin-badge">
+                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    <span>Blog Admin Mode Active</span>
+                </div>
+                <div class="blog-admin-actions">
+                    <button type="button" class="btn btn-sm" onclick="openBlogEditorModal(-1)">
+                        <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Add New Blog
+                    </button>
+                    <button type="button" class="btn-outline btn-sm" onclick="resetBlogsToDefault()">Reset to Default</button>
+                </div>
+            </div>
+
+            <div class="blogs-grid" id="blogsGrid">
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=600&q=80" alt="Mindfulness" class="blog-img">
+                    <div class="blog-info">
+                        <span class="blog-date">May 01, 2026</span>
+                        <h3 class="blog-title">The Art of Mindful Living</h3>
+                        <p class="blog-excerpt">Discover how incorporating small mindfulness practices into your daily routine can significantly reduce stress and improve your focus.</p>
+                        <button class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;" onclick="openBlogModal(0)">Read More</button>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Anxiety" class="blog-img">
+                    <div class="blog-info">
+                        <span class="blog-date">May 01, 2026</span>
+                        <h3 class="blog-title">Navigating Anxiety Today</h3>
+                        <p class="blog-excerpt">In an increasingly fast-paced world, understanding the roots of your anxiety is the first step toward finding a sustainable sense of calm.</p>
+                        <button class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;" onclick="openBlogModal(1)">Read More</button>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Self Care" class="blog-img">
+                    <div class="blog-info">
+                        <span class="blog-date">May 01, 2026</span>
+                        <h3 class="blog-title">Why Self-Care Isn't Selfish</h3>
+                        <p class="blog-excerpt">Self-care is a vital component of mental health maintenance. Learn why prioritizing yourself allows you to be more present for others.</p>
+                        <button class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;" onclick="openBlogModal(2)">Read More</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; <span id="copyright-year">2026</span> Mana-na <br>Counselling & Wellbeing Space</p>
+            <p class="footer-credit">Designed by <a href="https://bit.ly/thedteam" target="_blank"> The 'D Team</a></p>
+        </div>
+    </footer>
+    </div> <!-- Close mainContent -->
+
+    <style>
+        .btn {
+            display: inline-block;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        .logout-btn {
+            background-color: transparent !important;
+            border: 2px solid var(--btn-bg) !important;
+            color: var(--text-header) !important;
+            padding: 0.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            border-radius: 50px !important;
+            margin-right: 2rem !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .logout-btn:hover {
+            background-color: var(--btn-bg) !important;
+            color: var(--btn-text) !important;
+        }
+    </style>
+
+    <!-- Blog Modal -->
+    <div id="blogModal" class="blog-modal">
+        <div class="blog-modal-content">
+            <span class="blog-modal-close" onclick="closeBlogModal()">&times;</span>
+            <div class="blog-modal-layout">
+                <div class="blog-main-content" id="blogMainContent">
+                    <!-- Content injected by JS -->
+                </div>
+                <div class="blog-sidebar" id="blogSidebar">
+                    <!-- Sidebar injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Admin Edit Modal -->
+    <div id="blogAdminEditModal" class="blog-modal">
+        <div class="blog-modal-content" style="max-width: 900px; padding: 2.5rem 2rem;">
+            <span class="blog-modal-close" onclick="closeBlogEditorModal()">&times;</span>
+            <h2 id="blogEditorModalTitle" style="text-align: center; margin-bottom: 0.5rem; font-size: 1.8rem;">Edit Blog Post</h2>
+            <p style="text-align: center; margin-bottom: 1.5rem; font-size: 0.95rem; opacity: 0.85;">Update blog details (date, title, description). Changes will be saved locally.</p>
+            
+            <form id="blogAdminEditForm" onsubmit="handleBlogSave(event)">
+                <input type="hidden" id="blogEditIndex" value="-1">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem;">
+                    <div class="blog-form-group">
+                        <label for="blogEditTitle">Blog Title *</label>
+                        <input type="text" id="blogEditTitle" class="blog-form-control" required placeholder="e.g. The Art of Mindful Living">
+                    </div>
+                    <div class="blog-form-group">
+                        <label for="blogEditDate">Date *</label>
+                        <input type="text" id="blogEditDate" class="blog-form-control" required placeholder="e.g. May 01, 2026">
+                    </div>
+                </div>
+
+                <div class="blog-form-group">
+                    <label for="blogEditImg">Cover Image URL</label>
+                    <input type="url" id="blogEditImg" class="blog-form-control" placeholder="https://images.unsplash.com/photo-...">
+                </div>
+
+                <div class="blog-form-group">
+                    <label for="blogEditExcerpt">Short Description / Excerpt (shown on card) *</label>
+                    <textarea id="blogEditExcerpt" class="blog-form-control" required rows="3" placeholder="Brief summary of the blog..."></textarea>
+                </div>
+
+                <div class="blog-form-group">
+                    <label for="blogEditContentEditor">Full Description / Article Body (Rich Text) *</label>
+                    <div class="rich-editor-container">
+                        <div class="rich-editor-toolbar">
+                            <button type="button" class="editor-btn" onclick="formatDoc('bold')" title="Bold (Ctrl+B)">
+                                <strong>B</strong>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="formatDoc('italic')" title="Italic (Ctrl+I)">
+                                <em>I</em>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="formatDoc('underline')" title="Underline (Ctrl+U)">
+                                <u>U</u>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="formatDoc('strikeThrough')" title="Strikethrough">
+                                <s>S</s>
+                            </button>
+                            <div class="editor-divider"></div>
+                            <button type="button" class="editor-btn" onclick="formatDocLink()" title="Insert Hyperlink">
+                                <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="formatDoc('unlink')" title="Remove Link">
+                                <svg viewBox="0 0 24 24"><path d="M17 7h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1 0 1.43-.98 2.63-2.31 2.98l1.46 1.46C20.88 15.61 22 13.95 22 12c0-2.76-2.24-5-5-5zm-1 4h-2.19l2 2H16v-2zM2 4.27l3.11 3.11C3.29 8.12 2 9.91 2 12c0 2.76 2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1 0-1.59 1.21-2.9 2.76-3.07L8.83 11H8v2h2.17l2 2H7c-2.76 0-5-2.24-5-5 0-.58.11-1.14.3-1.66L1.39 2.86 2 4.27zM20 20l-1.41 1.41-2.12-2.12L3.71 6.54 5.12 5.12 20 20z"/></svg>
+                            </button>
+                            <div class="editor-divider"></div>
+                            <button type="button" class="editor-btn" onclick="formatDoc('insertUnorderedList')" title="Bullet List">
+                                <svg viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/></svg>
+                            </button>
+                            <button type="button" class="editor-btn" onclick="formatDoc('insertOrderedList')" title="Numbered List">
+                                <svg viewBox="0 0 24 24"><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></svg>
+                            </button>
+                            <div class="editor-divider"></div>
+                            <button type="button" class="editor-btn" onclick="formatDoc('removeFormat')" title="Clear Formatting">
+                                <svg viewBox="0 0 24 24"><path d="M3.27 5L2 6.27l6.97 6.97L6.5 19h3l1.57-3.66L16.73 21 18 19.73 3.27 5zM6 5v.18L8.82 8h2.4l-.72 1.68 2.1 2.1L14.21 8H20V5H6z"/></svg>
+                            </button>
+                        </div>
+                        <div id="blogEditContentEditor" class="rich-editor-content" contenteditable="true" data-placeholder="Write your article content here..."></div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; align-items: center; margin-top: 1.8rem; flex-wrap: wrap;">
+                    <button type="button" class="btn-outline" onclick="closeBlogEditorModal()">Cancel</button>
+                    <button type="submit" class="btn" style="padding: 0.65rem 1.8rem;">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification for Blog Admin -->
+    <div id="blogToast" class="blog-toast">Changes saved successfully!</div>
+
+    <div class="floating-buttons">
+        <a href="https://api.whatsapp.com/send/?phone=917349351920&text=Hi%20Mana-na%20-%20I'm%20interested%20in%20Counselling%20and%20Wellbeing%20Space!%20https://www.mana-na.in" target="_blank" class="float-btn whatsapp-btn" aria-label="Chat on WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </a>
+        <button id="backToTop" class="float-btn back-top-btn" aria-label="Back to Top">
+            <svg viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+        </button>
+    </div>
+
+    <script>
+        // --- Firebase Config & Auth ---
+        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lEVmtBaDU5c2tkd1U3VE5CRFNiVl9nN29JTVVOTzFrZ3ciLCJhdXRoRG9tYWluIjoibWFuYS1uYS1zbG90cy5maXJlYmFzZWFwcC5jb20iLCJwcm9qZWN0SWQiOiJtYW5hLW5hLXNsb3RzIiwic3RvcmFnZUJ1Y2tldCI6Im1hbmEtbmEtc2xvdHMuYXBwc3BvdC5jb20iLCJtZXNzYWdpbmdTZW5kZXJJZCI6Ijk3MDk5Njg1NDI5MiIsImFwcElkIjoiMTo5NzA5OTY4NTQyOTI6d2ViOmNlNWFkY2M0YTFjNGIyMWM0YjQxMDEifQ=="));
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        auth.setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+        function isBlogAdminEditMode() {
+            const searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.get('q') === 'blog-admin-edit') return true;
+            if (window.location.hash.includes('q=blog-admin-edit')) return true;
+            if (window.location.href.includes('q=blog-admin-edit')) return true;
+            return false;
+        }
+
+        // --- Sync Hide for Admin Mode to Prevent Flicker ---
+        if (isBlogAdminEditMode()) {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('loginOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // --- Auth State Listener ---
+        auth.onAuthStateChanged((user) => {
+            const navLogout = document.getElementById('navLogoutBtn');
+            if (isBlogAdminEditMode()) {
+                if (user) {
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    document.body.style.overflow = 'auto';
+                    if (navLogout) navLogout.style.display = 'inline-block';
+                    
+                    const adminControls = document.getElementById('blogAdminControls');
+                    if (adminControls) adminControls.style.display = 'flex';
+                    renderBlogs();
+                } else {
+                    document.getElementById('loginOverlay').style.display = 'flex';
+                    document.getElementById('mainContent').style.display = 'none';
+                    document.body.style.overflow = 'hidden';
+                    if (navLogout) navLogout.style.display = 'none';
+                }
+            } else {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.body.style.overflow = 'auto';
+                if (navLogout) navLogout.style.display = 'none';
+            }
+        });
+
+        function logoutUser() {
+            document.getElementById('adminEmail').value = '';
+            document.getElementById('adminPwd').value = '';
+            auth.signOut();
+        }
+
+        function checkPwd() {
+            const email = document.getElementById('adminEmail').value;
+            const pwd = document.getElementById('adminPwd').value;
+            const errorMsg = document.getElementById('loginError');
+            
+            errorMsg.style.display = 'none';
+            if(!email || !pwd) {
+                errorMsg.innerText = 'Please enter both email and password.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            const btn = document.getElementById('loginBtn');
+            btn.innerText = 'Verifying...';
+            
+            auth.signInWithEmailAndPassword(email, pwd)
+                .then(() => {
+                    btn.innerText = 'Unlock Panel';
+                })
+                .catch((error) => {
+                    errorMsg.innerText = 'Incorrect credentials. Please try again.';
+                    errorMsg.style.display = 'block';
+                    btn.innerText = 'Unlock Panel';
+                    document.getElementById('adminPwd').value = '';
+                });
+        }
+
+        // --- Theme Toggle Logic ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const rootElement = document.documentElement;
+        
+        const svgMoon = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        const svgSun = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
+        function updateThemeIcon(theme) {
+            themeToggleBtn.innerHTML = theme === 'dark' ? svgSun : svgMoon;
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        rootElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = rootElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            rootElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+                // --- Back to Top & WhatsApp Button Logic ---
+        const backToTopBtn = document.getElementById('backToTop');
+        const whatsappBtn = document.querySelector('.whatsapp-btn');
+
+        window.addEventListener('scroll', () => {
+            // Calculate 20% of total scrollable height
+            const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercentage = (window.scrollY / totalScrollableHeight) * 100;
+
+            // Show WhatsApp button at 15% scroll
+            if (scrollPercentage > 0) {
+                whatsappBtn.classList.add('visible');
+            } else {
+                whatsappBtn.classList.remove('visible');
+            }
+
+            // Show Back to Top button at 300px scroll
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // --- Dynamic Copyright Year ---
+        (function() {
+        const yearSpan = document.getElementById('copyright-year');
+        if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+        }
+        })();
+
+
+                // --- Blog Modal & Admin Edit Logic ---
+        const DEFAULT_BLOG_POSTS = [
+            {
+                title: "The Art of Mindful Living",
+                date: "May 01, 2026",
+                img: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1200&q=80",
+                excerpt: "Discover how incorporating small mindfulness practices into your daily routine can significantly reduce stress and improve your focus.",
+                content: `<p>Mindfulness is more than just a buzzword; it's a transformative practice that allows us to be fully present in our lives. By focusing on the "here and now," we can break free from the cycles of worry about the future or regret about the past.</p>
+<p>Incorporating mindfulness doesn't require hours of meditation. It can be as simple as focusing on your breath for five minutes, truly tasting your morning coffee, or feeling the sun on your skin during a walk. These moments of presence help regulate our nervous system and foster a sense of inner peace.</p>
+<p>At Mana-na, we integrate mindful awareness into our therapeutic process, helping you build a deeper connection with yourself and the world around you.</p>`
+            },
+            {
+                title: "Navigating Anxiety Today",
+                date: "May 01, 2026",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+                excerpt: "In an increasingly fast-paced world, understanding the roots of your anxiety is the first step toward finding a sustainable sense of calm.",
+                content: `<p>Anxiety is a natural response to stress, but when it becomes overwhelming, it can interfere with our quality of life. Understanding that anxiety is often our mind's way of trying to protect us can be the first step in managing it.</p>
+<p>Modern life presents unique challenges—digital overload, social comparisons, and global uncertainties. These factors can keep our "fight or flight" response constantly active. Learning to recognize the physical signs of anxiety allows us to intervene early with grounding techniques.</p>
+<p>Through evidence-based approaches like CBT, we work together to challenge anxious thoughts and develop a toolkit of strategies that promote long-term emotional stability.</p>`
+            },
+            {
+                title: "Why Self-Care Isn't Selfish",
+                date: "May 01, 2026",
+                img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80",
+                excerpt: "Self-care is a vital component of mental health maintenance. Learn why prioritizing yourself allows you to be more present for others.",
+                content: `<p>We often hear the phrase "you can't pour from an empty cup." This is the fundamental truth of self-care. It is not an indulgence or a luxury; it is a necessity for mental and emotional health.</p>
+<p>Self-care looks different for everyone. For some, it's setting boundaries at work; for others, it's making time for a hobby or ensuring they get enough sleep. The key is to identify what truly replenishes your energy and joy.</p>
+<p>When we prioritize our own well-being, we aren't taking away from others. Instead, we are ensuring that we have the capacity, patience, and clarity to be present for the people and responsibilities that matter most to us.</p>`
+            }
+        ];
+
+        let blogPosts = [];
+
+        function loadBlogPosts() {
+            try {
+                const saved = localStorage.getItem('manana_blog_posts');
+                if (saved !== null) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) {
+                        blogPosts = parsed;
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.error("Could not load blogs from localStorage:", e);
+            }
+            blogPosts = JSON.parse(JSON.stringify(DEFAULT_BLOG_POSTS));
+        }
+
+        async function saveBlogPostsToFirestore(posts) {
+            if (typeof db === 'undefined' || !db) return;
+            try {
+                await db.collection("settings").doc("blogs").set({
+                    posts: posts,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            } catch (err) {
+                console.error("Failed to sync blogs to Firestore cloud:", err);
+            }
+        }
+
+        function saveBlogPostsToStorage() {
+            try {
+                localStorage.setItem('manana_blog_posts', JSON.stringify(blogPosts));
+            } catch (e) {
+                console.error("Could not save blogs to localStorage:", e);
+            }
+            saveBlogPostsToFirestore(blogPosts);
+        }
+
+        function subscribeToLiveBlogs() {
+            if (typeof db === 'undefined' || !db) return;
+            try {
+                db.collection("settings").doc("blogs").onSnapshot((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data && Array.isArray(data.posts)) {
+                            blogPosts = data.posts;
+                            try {
+                                localStorage.setItem('manana_blog_posts', JSON.stringify(blogPosts));
+                            } catch (e) {}
+                            renderBlogs();
+                        }
+                    } else {
+                        // First time cloud setup: push current blog posts to Firestore
+                        saveBlogPostsToFirestore(blogPosts);
+                    }
+                }, (error) => {
+                    console.warn("Firestore live blog sync fallback to local cache:", error);
+                });
+            } catch (err) {
+                console.warn("Error setting up live blog sync:", err);
+            }
+        }
+
+        function showBlogToast(message) {
+            const toast = document.getElementById('blogToast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function renderBlogs() {
+            const grid = document.getElementById('blogsGrid');
+            const adminControls = document.getElementById('blogAdminControls');
+            const isAdmin = isBlogAdminEditMode() && auth && auth.currentUser;
+
+            if (adminControls) {
+                adminControls.style.display = isAdmin ? 'flex' : 'none';
+            }
+
+            if (!grid) return;
+
+            if (blogPosts.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 3rem; opacity: 0.7;">No blog posts available. ${isAdmin ? 'Click "Add New Blog" above to create one.' : ''}</div>`;
+                return;
+            }
+
+            let html = '';
+            blogPosts.forEach((post, index) => {
+                const imgUrl = post.img || 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=600&q=80';
+                const excerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]*>?/gm, '').substring(0, 140) + '...' : '');
+                
+                const adminButtons = isAdmin ? `
+                    <div class="blog-admin-card-btn-group">
+                        <button type="button" class="blog-card-edit-btn" onclick="openBlogEditorModal(${index})">
+                            <svg viewBox="0 0 24 24" style="width: 13px; height: 13px; fill: currentColor;"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                            Edit
+                        </button>
+                        <button type="button" class="blog-card-delete-btn" onclick="deleteBlogPost(${index})">
+                            <svg viewBox="0 0 24 24" style="width: 13px; height: 13px; fill: currentColor;"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            Delete
+                        </button>
+                    </div>
+                ` : '';
+
+                html += `
+                    <article class="blog-card">
+                        <img src="${imgUrl}" alt="${escapeHtml(post.title)}" class="blog-img">
+                        <div class="blog-info">
+                            <span class="blog-date">${escapeHtml(post.date)}</span>
+                            <h3 class="blog-title">${escapeHtml(post.title)}</h3>
+                            <p class="blog-excerpt">${escapeHtml(excerpt)}</p>
+                            <div class="blog-card-actions">
+                                <button type="button" class="btn" style="padding: 0.5rem 1.1rem; font-size: 0.82rem;" onclick="openBlogModal(${index})">Read More</button>
+                                ${adminButtons}
+                            </div>
+                        </div>
+                    </article>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function openBlogModal(index) {
+            const post = blogPosts[index];
+            if (!post) return;
+            const modal = document.getElementById('blogModal');
+            const mainContent = document.getElementById('blogMainContent');
+            const sidebar = document.getElementById('blogSidebar');
+            const isAdmin = isBlogAdminEditMode() && auth && auth.currentUser;
+
+            const adminEditAction = isAdmin ? `
+                <div class="blog-admin-card-btn-group" style="margin-bottom: 1.5rem;">
+                    <button type="button" class="blog-card-edit-btn" onclick="closeBlogModal(); setTimeout(() => openBlogEditorModal(${index}), 250);">
+                        <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Edit
+                    </button>
+                    <button type="button" class="blog-card-delete-btn" onclick="closeBlogModal(); deleteBlogPost(${index});">
+                        <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        Delete
+                    </button>
+                </div>
+            ` : '';
+
+            // Populate Main Content
+            mainContent.innerHTML = `
+                <img src="${post.img || 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1200&q=80'}" alt="${escapeHtml(post.title)}">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <span class="blog-date">${escapeHtml(post.date)}</span>
+                    ${adminEditAction}
+                </div>
+                <h2>${escapeHtml(post.title)}</h2>
+                <div class="blog-body">${post.content}</div>
+            `;
+
+            // Populate Sidebar (Jump Links)
+            let jumpLinksHtml = `<h3 class="sidebar-title">Explore More Blogs</h3><div class="jump-links-list">`;
+            let hasOtherPosts = false;
+            blogPosts.forEach((otherPost, i) => {
+                if (i !== index) {
+                    hasOtherPosts = true;
+                    jumpLinksHtml += `
+                        <div class="jump-link-item" onclick="openBlogModal(${i})">
+                            <h4>${escapeHtml(otherPost.title)}</h4>
+                            <span class="blog-date">${escapeHtml(otherPost.date)}</span>
+                        </div>
+                    `;
+                }
+            });
+            if (!hasOtherPosts) {
+                jumpLinksHtml += `<p style="font-size: 0.9rem; opacity: 0.7;">No other posts available.</p>`;
+            }
+            jumpLinksHtml += `</div>`;
+            sidebar.innerHTML = jumpLinksHtml;
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { modal.classList.add('active'); }, 10);
+            modal.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeBlogModal() {
+            const modal = document.getElementById('blogModal');
+            if (!modal) return;
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
+        }
+
+        function checkEditorEmpty(editor) {
+            if (!editor) return;
+            const text = editor.innerText.trim();
+            if (!text && (!editor.innerHTML || editor.innerHTML === '<br>' || editor.innerHTML === '<p><br></p>' || editor.innerHTML === '<p></p>')) {
+                editor.innerHTML = '';
+                editor.setAttribute('data-empty', 'true');
+            } else {
+                editor.removeAttribute('data-empty');
+            }
+        }
+
+        function formatDoc(cmd, val = null) {
+            const editor = document.getElementById('blogEditContentEditor');
+            if (editor) {
+                editor.focus();
+                document.execCommand(cmd, false, val);
+                checkEditorEmpty(editor);
+            }
+        }
+
+        function formatDocLink() {
+            const editor = document.getElementById('blogEditContentEditor');
+            if (editor) editor.focus();
+            
+            let url = prompt("Enter hyperlink URL (e.g. https://example.com):", "https://");
+            if (url && url !== "https://" && url.trim() !== "") {
+                url = url.trim();
+                if (!/^https?:\/\//i.test(url) && !url.startsWith('#') && !url.startsWith('mailto:')) {
+                    url = 'https://' + url;
+                }
+                document.execCommand('createLink', false, url);
+                
+                if (editor) {
+                    const links = editor.querySelectorAll('a');
+                    links.forEach(a => {
+                        if (a.href === url || a.getAttribute('href') === url) {
+                            a.setAttribute('target', '_blank');
+                            a.setAttribute('rel', 'noopener noreferrer');
+                        }
+                    });
+                    checkEditorEmpty(editor);
+                }
+            }
+        }
+
+        function openBlogEditorModal(index) {
+            const modal = document.getElementById('blogAdminEditModal');
+            const titleEl = document.getElementById('blogEditorModalTitle');
+            const idxInput = document.getElementById('blogEditIndex');
+            const titleInput = document.getElementById('blogEditTitle');
+            const dateInput = document.getElementById('blogEditDate');
+            const imgInput = document.getElementById('blogEditImg');
+            const excerptInput = document.getElementById('blogEditExcerpt');
+            const contentEditor = document.getElementById('blogEditContentEditor');
+
+            if (index >= 0 && blogPosts[index]) {
+                const post = blogPosts[index];
+                titleEl.textContent = "Edit Blog Post";
+                idxInput.value = index;
+                titleInput.value = post.title || '';
+                dateInput.value = post.date || '';
+                imgInput.value = post.img || '';
+                excerptInput.value = post.excerpt || '';
+                if (contentEditor) {
+                    contentEditor.innerHTML = post.content || '';
+                    checkEditorEmpty(contentEditor);
+                }
+            } else {
+                titleEl.textContent = "Add New Blog Post";
+                idxInput.value = -1;
+                titleInput.value = '';
+                const d = new Date();
+                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                dateInput.value = `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()}`;
+                imgInput.value = 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1200&q=80';
+                excerptInput.value = '';
+                if (contentEditor) {
+                    contentEditor.innerHTML = '';
+                    checkEditorEmpty(contentEditor);
+                }
+            }
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { modal.classList.add('active'); }, 10);
+            modal.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeBlogEditorModal() {
+            const modal = document.getElementById('blogAdminEditModal');
+            if (!modal) return;
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
+        }
+
+        function handleBlogSave(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('blogEditIndex').value, 10);
+            const title = document.getElementById('blogEditTitle').value.trim();
+            const date = document.getElementById('blogEditDate').value.trim();
+            const img = document.getElementById('blogEditImg').value.trim() || 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1200&q=80';
+            const excerpt = document.getElementById('blogEditExcerpt').value.trim();
+            const contentEditor = document.getElementById('blogEditContentEditor');
+            let content = contentEditor ? contentEditor.innerHTML.trim() : '';
+
+            if (!content || content === '<p><br></p>' || content === '<br>') {
+                alert("Please enter full description/content for the blog post.");
+                return;
+            }
+
+            // Ensure links have target="_blank"
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            tempDiv.querySelectorAll('a').forEach(a => {
+                a.setAttribute('target', '_blank');
+                a.setAttribute('rel', 'noopener noreferrer');
+            });
+            content = tempDiv.innerHTML;
+
+            const postData = { title, date, img, excerpt, content };
+
+            if (index >= 0 && index < blogPosts.length) {
+                blogPosts[index] = postData;
+                showBlogToast("Blog post updated successfully!");
+            } else {
+                blogPosts.unshift(postData);
+                showBlogToast("New blog post created successfully!");
+            }
+
+            saveBlogPostsToStorage();
+            closeBlogEditorModal();
+            renderBlogs();
+        }
+
+        function deleteBlogPost(index) {
+            if (confirm("Are you sure you want to delete this blog post?")) {
+                const deletedItem = blogPosts[index];
+                blogPosts.splice(index, 1);
+                
+                try {
+                    localStorage.setItem('manana_blog_posts', JSON.stringify(blogPosts));
+                } catch (e) {}
+                
+                if (typeof db !== 'undefined' && db && deletedItem) {
+                    try {
+                        db.collection("settings").doc("blogs").set({
+                            posts: blogPosts,
+                            deletedArchive: firebase.firestore.FieldValue.arrayUnion({
+                                ...deletedItem,
+                                deletedAt: new Date().toISOString()
+                            }),
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true });
+                    } catch (err) {
+                        console.error("Firestore delete archive error:", err);
+                    }
+                } else {
+                    saveBlogPostsToStorage();
+                }
+                
+                renderBlogs();
+                showBlogToast("Blog post deleted from frontend.");
+            }
+        }
+
+        function resetBlogsToDefault() {
+            if (confirm("Reset all blog posts to default? All custom edits will be lost.")) {
+                blogPosts = JSON.parse(JSON.stringify(DEFAULT_BLOG_POSTS));
+                saveBlogPostsToStorage();
+                renderBlogs();
+                showBlogToast("Blog posts reset to default.");
+            }
+        }
+
+        // Close modal on click outside
+        const blogModalEl = document.getElementById('blogModal');
+        if (blogModalEl) {
+            blogModalEl.addEventListener('click', function(e) {
+                if (e.target === this) closeBlogModal();
+            });
+        }
+        const blogAdminModalEl = document.getElementById('blogAdminEditModal');
+        if (blogAdminModalEl) {
+            blogAdminModalEl.addEventListener('click', function(e) {
+                if (e.target === this) closeBlogEditorModal();
+            });
+        }
+
+        const blogEditorEl = document.getElementById('blogEditContentEditor');
+        if (blogEditorEl) {
+            blogEditorEl.addEventListener('input', function() {
+                checkEditorEmpty(this);
+            });
+            blogEditorEl.addEventListener('keyup', function() {
+                checkEditorEmpty(this);
+            });
+            blogEditorEl.addEventListener('blur', function() {
+                checkEditorEmpty(this);
+            });
+        }
+
+        // Escape key to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeBlogModal();
+                closeBlogEditorModal();
+            }
+        });
+
+        // Initialize Blogs on DOM load & handle hash changes
+        loadBlogPosts();
+        renderBlogs();
+        subscribeToLiveBlogs();
+
+        window.addEventListener('hashchange', () => {
+            renderBlogs();
+        });
+
+        window.addEventListener('load', () => {
+            if (window.location.hash.includes('blogs')) {
+                const blogsSec = document.getElementById('blogs');
+                if (blogsSec) {
+                    setTimeout(() => {
+                        const headerOffset = navBar ? navBar.offsetHeight : 80;
+                        const offsetPosition = blogsSec.getBoundingClientRect().top + window.pageYOffset - headerOffset - 20;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }, 350);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

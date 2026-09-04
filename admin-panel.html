@@ -532,6 +532,8 @@
         }
 
         function logout() {
+            document.getElementById('adminEmail').value = '';
+            document.getElementById('adminPwd').value = '';
             auth.signOut();
             clearTimeout(inactivityTimer);
         }
