@@ -40,19 +40,78 @@
             --transition: all 0.3s ease;
         }
 
-        /* Hide Reviewer Names */
+        /* =========================================================
+           GOOGLE REVIEWS (JOTFORM WIDGET) - DESKTOP & MOBILE
+           ========================================================= */
+
+        /* 1. Hide All Reviewer Names */
         .sc-bBHxTw.liaVUv.jf-reviews-reviewer-name.jf-google-reviews-text,
-        .jf-reviews-reviewer-name {
+        .jf-reviews-reviewer-name,
+        [class*="jf-reviews-reviewer-name"],
+        [class*="reviewer-name"],
+        #google-reviews [class*="reviewer-name"],
+        [id^="JFWebsiteWidget"] [class*="reviewer-name"] {
             display: none !important;
         }
 
+        /* 2. Light Theme - Header/Modal Text in Black */
         [data-theme="light"] .jzYSTT span,
-        [data-theme="light"] .jMricc .read-more-modal--text {
+        [data-theme="light"] .jMricc .read-more-modal--text,
+        [data-theme="light"] .read-more-modal--text,
+        [data-theme="light"] [class*="read-more-modal--text"],
+        [data-theme="light"] [class*="read-more-modal"] p,
+        [data-theme="light"] [class*="read-more-modal"] span,
+        [data-theme="light"] #google-reviews [class*="jf-reviews-header"] span,
+        [data-theme="light"] [id^="JFWebsiteWidget"] [class*="jf-reviews-header"] span,
+        [data-theme="light"] #google-reviews [class*="jf-reviews-header-card"] span,
+        [data-theme="light"] [id^="JFWebsiteWidget"] [class*="jf-reviews-header-card"] span {
             color: #000 !important;
         }
 
+        /* Light Theme - Main CTA Button (White Text) */
+        [data-theme="light"] .sc-bdvvtL.sc-iqseJM.dEEJXo.icFeVK.jf-google-reviews-cta,
+        [data-theme="light"] .jf-google-reviews-cta:not([class*="close-button"]):not([class*="readMore"]),
+        [data-theme="light"] [class*="jf-google-reviews-cta"]:not([class*="close-button"]):not([class*="readMore"]),
+        [data-theme="light"] #google-reviews [class*="jf-google-reviews-cta"]:not([class*="close-button"]):not([class*="readMore"]),
+        [data-theme="light"] [id^="JFWebsiteWidget"] [class*="jf-google-reviews-cta"]:not([class*="close-button"]):not([class*="readMore"]) {
+            color: #ffffff !important;
+        }
+
+        [data-theme="light"] .sc-bdvvtL.sc-iqseJM.dEEJXo.icFeVK.jf-google-reviews-cta *,
+        [data-theme="light"] .jf-google-reviews-cta:not([class*="close-button"]):not([class*="readMore"]) *,
+        [data-theme="light"] [class*="jf-google-reviews-cta"]:not([class*="close-button"]):not([class*="readMore"]) *,
+        [data-theme="light"] #google-reviews [class*="jf-google-reviews-cta"]:not([class*="close-button"]):not([class*="readMore"]) *,
+        [data-theme="light"] [id^="JFWebsiteWidget"] [class*="jf-google-reviews-cta"]:not([class*="close-button"]):not([class*="readMore"]) * {
+            color: #ffffff !important;
+            fill: #ffffff !important;
+        }
+
+        /* 3. Light Theme - Modal Close Button */
+        [data-theme="light"] .sc-bdvvtL.dEEJXo.read-more-modal--close-button.jf-google-reviews-read-more-modal--close-button.jf-google-reviews-cta,
+        [data-theme="light"] .jf-google-reviews-read-more-modal--close-button,
+        [data-theme="light"] .read-more-modal--close-button,
+        [data-theme="light"] [class*="read-more-modal--close-button"],
+        [data-theme="light"] [class*="read-more-modal"] button,
+        [data-theme="light"] [class*="read-more-modal"] [class*="close-button"] {
+            background-color: #81C784 !important;
+            color: #335136 !important;
+        }
+
+        [data-theme="light"] .sc-bdvvtL.dEEJXo.read-more-modal--close-button.jf-google-reviews-read-more-modal--close-button.jf-google-reviews-cta *,
+        [data-theme="light"] .jf-google-reviews-read-more-modal--close-button *,
+        [data-theme="light"] .read-more-modal--close-button *,
+        [data-theme="light"] [class*="read-more-modal--close-button"] *,
+        [data-theme="light"] [class*="read-more-modal"] button *,
+        [data-theme="light"] [class*="read-more-modal"] [class*="close-button"] * {
+            color: #335136 !important;
+            fill: #335136 !important;
+        }
+
+        /* Dark Theme - Modal Text */
         [data-theme="dark"] .jzYSTT span,
-        [data-theme="dark"] .jMricc .read-more-modal--text {
+        [data-theme="dark"] .jMricc .read-more-modal--text,
+        [data-theme="dark"] .read-more-modal--text,
+        [data-theme="dark"] [class*="read-more-modal--text"] {
             color: #000 !important;
         }
 
@@ -66,38 +125,145 @@
             --nav-bg: rgba(13, 23, 16, 0.95);
         }
 
-        [data-theme="dark"] .sc-jeraig.iwvMzw.jf-reviews-header-card {
+        /* Header Card - White Border */
+        .sc-jeraig.iwvMzw.jf-reviews-header-card,
+        .jf-reviews-header-card,
+        [class*="jf-reviews-header-card"],
+        .sc-jeraig,
+        #google-reviews [class*="jf-reviews-header-card"],
+        [id^="JFWebsiteWidget"] [class*="jf-reviews-header-card"] {
+            border: 1px solid #ffffff !important;
+        }
+
+        /* 4. Dark Theme - Header Card */
+        [data-theme="dark"] .sc-jeraig.iwvMzw.jf-reviews-header-card,
+        [data-theme="dark"] .jf-reviews-header-card,
+        [data-theme="dark"] [class*="jf-reviews-header-card"],
+        [data-theme="dark"] .sc-jeraig,
+        [data-theme="dark"] #google-reviews [class*="jf-reviews-header-card"],
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-reviews-header-card"] {
+            background-color: var(--card-bg) !important;
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.04) !important;
+            border: 1px solid #ffffff !important;
+            color: var(--text-main) !important;
+        }
+
+        [data-theme="dark"] .sc-jeraig.iwvMzw.jf-reviews-header-card *,
+        [data-theme="dark"] .jf-reviews-header-card *,
+        [data-theme="dark"] [class*="jf-reviews-header-card"] *,
+        [data-theme="dark"] .sc-jeraig *,
+        [data-theme="dark"] #google-reviews [class*="jf-reviews-header-card"] *,
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-reviews-header-card"] * {
+            color: var(--text-main) !important;
+        }
+
+        /* 5. Dark Theme - Reviews Card Content */
+        [data-theme="dark"] .sc-ezbkAF.bOKntu.jf-reviews-card-content,
+        [data-theme="dark"] .jf-reviews-card-content,
+        [data-theme="dark"] [class*="jf-reviews-card-content"],
+        [data-theme="dark"] .jf-reviews-card,
+        [data-theme="dark"] [class*="jf-reviews-card"],
+        [data-theme="dark"] .sc-ezbkAF,
+        [data-theme="dark"] #google-reviews [class*="jf-reviews-card"],
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-reviews-card"],
+        [data-theme="dark"] #google-reviews [class*="jf-reviews-card-content"],
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-reviews-card-content"] {
             background-color: var(--card-bg) !important;
             box-shadow: 0 8px 30px rgba(255, 255, 255, 0.04) !important;
             border: 1px solid rgba(0, 103, 57, 0.125) !important;
             color: var(--text-main) !important;
         }
 
-        [data-theme="dark"] .sc-jeraig.iwvMzw.jf-reviews-header-card * {
+        [data-theme="dark"] .sc-ezbkAF.bOKntu.jf-reviews-card-content *,
+        [data-theme="dark"] .jf-reviews-card-content *,
+        [data-theme="dark"] [class*="jf-reviews-card-content"] *,
+        [data-theme="dark"] .jf-reviews-card *,
+        [data-theme="dark"] [class*="jf-reviews-card"] *,
+        [data-theme="dark"] .sc-ezbkAF *,
+        [data-theme="dark"] #google-reviews [class*="jf-reviews-card"] *,
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-reviews-card"] *,
+        [data-theme="dark"] #google-reviews [class*="jf-reviews-card-content"] *,
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-reviews-card-content"] * {
             color: var(--text-main) !important;
         }
 
-        [data-theme="dark"] .sc-ezbkAF.bOKntu.jf-reviews-card-content {
-            background-color: var(--card-bg) !important;
-            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.04) !important;
-            border: 1px solid rgba(0, 103, 57, 0.125) !important;
-            color: var(--text-main) !important;
-        }
-
-        [data-theme="dark"] .sc-ezbkAF.bOKntu.jf-reviews-card-content * {
-            color: var(--text-main) !important;
-        }
-
+        /* 6. Dark Theme - CTA Button */
         [data-theme="dark"] .sc-bdvvtL.sc-iqseJM.dEEJXo.icFeVK.jf-google-reviews-cta,
-        [data-theme="dark"] .jf-google-reviews-cta {
+        [data-theme="dark"] .jf-google-reviews-cta,
+        [data-theme="dark"] [class*="jf-google-reviews-cta"],
+        [data-theme="dark"] #google-reviews [class*="jf-google-reviews-cta"],
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-google-reviews-cta"] {
             background-color: #81C784 !important;
             color: #335136 !important;
         }
 
         [data-theme="dark"] .sc-bdvvtL.sc-iqseJM.dEEJXo.icFeVK.jf-google-reviews-cta *,
-        [data-theme="dark"] .jf-google-reviews-cta * {
+        [data-theme="dark"] .jf-google-reviews-cta *,
+        [data-theme="dark"] [class*="jf-google-reviews-cta"] *,
+        [data-theme="dark"] #google-reviews [class*="jf-google-reviews-cta"] *,
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="jf-google-reviews-cta"] * {
             color: #335136 !important;
             fill: #335136 !important;
+        }
+
+        /* 7. Read More (Both Dark & Light Modes) */
+        .sc-bdvvtL.dEEJXo.readMore.jf-reviews-read-more.jf-google-reviews-readMore.jf-google-reviews-cta,
+        .jf-reviews-read-more,
+        .jf-google-reviews-readMore,
+        [class*="jf-reviews-read-more"],
+        [class*="jf-google-reviews-readMore"],
+        [class*="readMore"],
+        #google-reviews [class*="readMore"],
+        [id^="JFWebsiteWidget"] [class*="readMore"],
+        [data-theme="dark"] .sc-bdvvtL.dEEJXo.readMore.jf-reviews-read-more.jf-google-reviews-readMore.jf-google-reviews-cta,
+        [data-theme="dark"] .jf-reviews-read-more,
+        [data-theme="dark"] .jf-google-reviews-readMore,
+        [data-theme="dark"] [class*="jf-reviews-read-more"],
+        [data-theme="dark"] [class*="jf-google-reviews-readMore"],
+        [data-theme="dark"] [class*="readMore"],
+        [data-theme="dark"] #google-reviews [class*="readMore"],
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="readMore"],
+        [data-theme="light"] .sc-bdvvtL.dEEJXo.readMore.jf-reviews-read-more.jf-google-reviews-readMore.jf-google-reviews-cta,
+        [data-theme="light"] .jf-reviews-read-more,
+        [data-theme="light"] .jf-google-reviews-readMore,
+        [data-theme="light"] [class*="jf-reviews-read-more"],
+        [data-theme="light"] [class*="jf-google-reviews-readMore"],
+        [data-theme="light"] [class*="readMore"],
+        [data-theme="light"] #google-reviews [class*="readMore"],
+        [data-theme="light"] [id^="JFWebsiteWidget"] [class*="readMore"] {
+            color: #81C784 !important;
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        .sc-bdvvtL.dEEJXo.readMore.jf-reviews-read-more.jf-google-reviews-readMore.jf-google-reviews-cta *,
+        .jf-reviews-read-more *,
+        .jf-google-reviews-readMore *,
+        [class*="jf-reviews-read-more"] *,
+        [class*="jf-google-reviews-readMore"] *,
+        [class*="readMore"] *,
+        #google-reviews [class*="readMore"] *,
+        [id^="JFWebsiteWidget"] [class*="readMore"] *,
+        [data-theme="dark"] .sc-bdvvtL.dEEJXo.readMore.jf-reviews-read-more.jf-google-reviews-readMore.jf-google-reviews-cta *,
+        [data-theme="dark"] .jf-reviews-read-more *,
+        [data-theme="dark"] .jf-google-reviews-readMore *,
+        [data-theme="dark"] [class*="jf-reviews-read-more"] *,
+        [data-theme="dark"] [class*="jf-google-reviews-readMore"] *,
+        [data-theme="dark"] [class*="readMore"] *,
+        [data-theme="dark"] #google-reviews [class*="readMore"] *,
+        [data-theme="dark"] [id^="JFWebsiteWidget"] [class*="readMore"] *,
+        [data-theme="light"] .sc-bdvvtL.dEEJXo.readMore.jf-reviews-read-more.jf-google-reviews-readMore.jf-google-reviews-cta *,
+        [data-theme="light"] .jf-reviews-read-more *,
+        [data-theme="light"] .jf-google-reviews-readMore *,
+        [data-theme="light"] [class*="jf-reviews-read-more"] *,
+        [data-theme="light"] [class*="jf-google-reviews-readMore"] *,
+        [data-theme="light"] [class*="readMore"] *,
+        [data-theme="light"] #google-reviews [class*="readMore"] *,
+        [data-theme="light"] [id^="JFWebsiteWidget"] [class*="readMore"] * {
+            color: #81C784 !important;
+            fill: #81C784 !important;
         }
 
         img {
@@ -3274,7 +3440,7 @@
                     <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
                     <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
                 </svg-->
-                Our Happy Client Reviews!
+                What Clients Say!
             </h2>
             <!--div class="google-reviews-container">
                 <div class="google-reviews-track" id="google-reviews-dynamic-track"-->
@@ -3521,7 +3687,7 @@
                     <div style="margin-top: 2rem;">
                         <p>Phone: <strong><a href="tel:+917349351920">+91 73493 51920</a></strong></p>
                         <p>Email: <strong><a href="mailto:info@mana-na.in">info@mana-na.in</a></strong></p>
-                        <p>Address: <strong>Pride Vatika Layout, Bannerghatta Road, Bengaluru</strong></p>
+                        <p>Address: <strong><a href="https://maps.app.goo.gl/dZNHgTtQVrWXNce36" target="_blank">Pride Vatika Layout, Bannerghatta Road, Bengaluru</a></strong></p>
                         <p style="margin-top: 0.5rem;"><strong>Available for: In-person and online consultations.</strong></p>
                     </div>
                 </div>
@@ -3598,6 +3764,7 @@
                     <a href="#counsellor">Meet the Counsellor</a>
                     <a href="#blogs">Blogs</a>
                     <a href="#testimonials">Testimonials</a>
+                    <a href="#google-reviews">Google Reviews</a>
                     <a href="#gallery">Gallery</a>
                     <a href="#faq">FAQs</a>
                     <a href="#self-assessments">Self-Assessments</a>
