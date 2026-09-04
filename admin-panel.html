@@ -350,9 +350,7 @@
     </style>
     <script>
         document.addEventListener('contextmenu', (e) => {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-            }
+            e.preventDefault();
         });
     </script>
 </head>
@@ -363,32 +361,35 @@
         <div class="login-card">
             <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo" style="width: 80px; margin-bottom: 1rem; border-radius: 8px;">
             <h2>Admin Access</h2>
-            <p>Please enter the secure password to <br>manage slots.</p>
+            <p>Please log in with your <br>authorized administrator account.</p>
+            <input type="email" id="adminEmail" placeholder="Enter admin email" style="margin-bottom: 10px;">
             <input type="password" id="adminPwd" placeholder="Enter password" onkeypress="if(event.key === 'Enter') checkPwd()">
-            <button class="btn" onclick="checkPwd()" style="margin-top: 0;">Unlock Panel</button>
-            <p id="loginError">Incorrect password. Please try again.</p>
+            <button class="btn" id="loginBtn" onclick="checkPwd()" style="margin-top: 0;">Unlock Panel</button>
+            <p id="loginError">Incorrect credentials. Please try again.</p>
         </div>
     </div>
 
-    <nav>
-        <a href="admin-panel.html" class="logo">
-            <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo">
-            <div class="logo-text">
-                <span class="brand-name">Mana-na<span class="kannada-text">&nbsp;ಮನ-ನ</span></span>
-                <span class="tagline">Admin Panel</span>
+    <div id="mainContent" style="display: none;">
+        <nav>
+            <a href="admin-panel.html" class="logo">
+                <img src="https://www.mana-na.in/mana-na_logo.png" alt="Mana-na Logo">
+                <div class="logo-text">
+                    <span class="brand-name">Mana-na<span class="kannada-text">&nbsp;ಮನ-ನ</span></span>
+                    <span class="tagline">Admin Panel</span>
+                </div>
+            </a>
+            <div class="nav-controls">
+                <button class="btn btn-outline" onclick="logout()" style="padding: 0.5rem 1.5rem; font-size: 0.9rem; margin-top: 0; width: auto;">Logout</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme"></button>
             </div>
-        </a>
-        <div class="nav-controls">
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme"></button>
-        </div>
-    </nav>
+        </nav>
 
-    <header class="page-header">
-        <h1>Slot Availability Management</h1>
-        <p>Select a date and choose which slots to block from public view.</p>
-    </header>
+        <header class="page-header">
+            <h1>Slot Availability Management</h1>
+            <p>Select a date and choose which slots to block from public view.</p>
+        </header>
 
-    <div class="admin-container">
+        <div class="admin-container">
         
         <!-- Control Panel -->
         <div class="admin-card">
@@ -450,40 +451,88 @@
             <svg viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
         </button>
     </div>
+    </div> <!-- Close mainContent -->
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
     <script>
         // --- Security / Authentication ---
-        // The password is Base64 encoded to hide it from plain text in the source code.
-        // Default password is: ManaNaSecure2026!
-        const ENCODED_PWD = "TWFuYU5hU2VjdXJlMjAyNiE=";
-
-        // If you want to change the password, you can open your browser console (F12) and run this:
-        // btoa("YourNewPassword");
-
         let inactivityTimer;
         const INACTIVITY_LIMIT = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-        function checkPwd() {
-            const input = document.getElementById('adminPwd').value.trim();
-            
-            // Encode user input to compare with the hidden password
-            if (btoa(input) === ENCODED_PWD) {
+        let isDataLoaded = false;
+        
+        // --- GLOBAL DATABASE CONFIGURATION (Firebase) ---
+        // Obfuscated to prevent automated bot scraping
+        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lEVmtBaDU5c2tkd1U3VE5CRFNiVl9nN29JTVVOTzFrZ3ciLCJhdXRoRG9tYWluIjoibWFuYS1uYS1zbG90cy5maXJlYmFzZWFwcC5jb20iLCJwcm9qZWN0SWQiOiJtYW5hLW5hLXNsb3RzIiwic3RvcmFnZUJ1Y2tldCI6Im1hbmEtbmEtc2xvdHMuYXBwc3BvdC5jb20iLCJtZXNzYWdpbmdTZW5kZXJJZCI6Ijk3MDk5Njg1NDI5MiIsImFwcElkIjoiMTo5NzA5OTY4NTQyOTI6d2ViOmNlNWFkY2M0YTFjNGIyMWM0YjQxMDEifQ=="));
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // Listen to Firebase Auth state changes
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is logged in
                 document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
                 document.body.classList.remove('locked');
                 resetInactivityTimer();
+                
+                if (!isDataLoaded) {
+                    loadGlobalData();
+                    isDataLoaded = true;
+                }
             } else {
-                document.getElementById('loginError').style.display = 'block';
+                // User is logged out
+                document.getElementById('loginOverlay').style.display = 'flex';
+                document.getElementById('mainContent').style.display = 'none';
+                document.body.classList.add('locked');
+                isDataLoaded = false;
             }
+        });
+
+        function checkPwd() {
+            const email = document.getElementById('adminEmail').value.trim();
+            const pwd = document.getElementById('adminPwd').value;
+            const btn = document.getElementById('loginBtn');
+            const errorMsg = document.getElementById('loginError');
+            
+            if (!email || !pwd) {
+                errorMsg.textContent = 'Please enter both email and password.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            btn.textContent = 'Logging in...';
+            btn.disabled = true;
+            errorMsg.style.display = 'none';
+
+            auth.setPersistence(firebase.auth.Auth.Persistence.NONE)
+                .then(() => {
+                    return auth.signInWithEmailAndPassword(email, pwd);
+                })
+                .then(() => {
+                    btn.textContent = 'Unlock Panel';
+                    btn.disabled = false;
+                    document.getElementById('adminPwd').value = '';
+                })
+                .catch((error) => {
+                    console.error("Login Error:", error);
+                    errorMsg.textContent = "Invalid email or password. Please try again.";
+                    errorMsg.style.display = 'block';
+                    btn.textContent = 'Unlock Panel';
+                    btn.disabled = false;
+                });
         }
 
         function logout() {
-            document.getElementById('loginOverlay').style.display = 'flex';
-            document.body.classList.add('locked');
-            document.getElementById('adminPwd').value = '';
-            document.getElementById('loginError').style.display = 'none';
+            auth.signOut();
             clearTimeout(inactivityTimer);
         }
 
@@ -526,14 +575,7 @@
             '2026-05-15': ['09:30 AM', '11:00 AM', '12:30 PM']*/
         };
 
-        // --- GLOBAL DATABASE CONFIGURATION (Firebase) ---
-        // Obfuscated to prevent automated bot scraping
-        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lEVmtBaDU5c2tkd1U3VE5CRFNiVl9nN29JTVVOTzFrZ3ciLCJhdXRoRG9tYWluIjoibWFuYS1uYS1zbG90cy5maXJlYmFzZWFwcC5jb20iLCJwcm9qZWN0SWQiOiJtYW5hLW5hLXNsb3RzIiwic3RvcmFnZUJ1Y2tldCI6Im1hbmEtbmEtc2xvdHMuYXBwc3BvdC5jb20iLCJtZXNzYWdpbmdTZW5kZXJJZCI6Ijk3MDk5Njg1NDI5MiIsImFwcElkIjoiMTo5NzA5OTY4NTQyOTI6d2ViOmNlNWFkY2M0YTFjNGIyMWM0YjQxMDEifQ=="));
 
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const db = firebase.firestore();
 
         function loadGlobalData() {
             try {
@@ -576,7 +618,6 @@
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
             renderCheckboxes();
-            loadGlobalData();
             
             // Set minimum date to today
             const dateInput = document.getElementById('blockDate');
