@@ -1,15 +1,11 @@
 User-agent: *
 Allow: /
-Allow: /#home
-Allow: /#about
-Allow: /#approach
-Allow: /#areas-of-support
-Allow: /#self-reflection
-Allow: /#counsellor
-Allow: /#testimonials
-Allow: /#gallery
-Allow: /#faq
-Allow: /#contact
-Allow: /#resources
+
+# Disallow internal, administrative, and preview files
+Disallow: /admin-panel.html
+Disallow: /invoice.html
+Disallow: /book-a-slot-old.html
+Disallow: /preview1.html
+Disallow: /email_template.html
 
 Sitemap: https://www.mana-na.in/sitemap.xml
